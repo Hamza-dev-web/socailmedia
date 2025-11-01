@@ -28,6 +28,7 @@
     "react-images-uploading": "^3.1.7",
     "socket.io": "^4.7.5",
     "socket.io-client": "^4.7.5",
+    "svix": "^1.81.0",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
