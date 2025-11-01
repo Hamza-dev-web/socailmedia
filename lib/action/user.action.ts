@@ -85,32 +85,29 @@ console.log(err)
     }
     
       export const CreateUsers = async (documents :{username :string , email:string , image :string })=>{
-        const clerkuser = await currentUser()
-        if(!clerkuser )return
-        console.log(documents.email)
-      let index =0
+
         try {
             const users= await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.POSTS_ID_COLLECTION as string,[
                 Query.equal("email" , [documents.email ])
             ])
-       if(users.documents.length > 0) return
-        const userDb = await database.createDocument(
+       if(users.documents.length > 0) return users
+       const id = ID.unique()  
+       const userDb = await database.createDocument(
             process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION as string,  
-            ID.unique()  ,
+            id ,
             {
              name : documents.username,
             email : documents.email,
                 image :documents.image,
                 frends : [] ,
                 save :[],
-                index ,
+                index :id,
                 message :[]
             }
         )
-        if(userDb) index++
         await database.createDocument(
             process.env.DATABASE_ID as string  ,
             process.env.NOTIFICATION_COLLECTION as string ,
