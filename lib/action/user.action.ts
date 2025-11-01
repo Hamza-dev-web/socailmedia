@@ -89,7 +89,7 @@ console.log(err)
         try {
             const users= await database.listDocuments(
                 process.env.DATABASE_ID as string,
-                process.env.POSTS_ID_COLLECTION as string,[
+                process.env.USERS_COLLECTION as string,[
                 Query.equal("email" , [documents.email ])
             ])
        if(users.documents.length > 0) return users
