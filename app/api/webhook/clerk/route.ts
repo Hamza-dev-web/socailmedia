@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
     console.log('Webhook payload:', evt.data)
 
 if (evt.type === 'user.created') {
+    console.log(evt.type , "start")
       await CreateUsers({
             username: evt.data.first_name as string,
             email: evt.data.email_addresses[0].email_address as string,
