@@ -17,14 +17,14 @@ export default async function Home() {
  const posts= await GetAllPosts()
  const clerkuser = await currentUser()
  const userdb = await getUsers(clerkuser.emailAddresses[0].emailAddress)
-
+if(!userdb) return
   return (
     <div className="w-full max-w-screen-xl mx-auto px-4 py-6 flex flex-col items-center rounded-md bg-gradient-to-r from-gray-200 via-blue-300 to-slate-800 shadow-lg">
 { posts && posts?.documents.length > 0 ? (
 <div className="mt-14 flex flex-wrap justify-center gap-5 w-full max-w-screen-lg mx-auto rounded-lg p-4 bg-white shadow-md">
 {
   posts.documents.map((post :any ) =>(
-    <PostsCard isinSave={false} post={post}  user={userdb} />
+    <PostsCard isinSave={false} post={post}  user={userdb.documents[0]} />
   ))
 }
 </div>

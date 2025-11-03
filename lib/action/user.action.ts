@@ -309,13 +309,13 @@ console.log(err)
             }
         }
 
-        export const SaveAPost = async( documents :{idofUser :string,title :string , like :number ,comments : string[] , image :string , userImage :string, posterName :string , index :number} , email :string )=>{
+        export const SaveAPost = async( documents :{idofUser :string,title :string , like :number ,comments : string[] , image :string , userImage :string, posterName :string , index :number ,email :string}  )=>{
 
             try{
                 const user = await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string,[
-                    Query.equal("email" , [email])
+                    Query.equal("email" , [documents.email])
                 ])
                 if(!user) return
                 const allsavePost = await database.listDocuments(

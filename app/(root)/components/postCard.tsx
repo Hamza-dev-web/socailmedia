@@ -72,23 +72,20 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
                 comments: post.comments,
                 userImage: post.userImage,
                 posterName: post.posterName,
+               email :   user.email
               },
-              user.email
+           
             )
           }
         />
       )}
     </div>
   </div>
-
-  {/* Comment Input */}
   {!isinSave && (
     <div className="mt-4">
       <Comments username={user.name} idPost={post.$id as string} />
     </div>
   )}
-
-  {/* Comments List */}
   {post.comments && post.comments.length > 0 && (
     <div className="flex flex-col gap-3 mt-6">
       {post.comments.map((comment) => (
@@ -99,8 +96,6 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
 </div>
     )
 } 
-
-
 export const PostsUsersCard =({post , user } :{ post :any , user : any})=>{
     return (
         <div className=" flex flex-col gap-3">
@@ -114,10 +109,9 @@ alt=""
 
 />
                
-         <h2>{post.posterName}</h2>
-        </div>
-      
-        <p>{post.title}</p>
+<h2>{post.posterName}</h2>
+  </div>
+  <p>{post.title}</p>
         <img
         src={post.image}
         height={600}
