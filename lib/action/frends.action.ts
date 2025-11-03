@@ -17,7 +17,7 @@ export const ListUsers = async()=>{
         
                 
             );
-       console.log(users)
+
             if(newDocuments.documents.length > 0 ){
 
 

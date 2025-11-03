@@ -312,6 +312,7 @@ console.log(err)
         export const SaveAPost = async( documents :{idofUser :string,title :string , like :number ,comments : string[] , image :string , userImage :string, posterName :string , index :number ,email :string}  )=>{
 
             try{
+
                 const user = await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string,[
@@ -370,9 +371,51 @@ if(allsavePost.documents.length > 0){
                         }
                     }
                 }
+                else {
+                const savedPost=    await database.createDocument(
+                process.env.DATABASE_ID as string,
+                process.env.SAVE_COLLECTION as string,
+                ID.unique() , 
+                {
+                    title  :documents.title,
+                    Like : documents.like,
+                    image :documents.image,
+                    comments: documents.comments,
+                    userImage : documents.userImage,
+                    posterName : documents.posterName ,
+                    index :documents.index
+                           }
+                    )
+                           let data ={}
+                    if(savedPost && user.documents[0]) {
+    
+                         data ={
+                    
+                            name : user.documents[0].username,
+                            email : user.documents[0].email,
+                                image :user.documents[0].image,
+                                frends : user.documents[0].frends ,
+                                index  :user.documents[0].index,
+                              save : [
+                                savedPost
+                           
+        
+                              ],
+                              message : user.documents[0].message
+                         }
+                        
+                    
+                    await database.updateDocument(
+                        process.env.DATABASE_ID as string,
+                        process.env.USERS_COLLECTION as string,
+                        user.documents[0].$id ,data
+                       )
+                }
+                
                     console.log("don")
                         return console.log("ok")
                 }
+            }
       
             catch(err :any) {
                 console.log(err)

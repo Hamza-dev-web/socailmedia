@@ -5,7 +5,6 @@ import Image from "next/image";
 import { Comments } from "./comments";
 import { CommentsCard } from "./commentscard";
 export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isinSave : boolean}){
- console.log(post)
  return (
 <div className="w-full max-w-2xl mx-auto flex flex-col gap-5 text-left p-6 rounded-md bg-gradient-to-r from-slate-200 via-blue-200 to-blue-100 shadow-md">
 
@@ -64,7 +63,7 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
           onClick={async () =>
             await SaveAPost(
               {
-                idofUser: String(post.$id),
+                idofUser: String(user.$id),
                 title: post.title,
                 image: post.image,
                 like: post.Like,
