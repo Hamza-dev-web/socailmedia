@@ -13,17 +13,10 @@ export default async function  RootLayout({
   children: React.ReactNode;
 }>) {
 
+ const clerkuser = await currentUser()
+ if(!clerkuser ) redirect('/sign-in') 
 
-/*
-  let userdb = null
-  let  isuser = await getUsers(user?.emailAddresses[0].emailAddress as string)
-  console.log(  userdb)
-isuser &&   isuser.documents.length === 0  ?  userdb =  await CreateUsers({
-        username: user.username as string,
-        email: user.emailAddresses[0].emailAddress as string,
-        image: user.imageUrl as string,
-      }) :  userdb = isuser && isuser
-      */
+
   return (
 
 

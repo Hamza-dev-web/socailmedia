@@ -16,24 +16,15 @@ export interface Post {
 export default async function Home() {
  const posts= await GetAllPosts()
  const clerkuser = await currentUser()
-const user = await getUsers(clerkuser?.emailAddresses[0].emailAddress as string)
-if(!user) return
-let  userpas ={}
-for(let i=0 ; i<user.documents.length ;i++){
- userpas = {
-  image : user.documents[i].image ,
-  name : user.documents[i].name ,
-  email : user.documents[i].email,
-  id : user.documents[i].$id
-  }
-}
+ const userdb = await getUsers(clerkuser.emailAddresses[0].emailAddress)
+
   return (
     <div className="w-full max-w-screen-xl mx-auto px-4 py-6 flex flex-col items-center rounded-md bg-gradient-to-r from-gray-200 via-blue-300 to-slate-800 shadow-lg">
 { posts && posts?.documents.length > 0 ? (
 <div className="mt-14 flex flex-wrap justify-center gap-5 w-full max-w-screen-lg mx-auto rounded-lg p-4 bg-white shadow-md">
 {
   posts.documents.map((post :any ) =>(
-    <PostsCard isinSave={false} post={post} user={userpas}/>
+    <PostsCard isinSave={false} post={post}  user={userdb} />
   ))
 }
 </div>

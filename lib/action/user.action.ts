@@ -89,7 +89,8 @@ console.log(err)
         try {
             const users= await database.listDocuments(
                 process.env.DATABASE_ID as string,
-                process.env.USERS_COLLECTION as string,[
+                process.env.USERS_COLLECTION as
+                 string,[
                 Query.equal("email" , [documents.email ])
             ])
        if(users.documents.length > 0) return users
@@ -108,6 +109,7 @@ console.log(err)
                 message :[]
             }
         )
+        console.log(userDb)
         await database.createDocument(
             process.env.DATABASE_ID as string  ,
             process.env.NOTIFICATION_COLLECTION as string ,
@@ -325,7 +327,6 @@ console.log(err)
 if(allsavePost.documents.length > 0){
     for(let i =0 ; i<allsavePost.documents.length ;i++){
 
-        
            console.log("check")
             const savedPost = await database.createDocument(
                 process.env.DATABASE_ID as string,
