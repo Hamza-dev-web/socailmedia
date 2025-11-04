@@ -510,12 +510,13 @@ catch(err :any){
 
   export const handleTheLike = async (id :string , idUser :string)=>{
         try {
+
             const posts = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.POSTS_ID_COLLECTION as string,[
                 Query.equal("$id" , [id ])
             ])
-            console.log("post :",posts )
+            console.log("post :",posts , "id" , id)
             const user  = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.USERS_COLLECTION as string,[
