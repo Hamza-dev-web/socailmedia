@@ -516,7 +516,7 @@ catch(err :any){
                 process.env.POSTS_ID_COLLECTION as string,[
                 Query.equal("$id" , [id ])
             ])
-            console.log("post :",posts , "id" , id)
+            console.log("post :",posts , "id" , idUser)
             const user  = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.USERS_COLLECTION as string,[
