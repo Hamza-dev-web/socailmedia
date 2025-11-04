@@ -12,12 +12,13 @@ export default  async function Home() {
   const clerkUser = await currentUser()
   const Follower = await ListAllthefollower(clerkUser?.emailAddresses[0].emailAddress as string )
   const users = await ListUsers()
+
   let Usersshow = []
   for(let i=0 ; i< Follower?.length ;i++) {
     Usersshow = users.filter((usr) => usr.name != Follower[i].username)
   console.log(Usersshow)
   }
-
+  console.log("users" , users, clerkUser)
   return (
     <>
     {/* sm:max-w-[1200px]  hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-gradient-to-r from-gray-200 via-blue to-slate-900 */}
@@ -33,7 +34,7 @@ export default  async function Home() {
     <Frends
 clerkUser={{
   id :clerkUser.id ,
-  username : clerkUser.username,
+  username : `${clerkUser.firstName}${clerkUser.lastName}`,
   email :clerkUser.emailAddresses[0].emailAddress
 }}
 users={Usersshow}

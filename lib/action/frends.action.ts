@@ -6,29 +6,19 @@ import { log } from "console";
 
 
 export const ListUsers = async()=>{
-
-
         try {
             const user =await currentUser()
             const  newDocuments =  await database.listDocuments(
                process.env.DATABASE_ID as string,
                process.env.USERS_COLLECTION  as string,
-               [ ]
-        
-                
-            );
-
+               []);
             if(newDocuments.documents.length > 0 ){
-
-
-                const usertoRetours = newDocuments.documents.filter((users) => users.name != user?.username as string)
-       
+                const usertoRetours = newDocuments.documents.filter((users) => users.email != user?.emailAddresses[0].emailAddress as string)
         return         usertoRetours
             }
             else {
                 return []
             }
-          
         }
         catch(err :any) {
             console.log(err)

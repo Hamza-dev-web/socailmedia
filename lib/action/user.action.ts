@@ -145,93 +145,7 @@ console.log(err)
         }
     }
     
-    export const handleTheLike = async (id :string , idUser :string)=>{
-        try {
-            const posts = await database.listDocuments(
-                process.env.DATABASE_ID as string,
-                process.env.POSTS_ID_COLLECTION as string,[
-                Query.equal("$id" , [id ])
-            ])
-            const allUser  = await database.listDocuments(
-                process.env.DATABASE_ID as string,
-                process.env.USERS_COLLECTION as string,[
-              ])
-        const user = allUser.documents.find((usr) => usr.$id == idUser)
-            if(!posts || !user)  return console.log("not found")
-           
-                for(let i =0 ; i<posts.documents[0].isLiked.length ; i++){
-                    posts.documents[0].isLiked[i].idofuserthatliked
-                if(  posts.documents[0].isLiked[i].idofuserthatliked &&idUser != posts.documents[0].isLiked[i].idofuserthatliked){
-                   console.log("check")
-                     const newlike = await database.createDocument(
-                        process.env.DATABASE_ID as string,
-                        process.env.ISLIKED_COLLECTION as string,  
-                        ID.unique()  ,
-                        {
-                            idofuserthatliked : user.$id 
-                        }
-                    )           
-                    
-                    const data ={
-                                     title : posts.documents[0].title ,
-                                        posterName :posts.documents[0].postername ,
-                                        image:posts.documents[0].image ,
-                                        Like : posts.documents[0].Like + 1 ,
-                                        isLiked :[ ...posts.documents[0].isLiked ,
-                                        newlike 
-                                    ] ,
-                                        comments : posts.documents[0].comments ,
-                                        userImage :posts.documents[0].userImage,
-                                        index :posts.documents[0].index
-                                    }
-                            
-                        await database.updateDocument(
-                            process.env.DATABASE_ID as string,
-                            process.env.POSTS_ID_COLLECTION as string,id ,
-                            data
-                        )
-                    }
-                    else {
-                        return console.log("alredy liked")
-                       }
-                
-                    }
-                    if(posts.documents[0].isLiked.length == 0 ){
-                        const newlike = await database.createDocument(
-                            process.env.DATABASE_ID as string,
-                            process.env.ISLIKED_COLLECTION as string,  
-                            ID.unique()  ,
-                            {
-                                idofuserthatliked : user.$id 
-                            }
-                        )           
-                        
-                        const data ={
-                                         title : posts.documents[0].title ,
-                                            posterName :posts.documents[0].postername ,
-                                            image:posts.documents[0].image ,
-                                            Like : posts.documents[0].Like + 1 ,
-                                            isLiked :[
-                                            newlike 
-                                        ] ,
-                                            comments : posts.documents[0].comments ,
-                                            userImage :posts.documents[0].userImage,
-                                            index :posts.documents[0].index
-                                        }
-                                
-                            await database.updateDocument(
-                                process.env.DATABASE_ID as string,
-                                process.env.POSTS_ID_COLLECTION as string,id ,
-                                data
-                            )
-                            console.log("ok")
-                   
-                }
-}
-catch (err :any) {
-console.log(err)
-}
-    }
+
     
     export const handleTheComments = async (idPost :string    , comments:string , username :string)=>{
         try {
@@ -593,3 +507,93 @@ catch(err :any){
     console.log(err)
 }
 }
+
+  export const handleTheLike = async (id :string , idUser :string)=>{
+        try {
+            const posts = await database.listDocuments(
+                process.env.DATABASE_ID as string,
+                process.env.POSTS_ID_COLLECTION as string,[
+                Query.equal("$id" , [id ])
+            ])
+            console.log("post :",posts )
+            const user  = await database.listDocuments(
+                process.env.DATABASE_ID as string,
+                process.env.USERS_COLLECTION as string,[
+                    Query.equal("$id" , idUser)
+              ])
+            if(!posts || user)  return console.log("not found")
+             console.log("user :",user )
+                for(let i =0 ; i<posts.documents[0].isLiked.length ; i++){
+                    posts.documents[0].isLiked[i].idofuserthatliked
+                if(  posts.documents[0].isLiked[i].idofuserthatliked &&idUser != posts.documents[0].isLiked[i].idofuserthatliked){
+                   console.log("check")
+                     const newlike = await database.createDocument(
+                        process.env.DATABASE_ID as string,
+                        process.env.ISLIKED_COLLECTION as string,  
+                        ID.unique()  ,
+                        {
+                            idofuserthatliked : user.documents[0].$id 
+                        }
+                    )           
+                    
+                    const data ={
+                                     title : posts.documents[0].title ,
+                                        posterName :posts.documents[0].postername ,
+                                        image:posts.documents[0].image ,
+                                        Like : posts.documents[0].Like + 1 ,
+                                        isLiked :[ ...posts.documents[0].isLiked ,
+                                        newlike 
+                                    ] ,
+                                        comments : posts.documents[0].comments ,
+                                        userImage :posts.documents[0].userImage,
+                                        index :posts.documents[0].index
+                                    }
+                            
+                        await database.updateDocument(
+                            process.env.DATABASE_ID as string,
+                            process.env.POSTS_ID_COLLECTION as string,id ,
+                            data
+                        )
+                    }
+                    else {
+                        return console.log("alredy liked")
+                       }
+                
+                    }
+                    if(posts.documents[0].isLiked.length == 0 ){
+                        const newlike = await database.createDocument(
+                            process.env.DATABASE_ID as string,
+                            process.env.ISLIKED_COLLECTION as string,  
+                            ID.unique()  ,
+                            {
+                                idofuserthatliked : user.documents[0].$id 
+                            }
+                        )           
+                        
+                        const data ={
+                                         title : posts.documents[0].title ,
+                                            posterName :posts.documents[0].postername ,
+                                            image:posts.documents[0].image ,
+                                            Like : posts.documents[0].Like + 1 ,
+                                            isLiked :[
+                                            newlike 
+                                        ] ,
+                                            comments : posts.documents[0].comments ,
+                                            userImage :posts.documents[0].userImage,
+                                            index :posts.documents[0].index
+                                        }
+                                
+                            await database.updateDocument(
+                                process.env.DATABASE_ID as string,
+                                process.env.POSTS_ID_COLLECTION as string,id ,
+                                data
+                            )
+                            console.log("ok")
+                   
+                }
+}
+catch (err :any) {
+console.log(err)
+}
+    }
+    

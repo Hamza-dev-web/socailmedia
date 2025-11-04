@@ -10,13 +10,10 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
-import { Users } from "node-appwrite";
-
 export default  function Frends({
     users ,
     listOfFollow,
     clerkUser,
-
 }:{
     users :Document[] | any ,
     listOfFollow : any[],
@@ -27,24 +24,19 @@ const router = useRouter()
 const [satus , setStatus] =useState(false)
 const [follwer , setFollower] =useState(listOfFollow)
 const [searchedUser , setSearched] =useState([])
-
-
 useEffect(()=>{
   if(follwer?.length > 0 ){
     for(let j =0 ; j<follwer.length ;j++){
       setStatus(follwer[j].Accept)
-   
     }
   }
 } ,[])
-
-
-
+console.log()
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
   {listOfFollow && listOfFollow.length > 0 && listOfFollow.map((usr: any) => (
-    <div className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
+    <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
         onClick={() => router.push(`${usr.$id}/user`)}
@@ -176,10 +168,9 @@ useEffect(()=>{
 
   <div className="w-full flex flex-col items-center mt-6 px-4">
     {users &&
-      clerkUser !== undefined &&
       users.length > 0 &&
       users
-        .filter((userd: { name: string }) => userd?.name !== clerkUser?.username)
+        .filter((userd: { name: string }) => userd?.name != clerkUser?.username)
         .map((userto: any) => (
           <UserCard key={userto.$id} useremail={clerkUser.email as string} users={userto} />
         ))}
