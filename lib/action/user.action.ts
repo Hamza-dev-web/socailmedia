@@ -520,7 +520,7 @@ catch(err :any){
             const user  = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.USERS_COLLECTION as string,[
-                    Query.equal("$id" , idUser)
+                    Query.equal("$id" , [idUser])
               ])
             if(!posts || user)  return console.log("not found")
              console.log("user :",user )
