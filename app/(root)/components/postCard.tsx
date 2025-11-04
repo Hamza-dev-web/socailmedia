@@ -51,7 +51,10 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
           width={28}
           height={28}
           className="cursor-pointer"
-          onClick={async () => DeleteAsavedPost(post.$id)}
+          onClick={async () => {
+            DeleteAsavedPost(post.$id)
+            window.location.reload()
+          }}
         />
       ) : (
         <img

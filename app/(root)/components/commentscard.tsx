@@ -47,6 +47,7 @@ const [comments , setComments] =useState(comment.comments)
                 comments: comments,
               });
               setupdateCom(false);
+              window.location.reload()
             }}
           >
             Update
@@ -80,7 +81,10 @@ const [comments , setComments] =useState(comment.comments)
 
           <div
             className="flex items-center gap-2 px-3 py-1 hover:bg-slate-200 cursor-pointer rounded"
-            onClick={async () => await DeleteComments(comment.$id)}
+            onClick={async () => {
+              await DeleteComments(comment.$id)
+                    window.location.reload()
+          }}
           >
             <img src="delete.png" alt="Delete" width={20} height={20} />
             <p className="text-sm font-medium text-gray-800">Delete</p>

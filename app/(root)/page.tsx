@@ -17,7 +17,6 @@ export default async function Home() {
  const posts= await GetAllPosts()
  const clerkuser = await currentUser()
  const userdb = await getUsers(clerkuser.emailAddresses[0].emailAddress)
-console.log(userdb?.documents)
  if(!userdb) return
   return (
     <div className="w-full max-w-screen-xl mx-auto px-4 py-6 flex flex-col items-center rounded-md bg-gradient-to-r from-gray-200 via-blue-300 to-slate-800 shadow-lg">

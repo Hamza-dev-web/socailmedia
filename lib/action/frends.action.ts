@@ -241,4 +241,3 @@ export const handleAccept =async( id :string , email :string) =>{
         console.log(err)
     }
 }
-///tryhackeme89$$90$
