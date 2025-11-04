@@ -36,7 +36,7 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
     {/* Like */}
     <div 
       className="flex gap-2 items-center cursor-pointer" 
-      onClick={async () => await handleTheLike(post.$id as string, user.id as string)}
+      onClick={async () => await handleTheLike(post.$id as string, user.$id as string)}
     >
       <Image src="/ja.png" alt="Like" width={28} height={28}  className=" rounded-lg"/>
       <p className="text-gray-800">{post.Like}</p>
