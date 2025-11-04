@@ -52,7 +52,7 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
           height={28}
           className="cursor-pointer"
           onClick={async () => {
-            DeleteAsavedPost(post.$id)
+            DeleteAsavedPost(post.$id , user.$id)
             window.location.reload()
           }}
         />
@@ -63,7 +63,7 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
           width={28}
           height={28}
           className="cursor-pointer"
-          onClick={async () =>
+          onClick={async () =>{
             await SaveAPost(
               {
                 idofUser: String(user.$id),
@@ -75,9 +75,9 @@ export function PostsCard ({post , isinSave,user} :{post :Post , user :any , isi
                 userImage: post.userImage,
                 posterName: post.posterName,
                email :   user.email
-              },
-           
-            )
+              })
+                     window.location.reload()
+            }
           }
         />
       )}
@@ -122,7 +122,7 @@ alt=""
         alt=""
         />
            <div className="flex justify-between   items-center  ">
-        <div className=" flex  gap-3 items-center " onClick={async() => await handleTheLike(post.$id as string , user.id as string )}>
+        <div className=" flex  gap-3 items-center " onClick={async() => await handleTheLike(post.$id as string , user.$id as string )}>
             <Image src="/ja.png" alt="" width={30} height={30} /> 
             <p>{post.Like} </p>
             </div>
