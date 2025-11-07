@@ -14,7 +14,7 @@ console.log(posts)
 if(!posts) return
 const follower = await ListAllthefollower(user.email)
     return (
-      <main className="w-full h-full flex flex-col items-center justify-center hidden md:flex md:ml-3 xl:ml[-220px] bg-gradient-to-r from-gray-200 via-blue-500 to-slate-800 rounded-md px-4 py-6">
+      <main className="w-full h-full flex flex-col items-center justify-center hidden md:flex md:ml-3 xl:ml[-240px] bg-gradient-to-r from-gray-200 via-blue-500 to-slate-800 rounded-md px-4 py-6">
   <div className="flex flex-col gap-6 w-full max-w-[1200px]">
 
     {/* User Info */}
@@ -51,9 +51,9 @@ const follower = await ListAllthefollower(user.email)
     )}
 
     {/* Posts */}
-    {posts && posts.length > 0 ? (
+    {posts && posts.documents.length > 0 ? (
       <div className="flex flex-wrap gap-4 justify-start mt-6">
-        {posts.map((post: any) => (
+        {posts.documents.map((post: any) => (
           <PostsUsersCard key={post.id} post={post} user={user} />
         ))}
       </div>
