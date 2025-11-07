@@ -26,7 +26,7 @@ export default  async function Home() {
              flex-col items-center 
             rounded-md 
             px-4 sm:px-6 md:px-8 
-            hidden md:flex xl:ml-[200px]">
+            hidden md:flex ">
 {
   users.length > 0 &&  (
 
