@@ -17,6 +17,7 @@ export default  async function Home() {
   for(let i=0 ; i< Follower?.length ;i++) {
     Usersshow = users.filter((usr) => usr.name != Follower[i].username)
   }
+  console.log(users.length)
   return (
     <>
     {/* sm:max-w-[1200px]  hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-gradient-to-r from-gray-200 via-blue to-slate-900 */}
