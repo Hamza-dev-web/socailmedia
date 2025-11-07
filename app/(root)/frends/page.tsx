@@ -11,7 +11,7 @@ import Frends from "../components/frends";
 export default  async function Home() {
   const clerkUser = await currentUser()
   const Follower = await ListAllthefollower(clerkUser?.emailAddresses[0].emailAddress as string )
-  const users = await ListUsers()
+  const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
 
   let Usersshow = []
   for(let i=0 ; i< Follower?.length ;i++) {
