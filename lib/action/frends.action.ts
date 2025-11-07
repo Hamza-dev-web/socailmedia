@@ -5,15 +5,14 @@ import { currentUser } from "@clerk/nextjs/server";
 import { log } from "console";
 
 
-export const ListUsers = async()=>{
+export const ListUsers = async(email:string)=>{
         try {
-            const user =await currentUser()
             const  newDocuments =  await database.listDocuments(
                process.env.DATABASE_ID as string,
                process.env.USERS_COLLECTION  as string,
                []);
             if(newDocuments.documents.length > 0 ){
-                const usertoRetours = newDocuments.documents.filter((users) => users.email != user?.emailAddresses[0].emailAddress as string)
+                const usertoRetours = newDocuments.documents.filter((users) => users.email !=email as string)
         return         usertoRetours
             }
             else {
@@ -35,7 +34,15 @@ try{
                  ]
                      
                  );
-          
+          const potentielfrend =await database.listDocuments(
+                    process.env.DATABASE_ID as string,
+                    process.env.FRENDS_COLLECTION  as string
+                    ,[
+                     Query.equal("userId" , [documents.userId ])
+                 ]
+                     
+                 );
+                 if(potentielfrend.documents.length > 0) return
                  const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
