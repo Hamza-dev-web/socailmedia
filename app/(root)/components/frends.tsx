@@ -170,7 +170,7 @@ console.log()
     {users &&
       users.length > 0 &&
       users
-        .filter((userd: { name: string }) => userd?.name != clerkUser?.username)
+        .filter((userd: { email: string }) => userd?.email != clerkUser?.email)
         .map((userto: any) => (
           <UserCard key={userto.$id} useremail={clerkUser.email as string} users={userto} />
         ))}
