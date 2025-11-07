@@ -522,7 +522,7 @@ catch(err :any){
                 process.env.USERS_COLLECTION as string,[
                     Query.equal("$id" , [idUser])
               ])
-            if(!posts || user)  return console.log("not found")
+            if(!posts || !user)  return console.log("not found")
              console.log("user :",user )
                 for(let i =0 ; i<posts.documents[0].isLiked.length ; i++){
                     posts.documents[0].isLiked[i].idofuserthatliked
