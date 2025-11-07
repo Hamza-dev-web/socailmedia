@@ -15,7 +15,7 @@ export default  function Frends({
     listOfFollow,
     clerkUser,
 }:{
-    users :Document[] | any ,
+    users :  any ,
     listOfFollow : any[],
     clerkUser :{id :string , username:string , email:string}
 }) {
@@ -31,7 +31,7 @@ useEffect(()=>{
     }
   }
 } ,[])
-console.log()
+console.log('users' ,users)
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
