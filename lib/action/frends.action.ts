@@ -34,16 +34,11 @@ try{
                  ]
                      
                  );
-          const potentielfrend =await database.listDocuments(
-                    process.env.DATABASE_ID as string,
-                    process.env.FRENDS_COLLECTION  as string
-                    ,[
-                     Query.equal("userId" , [documents.userId ])
-                 ]
-                     
-                 );
-                 if(potentielfrend.documents.length > 0) return
-                 const  frends =  await database.createDocument(
+                 if(user.documents[0].frends.length > 0){
+                     for(let i =0 ; i<user.documents[0].frends.length ; i++) {
+if(user.documents[0].frends[i].userId != documents.userId ){
+    console.log('ok')
+     const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                ID.unique() ,
@@ -78,6 +73,51 @@ try{
               process.env.USERS_COLLECTION  as string,user.documents[0].$id ,data)
             }
             return  "ok"
+}
+       }
+
+                 }
+                 else if(user.documents[0].frends.length== 0) {
+                       const  frends =  await database.createDocument(
+                    process.env.DATABASE_ID as string,
+                    process.env.FRENDS_COLLECTION  as string,
+               ID.unique() ,
+               {
+                username :documents.username,
+               userId :documents.userId,
+               image : documents.image,
+               Accept:false,
+               index :documents.index
+               }
+             
+                     
+                 );
+        
+            if(user.documents.length > 0 && frends ){
+              let data ={
+                name : user.documents[0].name ,
+                email :user.documents[0].email ,
+                image:user.documents[0].image ,
+                frends : [... user.documents[0].frends,{
+                    username :documents.username,
+                    userId :documents.userId,
+                    image : documents.image,
+                    index :documents.index,
+                    Accept : false
+                }
+                ],
+                save : user.documents[0].save 
+              }
+              await database.updateDocument(
+              process.env.DATABASE_ID as string,
+              process.env.USERS_COLLECTION  as string,user.documents[0].$id ,data)
+            }
+            return  "ok"
+                 }
+
+     
+    
+                
           
         }
         catch(err :any) {
