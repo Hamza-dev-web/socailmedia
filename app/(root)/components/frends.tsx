@@ -11,10 +11,12 @@ import { Input } from "@/components/ui/input";
 import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
 export default  function Frends({
-    users ,
+  sectionId,  
+  users ,
     listOfFollow,
     clerkUser,
 }:{
+    sectionId :string ,
     users :  any ,
     listOfFollow : any[],
     clerkUser :{id :string , username:string , email:string}
@@ -172,7 +174,7 @@ console.log('users' ,users)
       users
         .filter((userd: { email: string }) => userd?.email != clerkUser?.email)
         .map((userto: any) => (
-          <UserCard key={userto.$id} useremail={clerkUser.email as string} users={userto} />
+          <UserCard sectionId={sectionId} key={userto.$id} useremail={clerkUser.email as string} users={userto} />
         ))}
   </div>
 </div>
