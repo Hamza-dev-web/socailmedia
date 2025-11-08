@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-export const UserCard =({users , useremail} :{users :{$id :string ,name: string , email :string , image :string , index:number  } , useremail : string})=>{
+export const UserCard =({users , useremail , sectionId} :{users :{$id :string ,name: string , email :string , image :string , index:number  },sectionId :string  , useremail : string})=>{
  const [sending , setSending] =useState('Follow')
  const router = useRouter()
 console.log(users)
@@ -51,9 +51,10 @@ return (
           const status = await HandleThefollow(
             {
               index: users.index,
-              userId: users.$id as string,
+              senderId: sectionId as string,
               username: users.name as string,
               image: users.image,
+              receverId :users.$id
             },
             useremail as string
           ) as string;

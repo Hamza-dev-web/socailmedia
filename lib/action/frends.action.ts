@@ -23,7 +23,7 @@ export const ListUsers = async(email:string)=>{
             console.log(err)
         }
     }
-    export const HandleThefollow = async(documents :{index :number,image :string ,userId :string , username :string }, email :string)=>{
+    export const HandleThefollow = async(documents :{index :number,image :string ,senderId :string, receverId: string, username :string }, email :string)=>{
 
 try{        
                 const  user =  await database.listDocuments(
@@ -36,7 +36,9 @@ try{
                  );
                  if(user.documents[0].frends.length > 0){
                      for(let i =0 ; i<user.documents[0].frends.length ; i++) {
-if(user.documents[0].frends[i].userId != documents.userId ){
+if(user.documents[0].frends[i].senderId != documents.senderId &&
+user.documents[0].frends[i].receverId != documents.receverId
+  ){
     console.log('ok')
      const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
@@ -44,7 +46,8 @@ if(user.documents[0].frends[i].userId != documents.userId ){
                ID.unique() ,
                {
                 username :documents.username,
-               userId :documents.userId,
+               senderId :documents.senderId,
+               receverId : documents.receverId,
                image : documents.image,
                Accept:false,
                index :documents.index

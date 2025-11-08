@@ -6,14 +6,16 @@ import Link from "next/link";
 import { UserCard } from "../components/userCard";
 import { currentUser } from "@clerk/nextjs/server";
 import Frends from "../components/frends";
+import { getUsers } from "@/lib/action/user.action";
 
 
 export default  async function Home() {
   const clerkUser = await currentUser()
   const Follower = await ListAllthefollower(clerkUser?.emailAddresses[0].emailAddress as string )
   const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
-
-  let Usersshow = []
+const sessionuser = await getUsers(clerkUser.emailAddresses[0].emailAddress)
+if(!sessionuser) return 
+let Usersshow = []
   for(let i=0 ; i< Follower?.length ;i++) {
     Usersshow = users.filter((usr) => usr.email != Follower[i].email)
   }
@@ -31,6 +33,7 @@ export default  async function Home() {
   users.length > 0 &&  (
 
     <Frends
+sectionId={sessionuser.documents[0].$id}
 clerkUser={{
   id :clerkUser.id ,
   username : `${clerkUser.firstName}${clerkUser.lastName}`,
