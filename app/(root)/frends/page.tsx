@@ -15,11 +15,13 @@ export default  async function Home() {
   const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
 const sessionuser = await getUsers(clerkUser.emailAddresses[0].emailAddress)
 if(!sessionuser) return 
+console.log(Follower)
+/*
 let Usersshow = []
   for(let i=0 ; i< Follower?.length ;i++) {
     Usersshow = users.filter((usr) => usr.email != Follower[i].email)
   }
-  console.log(Usersshow)
+    */
   return (
     <>
     {/* sm:max-w-[1200px]  hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-gradient-to-r from-gray-200 via-blue to-slate-900 */}
