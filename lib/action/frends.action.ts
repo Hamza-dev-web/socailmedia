@@ -207,7 +207,7 @@ export const DeleteRequest =async( id :string)=>{
 export const handleAccept =async( id :string , email :string) =>{
     try {
 
-        console;log("start")
+        console;log("startt")
         const userthatsended = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
        [      Query.equal("$id" , id)]
