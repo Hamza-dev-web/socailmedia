@@ -53,7 +53,7 @@ console.log('users' ,users)
         <p className="font-black">{usr.username}</p>
       </div>
 
-      {satus == false ? (
+      {usr.Accept === false ? (
         <div className="flex gap-4 items-center">
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"

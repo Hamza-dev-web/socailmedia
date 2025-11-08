@@ -170,6 +170,20 @@ let data= [] as any
             console.log(err)
         }
     }
+/*
+    export const getallInvitation = async () =>{
+        try {
+await database.listDocuments(
+                    process.env.DATABASE_ID as string,
+                process.env.FRENDS_COLLECTION  as string,      
+                 [Query.equal("receverId" , )]
+)
+        }
+        catch (err :any) {
+            console.log(err)
+        }
+    }
+        */
 export const DeleteRequest =async( id :string)=>{
     try {
         const user = await database.listDocuments(process.env.DATABASE_ID as string,
