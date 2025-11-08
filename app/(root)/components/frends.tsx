@@ -53,7 +53,7 @@ console.log(follwer)
         <p className="font-black">{usr.username}</p>
       </div>
 
-      {usr.Accept === false ? (
+      {usr.Accept === false && usr.senderId != sectionId ? (
         <div className="flex gap-4 items-center">
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
