@@ -24,20 +24,19 @@ export const ListUsers = async(email:string)=>{
         }
     }
     export const HandleThefollow = async(documents :{index :number,image :string , receverId: string,senderId :string, username :string }, email :string)=>{
-
-try{        console.log("ids :" , documents.receverId, documents.senderId )
+try{        
+    console.log("ids :" , documents.receverId, documents.senderId )
                 const  user =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION  as string
                     ,[
-                     Query.equal("email" , [email ])
+                     Query.equal("email" , [email])
                  ]);
        const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                [Query.equal("senderId"  , documents.senderId ),
-                Query.equal("receverId"  , documents.receverId )
-               ]  )
+                Query.equal("receverId"  , documents.receverId )])
                if (Potentielfrends.documents.length > 0) return
        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
@@ -52,35 +51,7 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
                index :documents.index
                });
                  let data ={}
-                   if(user.documents[0].frends.length == 0) {
-
             if(user.documents.length > 0 && frends ){
-              let data ={
-                name : user.documents[0].name ,
-                email :user.documents[0].email ,
-                image:user.documents[0].image ,
-                frends : [{
-                    username :documents.username,
-                     senderId :documents.senderId,
-                   receverId : documents.receverId,
-                    image : documents.image,
-                    index :documents.index,
-                    Accept : false
-                }
-                ],
-                save : user.documents[0].save 
-              }
-              await database.updateDocument(
-              process.env.DATABASE_ID as string,
-              process.env.USERS_COLLECTION  as string,
-              documents.receverId ,
-              data)
-            }
-                 }  
-
-                 if(user.documents[0].frends.length > 0){
-            if(user.documents.length > 0 && frends ){
-
                data ={
                 name : user.documents[0].name ,
                 email :user.documents[0].email ,
@@ -99,16 +70,10 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
               await database.updateDocument(
               process.env.DATABASE_ID as string,
               process.env.USERS_COLLECTION  as string,
-              documents.receverId ,data
-            )
-            } 
-                }
-             
-        
-
-           return  "ok"
-                
-          
+              documents.receverId ,
+              data)
+            }
+            return  "ok"
         }
         catch(err :any) {
             console.log(err)
