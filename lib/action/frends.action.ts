@@ -69,7 +69,7 @@ user.documents[0].frends[i].receverId != documents.receverId
               await database.updateDocument(
               process.env.DATABASE_ID as string,
               process.env.USERS_COLLECTION  as string,
-              user.documents[0].$id ,data
+              documents.receverId ,data
             )
             }
             return  "ok"
