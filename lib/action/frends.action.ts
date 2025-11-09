@@ -41,7 +41,9 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
                ]  )
                if (Potentielfrends.documents.length > 0) return
 
-                         const  frends =  await database.createDocument(
+
+                 if(user.documents[0].frends.length > 0){
+                          const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                ID.unique() ,
@@ -53,9 +55,6 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
                Accept:false,
                index :documents.index
                });
-
-                 if(user.documents[0].frends.length > 0){
-                 
             if(user.documents.length > 0 && frends ){
 
               let data ={
@@ -81,6 +80,7 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
             } 
                 }
                if(user.documents[0].frends.length == 0) {
+                
                        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
@@ -115,7 +115,7 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
               }
               await database.updateDocument(
               process.env.DATABASE_ID as string,
-              process.env.USERS_COLLECTION  as string,user.documents[0].$id ,data)
+              process.env.USERS_COLLECTION  as string,documents.receverId ,data)
             }
                  }  
         
