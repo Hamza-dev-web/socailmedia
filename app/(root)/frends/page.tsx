@@ -15,7 +15,7 @@ export default  async function Home() {
   const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
 const sessionuser = await getUsers(clerkUser.emailAddresses[0].emailAddress)
 if(!sessionuser) return 
-console.log(Follower)
+console.log('Follower' ,Follower)
 /*
 let Usersshow = []
   for(let i=0 ; i< Follower?.length ;i++) {
@@ -43,7 +43,6 @@ clerkUser={{
 }}
 users={users}
 listOfFollow={Follower}
-
 /> 
   )
 }

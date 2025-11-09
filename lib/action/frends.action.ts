@@ -75,12 +75,7 @@ try{
               documents.receverId ,data
             )
             }
-            
-    
-
-       }
-
-
+        
         else if(user.documents[0].frends.length == 0) {
                        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
@@ -118,7 +113,8 @@ try{
               process.env.DATABASE_ID as string,
               process.env.USERS_COLLECTION  as string,user.documents[0].$id ,data)
             }
-                 }
+                 }   
+                }
 
      
            return  "ok"
