@@ -40,6 +40,7 @@ try{
                [Query.equal("senderId"  , documents.senderId ),
                 Query.equal("receverId"  , documents.receverId )
                ]  )
+               console.log(Potentielfrends , user)
                if (Potentielfrends.documents.length > 0) return
       const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
