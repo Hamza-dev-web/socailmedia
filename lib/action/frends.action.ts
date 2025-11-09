@@ -33,6 +33,7 @@ try{
                      Query.equal("email" , [email ])
                  ]
                      );
+                     console.log(user)
                  if(user.documents[0].frends.length > 0){
                         const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
