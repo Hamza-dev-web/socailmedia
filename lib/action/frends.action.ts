@@ -78,7 +78,7 @@ try{
             )
             }
         
-        else if(user.documents[0].frends.length == 0) {
+         if(user.documents[0].frends.length == 0) {
                        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
