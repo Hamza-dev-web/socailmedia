@@ -23,7 +23,7 @@ export const ListUsers = async(email:string)=>{
             console.log(err)
         }
     }
-    export const HandleThefollow = async(documents :{index :number,image :string ,senderId :string, receverId: string, username :string }, email :string)=>{
+    export const HandleThefollow = async(documents :{index :number,image :string , receverId: string,senderId :string, username :string }, email :string)=>{
 
 try{        
                 const  user =  await database.listDocuments(
