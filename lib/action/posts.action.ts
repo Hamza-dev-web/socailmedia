@@ -31,7 +31,11 @@ process.env.DATABASE_ID as string  ,
 process.env.NOTIFICATION_COLLECTION as string ,
 ID.unique(),
  {
-content : `${user.username} have create a new Post`
+  posterName:user.username,
+     username : user.username ,
+     userimage : user.image,
+     type:"post"
+    
  });
         return  console.log("succ")
     }

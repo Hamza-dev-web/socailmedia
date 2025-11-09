@@ -116,7 +116,8 @@ console.log(err)
             ID.unique(), {
     posterName:documents.username,
      username : documents.username ,
-     userimage : documents.image
+     userimage : documents.image,
+     type:"user"
     
             }
         )
