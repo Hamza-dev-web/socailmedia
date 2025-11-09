@@ -184,19 +184,43 @@ await database.listDocuments(
         }
     }
         */
-export const DeleteRequest =async( id :string)=>{
+export const DeleteRequest =async( senderId :string , receverId :string)=>{
     try {
         const user = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
-       [      Query.equal("$id" , id)]
+       [      Query.equal("$id" , receverId)]
      
              
          )
+
          if(!user ) return
+           const frendsrequest = await database.listDocuments(process.env.DATABASE_ID as string,
+            process.env.USERS_COLLECTION  as string,
+       [      Query.equal("senderId" ,senderId),
+              Query.equal("receverId" ,user.documents[0].$id)
+       ]        
+         )
         await database.deleteDocument( 
             process.env.DATABASE_ID as string,
-            process.env.FRENDS_COLLECTION  as string, id)
-
+            process.env.FRENDS_COLLECTION  as string, frendsrequest.documents[0].$id)
+           const data = user.documents[0].frends.filter((rqs:any) => rqs.$id != frendsrequest.documents[0].$id) 
+    const updatedData   ={
+    
+                    name : user.documents[0].name ,
+                    email :user.documents[0].email ,
+                    image:user.documents[0].image ,
+                    index :user.documents[0].index,
+                    frends :data
+                    ,
+              save :user.documents[0].save
+      
+            }
+                
+        
+            await database.updateDocument(
+            process.env.DATABASE_ID as string,
+            process.env.USERS_COLLECTION  as string,user.documents[0].$id ,updatedData)
+          
             return console.log("ok")
 
     }
@@ -204,42 +228,39 @@ export const DeleteRequest =async( id :string)=>{
         console.log(err)
     }
 }
-export const handleAccept =async( id :string , email :string) =>{
+export const handleAccept =async( senderId :string, email :string) =>{
     try {
 
-        console;log("startt")
+        console.log("startt")
+        /*
         const userthatsended = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
-       [      Query.equal("$id" , id)]
+       [      Query.equal("$id" , senderId)]
      
              
          )
+       */
          const currentuser = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
-       [      Query.equal("email" ,email)]
-     
-             
+       [      Query.equal("email" ,email)]        
          )
+          const frendsrequest = await database.listDocuments(process.env.DATABASE_ID as string,
+            process.env.USERS_COLLECTION  as string,
+       [      Query.equal("senderId" ,senderId),
+              Query.equal("receverId" ,currentuser.documents[0].$id)
+       ]        
+         )
+         console.log(frendsrequest)
       
-         if(!userthatsended ) return
+      
+         if(!currentuser && !frendsrequest ) return
          let data ={}
          if(currentuser.documents[0].frends.length > 0  ){
-         for(let i=0 ;i<currentuser.documents[0].frends.length ;i++){
-        
-      
-
-              const frends = await database.listDocuments(
-                process.env.DATABASE_ID as string,
-                process.env.FRENDS_COLLECTION  as string,       [      Query.equal("$id" , currentuser.documents[0].frends[i].$id)])
-                if(!frends) return console.log("not founds") 
              const updatedfrends =   await database.updateDocument(
                     process.env.DATABASE_ID as string,
-                    process.env.FRENDS_COLLECTION  as string,currentuser.documents[0].frends[i].$id ,{
-                        userId:userthatsended.documents[0].frends[i].userId,
-                        image : userthatsended.documents[0].frends[i].image,
-                        username : userthatsended.documents[0].frends.username ,
+                    process.env.FRENDS_COLLECTION  as string,frendsrequest.documents[0].$id ,{
+                        ...frendsrequest.documents[0],
                         Accept :true,
-                        index : userthatsended.documents[0].index
                     })
 
          
@@ -250,9 +271,7 @@ export const handleAccept =async( id :string , email :string) =>{
                     image:currentuser.documents[0].image ,
                     index :currentuser.documents[0].index,
                     frends : [... currentuser.documents[0].frends,{
-                        userId:updatedfrends.documents[0].frends[i].userId,
-                        image : updatedfrends.documents[0].frends[i].image,
-                        username : updatedfrends.documents[0].frends.username ,
+                      ...frendsrequest.documents[0],
                       Accept :true
                     }
                     ] ,
@@ -262,23 +281,22 @@ export const handleAccept =async( id :string , email :string) =>{
         }
             else if(currentuser.documents[0].frends.length  == 1) {
                 data   ={
+    
                     name : currentuser.documents[0].name ,
                     email :currentuser.documents[0].email ,
                     image:currentuser.documents[0].image ,
                     index :currentuser.documents[0].index,
-                    frends : [{
-                        userId:updatedfrends.documents[0].frends[i].userId,
-                        image : updatedfrends.documents[0].frends[i].image,
-                        username : updatedfrends.documents[0].frends.username ,
+                    frends : [... currentuser.documents[0].frends,{
+                      ...frendsrequest.documents[0],
                       Accept :true
                     }
                     ] ,
               save :currentuser.documents[0].save
       
             }
+      
             }
-            
-              
+                
         
             await database.updateDocument(
             process.env.DATABASE_ID as string,
@@ -286,10 +304,7 @@ export const handleAccept =async( id :string , email :string) =>{
           }
              console.log("done"  , data )
           return "Accept"
-        }
-       
-
-    }
+            }
     catch (err :any) {
         console.log(err)
     }

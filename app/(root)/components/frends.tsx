@@ -1,14 +1,11 @@
 "use client"
-
 import { DeleteRequest, handleAccept, ListAllthefollower, ListUsers } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";
-import { currentUser, User } from "@clerk/nextjs/server";
 import { GetSearchedUsers, getUsers } from "@/lib/action/user.action";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { useUser } from "@clerk/clerk-react";
 import { useRouter } from "next/navigation";
 export default  function Frends({
   sectionId,  
@@ -37,7 +34,9 @@ console.log(follwer)
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
-  {listOfFollow && listOfFollow.length > 0 && listOfFollow.map((usr: any) => (
+  {listOfFollow && listOfFollow.length > 0 &&  listOfFollow.map((usr: any) => (
+   <>
+   {usr.senderId != sectionId  ? (
     <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
@@ -53,12 +52,12 @@ console.log(follwer)
         <p className="font-black">{usr.username}</p>
       </div>
 
-      {usr.Accept === false && usr.senderId != sectionId ? (
+      {usr.Accept === false ? (
         <div className="flex gap-4 items-center">
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
             onClick={async () =>
-              await handleAccept(usr.userId, clerkUser && clerkUser.email)
+              await handleAccept( usr.senderId,clerkUser && clerkUser.email)
             }
           >
             <Image
@@ -73,7 +72,7 @@ console.log(follwer)
 
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
-            onClick={async () => await DeleteRequest(usr.$id)}
+            onClick={async () => await DeleteRequest(usr.$id , sectionId)}
           >
             <Image
               src="/delete.png"
@@ -109,7 +108,11 @@ console.log(follwer)
           )}
         </>
       )}
-    </div>
+    </div>      
+    ):(
+<></>
+    )}
+</>
   ))}
 
   <div className="flex flex-col items-center w-full px-4 mt-5">
