@@ -30,7 +30,7 @@ useEffect(()=>{
     }
   }
 } ,[])
-console.log(follwer)
+console.log("Follower" ,follwer)
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">

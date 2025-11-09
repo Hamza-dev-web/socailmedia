@@ -34,11 +34,14 @@ try{
                  ]
                      );
                  if(user.documents[0].frends.length > 0){
-                     for(let i =0 ; i<user.documents[0].frends.length ; i++) {
-if(user.documents[0].frends[i].senderId != documents.senderId &&
-user.documents[0].frends[i].receverId != documents.receverId
-  ){
-     const  frends =  await database.createDocument(
+                        const  Potentielfrends =  await database.listDocuments(
+                    process.env.DATABASE_ID as string,
+                    process.env.FRENDS_COLLECTION  as string,
+               [Query.equal("senderId"  , documents.senderId ),
+                Query.equal("receverId"  , documents.receverId )
+               ]  )
+               if (Potentielfrends.documents.length > 0) return
+      const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                ID.unique() ,
@@ -72,12 +75,13 @@ user.documents[0].frends[i].receverId != documents.receverId
               documents.receverId ,data
             )
             }
-            return  "ok"
-}
+            
+    
+
        }
 
-                 }
-                 else if(user.documents[0].frends.length== 0) {
+
+        else if(user.documents[0].frends.length == 0) {
                        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
@@ -114,11 +118,10 @@ user.documents[0].frends[i].receverId != documents.receverId
               process.env.DATABASE_ID as string,
               process.env.USERS_COLLECTION  as string,user.documents[0].$id ,data)
             }
-            return  "ok"
                  }
 
      
-    
+           return  "ok"
                 
           
         }
