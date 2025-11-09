@@ -36,7 +36,7 @@ try{
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                [Query.equal("senderId"  , documents.senderId ),
-                Query.equal("receverId"  , documents.receverId )])
+                 Query.equal("receverId"  , documents.receverId )])
                if (Potentielfrends.documents.length > 0) return
        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
