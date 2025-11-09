@@ -46,7 +46,7 @@ export default async function Notifictation (){
 
           {/* Notification Text */}
           <p className="text-base md:text-lg text-[15px] text-gray-700 text-center md:text-left">
-            {noti.type
+            {noti.type == "post"
               ? "has posted a new post."
               : "has joined the app."}
           </p>
