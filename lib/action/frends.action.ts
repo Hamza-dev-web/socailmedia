@@ -31,19 +31,17 @@ try{
                     process.env.USERS_COLLECTION  as string
                     ,[
                      Query.equal("email" , [email ])
-                 ]
-                     );
+                 ]);
                      console.log(user)
-                 if(user.documents[0].frends.length > 0){
-                        const  Potentielfrends =  await database.listDocuments(
+       const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                [Query.equal("senderId"  , documents.senderId ),
                 Query.equal("receverId"  , documents.receverId )
                ]  )
-               console.log(Potentielfrends , user)
                if (Potentielfrends.documents.length > 0) return
-      const  frends =  await database.createDocument(
+
+                         const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                ID.unique() ,
@@ -55,7 +53,11 @@ try{
                Accept:false,
                index :documents.index
                });
+
+                 if(user.documents[0].frends.length > 0){
+                 
             if(user.documents.length > 0 && frends ){
+
               let data ={
                 name : user.documents[0].name ,
                 email :user.documents[0].email ,
@@ -76,9 +78,9 @@ try{
               process.env.USERS_COLLECTION  as string,
               documents.receverId ,data
             )
-            }
-        
-         if(user.documents[0].frends.length == 0) {
+            } 
+                }
+               if(user.documents[0].frends.length == 0) {
                        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
@@ -115,10 +117,9 @@ try{
               process.env.DATABASE_ID as string,
               process.env.USERS_COLLECTION  as string,user.documents[0].$id ,data)
             }
-                 }   
-                }
+                 }  
+        
 
-     
            return  "ok"
                 
           
