@@ -32,7 +32,6 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
                     ,[
                      Query.equal("email" , [email ])
                  ]);
-                     console.log(user)
        const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
@@ -40,24 +39,49 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
                 Query.equal("receverId"  , documents.receverId )
                ]  )
                if (Potentielfrends.documents.length > 0) return
-
-
-                 if(user.documents[0].frends.length > 0){
-                          const  frends =  await database.createDocument(
+       const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                ID.unique() ,
                {
-                username :documents.username,
-               senderId :documents.senderId,
+             username :documents.username,
+              senderId :documents.senderId,
                receverId : documents.receverId,
                image : documents.image,
                Accept:false,
                index :documents.index
                });
+                 let data ={}
+                   if(user.documents[0].frends.length == 0) {
+
+            if(user.documents.length > 0 && frends ){
+              let data ={
+                name : user.documents[0].name ,
+                email :user.documents[0].email ,
+                image:user.documents[0].image ,
+                frends : [{
+                    username :documents.username,
+                     senderId :documents.senderId,
+                   receverId : documents.receverId,
+                    image : documents.image,
+                    index :documents.index,
+                    Accept : false
+                }
+                ],
+                save : user.documents[0].save 
+              }
+              await database.updateDocument(
+              process.env.DATABASE_ID as string,
+              process.env.USERS_COLLECTION  as string,
+              documents.receverId ,
+              data)
+            }
+                 }  
+
+                 if(user.documents[0].frends.length > 0){
             if(user.documents.length > 0 && frends ){
 
-              let data ={
+               data ={
                 name : user.documents[0].name ,
                 email :user.documents[0].email ,
                 image:user.documents[0].image ,
@@ -79,45 +103,7 @@ try{        console.log("ids :" , documents.receverId, documents.senderId )
             )
             } 
                 }
-               if(user.documents[0].frends.length == 0) {
-                
-                       const  frends =  await database.createDocument(
-                    process.env.DATABASE_ID as string,
-                    process.env.FRENDS_COLLECTION  as string,
-               ID.unique() ,
-               {
-             username :documents.username,
-              senderId :documents.senderId,
-               receverId : documents.receverId,
-               image : documents.image,
-               Accept:false,
-               index :documents.index
-               }
              
-                     
-                 );
-        
-            if(user.documents.length > 0 && frends ){
-              let data ={
-                name : user.documents[0].name ,
-                email :user.documents[0].email ,
-                image:user.documents[0].image ,
-                frends : [... user.documents[0].frends,{
-                    username :documents.username,
-                     senderId :documents.senderId,
-                   receverId : documents.receverId,
-                    image : documents.image,
-                    index :documents.index,
-                    Accept : false
-                }
-                ],
-                save : user.documents[0].save 
-              }
-              await database.updateDocument(
-              process.env.DATABASE_ID as string,
-              process.env.USERS_COLLECTION  as string,documents.receverId ,data)
-            }
-                 }  
         
 
            return  "ok"
