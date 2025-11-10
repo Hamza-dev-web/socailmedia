@@ -24,7 +24,9 @@ export const ListUsers = async(email:string)=>{
         }
     }
     export const HandleThefollow = async(documents :{index :number,image :string , receverId: string,senderId :string, username :string }, email :string)=>{
-try{        
+    try{   
+        let index=0
+        if(index == 0){   
     console.log("ids :" , documents.receverId, documents.senderId )
                 const  user =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
@@ -56,7 +58,9 @@ try{
                 name : user.documents[0].name ,
                 email :user.documents[0].email ,
                 image:user.documents[0].image ,
-                frends : [... user.documents[0].frends,{
+                frends : [
+                ... user.documents[0].frends
+                ,{
                     username :documents.username,
                      senderId :documents.senderId,
                    receverId : documents.receverId,
@@ -73,7 +77,11 @@ try{
               documents.receverId ,
               data)
             }
+             index++
             return  "ok"
+        
+        }
+        index=0
         }
         catch(err :any) {
             console.log(err)
