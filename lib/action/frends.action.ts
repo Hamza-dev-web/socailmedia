@@ -2,8 +2,6 @@
 import { database, users } from "../appwrite/config"
 import { ID, Query } from "node-appwrite";
 import { currentUser } from "@clerk/nextjs/server";
-import { log } from "console";
-
 
 export const ListUsers = async(email:string)=>{
         try {
@@ -25,28 +23,29 @@ export const ListUsers = async(email:string)=>{
     }
     export const HandleThefollow = async(documents :{index :number,image :string , receverId: string,senderId :string, username :string }, email :string)=>{
     try{   
-        let index=0
-        if(index == 0){   
-    console.log("ids :" , documents.receverId, documents.senderId )
+         
+    
                 const  user =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION  as string
                     ,[
                      Query.equal("email" , [email])
                  ]);
+                 console.log("ids :" , documents.receverId, documents.senderId,"user", user )
        const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                [Query.equal("senderId"  , documents.senderId ),
                  Query.equal("receverId"  , documents.receverId )])
                if (Potentielfrends.documents.length > 0) return
+               
        const  frends =  await database.createDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
                ID.unique() ,
                {
-             username :documents.username,
-              senderId :documents.senderId,
+               username :documents.username,
+               senderId :documents.senderId,
                receverId : documents.receverId,
                image : documents.image,
                Accept:false,
@@ -75,13 +74,9 @@ export const ListUsers = async(email:string)=>{
               process.env.DATABASE_ID as string,
               process.env.USERS_COLLECTION  as string,
               documents.receverId ,
-              data)
-            }
-             index++
+              data
+            )}
             return  "ok"
-        
-        }
-        index=0
         }
         catch(err :any) {
             console.log(err)
