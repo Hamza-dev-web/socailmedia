@@ -31,7 +31,7 @@ export const ListUsers = async(email:string)=>{
                     ,[
                      Query.equal("email" , [email])
                  ]);
-                 console.log("ids :" , documents.receverId, documents.senderId,"user", user )
+                 console.log("ids  :" , documents.receverId, documents.senderId,"user", user )
        const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
