@@ -129,7 +129,8 @@ export const HandleThefollow = async (
         image: documents.image,
         Accept: false,
         index: documents.index,
-        PairId, // unique pair field
+        PairId,
+        status:"Sending" // unique pair field
       }
     );
 
@@ -154,6 +155,8 @@ export const HandleThefollow = async (
         image: documents.image,
         index: documents.index,
         Accept: false,
+        PairId,
+        status:"Sending"
       },
     ];
 
