@@ -21,6 +21,7 @@ export const ListUsers = async(email:string)=>{
             console.log(err)
         }
     }
+    /*
     export const HandleThefollow = async(documents :{index :number,image :string , receverId: string,senderId :string, username :string }, email :string)=>{
     try{   
          
@@ -82,6 +83,98 @@ export const ListUsers = async(email:string)=>{
             console.log(err)
         }
     }
+        */
+       
+export const HandleThefollow = async (
+  documents: {
+    index: number;
+    image: string;
+    receverId: string;
+    senderId: string;
+    username: string;
+  },
+  email: string
+) => {
+  try {
+    // Get the receiver user document by email
+    const userRes = await database.listDocuments(
+      process.env.DATABASE_ID as string,
+      process.env.USERS_COLLECTION as string,
+      [Query.equal("email", [email])]
+    );
+
+    if (userRes.documents.length === 0) {
+      console.error("Receiver user not found");
+      return;
+    }
+
+    const receiverDoc = userRes.documents[0];
+
+    // Check for existing friendship (both directions)
+const existingFriends = await database.listDocuments(
+  process.env.DATABASE_ID as string,
+  process.env.FRENDS_COLLECTION as string,
+  [
+    Query.or([
+      Query.and([
+        Query.equal("senderId", documents.senderId),
+        Query.equal("receverId", documents.receverId),
+      ]),
+      Query.and([
+        Query.equal("senderId", documents.receverId),
+        Query.equal("receverId", documents.senderId),
+      ]),
+    ]),
+  ]
+);
+
+    if (existingFriends.documents.length > 0) {
+      console.log("Friendship already exists");
+      return;
+    }
+
+    // Create new friend record
+    const newFriend = await database.createDocument(
+      process.env.DATABASE_ID as string,
+      process.env.FRENDS_COLLECTION as string,
+      ID.unique(),
+      {
+        username: documents.username,
+        senderId: documents.senderId,
+        receverId: documents.receverId,
+        image: documents.image,
+        Accept: false,
+        index: documents.index,
+      }
+    );
+
+    // Update receiver's friends list
+    const updatedFriends = [
+      ...(receiverDoc.frends || []),
+      {
+        username: documents.username,
+        senderId: documents.senderId,
+        receverId: documents.receverId,
+        image: documents.image,
+        index: documents.index,
+        Accept: false,
+      },
+    ];
+
+    await database.updateDocument(
+      process.env.DATABASE_ID as string,
+      process.env.USERS_COLLECTION as string,
+      receiverDoc.$id, // use the actual document ID
+      {
+        frends: updatedFriends,
+      }
+    );
+
+    return "ok";
+  } catch (err) {
+    console.error("Error in HandleThefollow:", err);
+  }
+};
     export const ListAllthefollower = async( email : string)=>{
 let data= [] as any
         try {
