@@ -98,55 +98,61 @@ export const HandleThefollow = async (
   email: string
 ) => {
   try {
-    // Ensure IDs are consistent strings
+    // 1️⃣ Normalize IDs
     const senderId = String(documents.senderId);
     const receverId = String(documents.receverId);
 
-    // Create a consistent unique pair ID (order-independent)
-    const PairId = [senderId, receverId].sort().join("_");
+    // Create a unique, order-independent pair ID
+    const pairId = [senderId, receverId].sort().join("_");
 
-    // Check if this pair already exists
+    // 2️⃣ Check if friendship already exists
     const existing = await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
-      [Query.equal("PairId", [PairId])]
+      [Query.equal("pairId", [pairId])]
     );
 
     if (existing.documents.length > 0) {
-      console.log("Friendship already exists.");
+      console.log("Friendship already exists:", pairId);
       return "already_exists";
     }
 
-    // Create friend document with unique pairId
+    // 3️⃣ Create a friend record (marked as sending / pending)
     const newFriend = await database.createDocument(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
       ID.unique(),
       {
-        username: documents.username,
+        pairId,
         senderId,
         receverId,
+        username: documents.username,
         image: documents.image,
-        Accept: false,
         index: documents.index,
-        PairId,
-        status:"Sending" // unique pair field
+        Accept: false, // Not yet accepted
+        status: "sending", // Optional custom field for clarity
+        createdAt: new Date().toISOString(),
       }
     );
 
-    // Get receiver user by email
-    const userRes = await database.listDocuments(
+    console.log("Friend request created:", newFriend.$id);
+
+    // 4️⃣ Find the receiver user by ID or email
+    const receiverRes = await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
-      [Query.equal("email", [email])]
+      [Query.equal("$id", [receverId])]
     );
 
-    if (userRes.documents.length === 0) return "receiver_not_found";
+    if (receiverRes.documents.length === 0) {
+      console.error("Receiver not found:", receverId);
+      return "receiver_not_found";
+    }
 
-    const receiverDoc = userRes.documents[0];
+    const receiverDoc = receiverRes.documents[0];
 
-    // Update their friend list
-    const updatedFriends = [
+    // 5️⃣ Update receiver’s friend list
+    const receiverFriends = [
       ...(receiverDoc.frends || []),
       {
         username: documents.username,
@@ -155,8 +161,7 @@ export const HandleThefollow = async (
         image: documents.image,
         index: documents.index,
         Accept: false,
-        PairId,
-        status:"Sending"
+        status: "pending", // receiver sees it as pending
       },
     ];
 
@@ -164,12 +169,14 @@ export const HandleThefollow = async (
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       receiverDoc.$id,
-      { frends: updatedFriends }
+      { frends: receiverFriends }
     );
 
+    console.log("Receiver updated with pending friend request.");
     return "ok";
-  } catch (err) {
-    console.error("Error in HandleThefollow:", err);
+  } catch (err: any) {
+    console.error("Error in HandleFollow:", err.message || err);
+    return "error";
   }
 };
 
