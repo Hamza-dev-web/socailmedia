@@ -85,6 +85,8 @@ export const ListUsers = async(email:string)=>{
     }
         */
        
+
+
 export const HandleThefollow = async (
   documents: {
     index: number;
@@ -96,65 +98,59 @@ export const HandleThefollow = async (
   email: string
 ) => {
   try {
-    // Get the receiver user document by email
-    const userRes = await database.listDocuments(
+    // Ensure IDs are consistent strings
+    const senderId = String(documents.senderId);
+    const receverId = String(documents.receverId);
+
+    // Create a consistent unique pair ID (order-independent)
+    const PairId = [senderId, receverId].sort().join("_");
+
+    // Check if this pair already exists
+    const existing = await database.listDocuments(
       process.env.DATABASE_ID as string,
-      process.env.USERS_COLLECTION as string,
-      [Query.equal("email", [email])]
+      process.env.FRENDS_COLLECTION as string,
+      [Query.equal("PairId", [PairId])]
     );
 
-    if (userRes.documents.length === 0) {
-      console.error("Receiver user not found");
-      return;
+    if (existing.documents.length > 0) {
+      console.log("Friendship already exists.");
+      return "already_exists";
     }
 
-    const receiverDoc = userRes.documents[0];
-
-    // Check for existing friendship (both directions)
-const existingFriends = await database.listDocuments(
-  process.env.DATABASE_ID as string,
-  process.env.FRENDS_COLLECTION as string,
-  [
-    Query.or([
-      Query.and([
-        Query.equal("senderId", documents.senderId),
-        Query.equal("receverId", documents.receverId),
-      ]),
-      Query.and([
-        Query.equal("senderId", documents.receverId),
-        Query.equal("receverId", documents.senderId),
-      ]),
-    ]),
-  ]
-);
-
-    if (existingFriends.documents.length > 0) {
-      console.log("Friendship already exists");
-      return;
-    }
-
-    // Create new friend record
+    // Create friend document with unique pairId
     const newFriend = await database.createDocument(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
       ID.unique(),
       {
         username: documents.username,
-        senderId: documents.senderId,
-        receverId: documents.receverId,
+        senderId,
+        receverId,
         image: documents.image,
         Accept: false,
         index: documents.index,
+        PairId, // unique pair field
       }
     );
 
-    // Update receiver's friends list
+    // Get receiver user by email
+    const userRes = await database.listDocuments(
+      process.env.DATABASE_ID as string,
+      process.env.USERS_COLLECTION as string,
+      [Query.equal("email", [email])]
+    );
+
+    if (userRes.documents.length === 0) return "receiver_not_found";
+
+    const receiverDoc = userRes.documents[0];
+
+    // Update their friend list
     const updatedFriends = [
       ...(receiverDoc.frends || []),
       {
         username: documents.username,
-        senderId: documents.senderId,
-        receverId: documents.receverId,
+        senderId,
+        receverId,
         image: documents.image,
         index: documents.index,
         Accept: false,
@@ -164,10 +160,8 @@ const existingFriends = await database.listDocuments(
     await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
-      receiverDoc.$id, // use the actual document ID
-      {
-        frends: updatedFriends,
-      }
+      receiverDoc.$id,
+      { frends: updatedFriends }
     );
 
     return "ok";
@@ -175,6 +169,7 @@ const existingFriends = await database.listDocuments(
     console.error("Error in HandleThefollow:", err);
   }
 };
+
     export const ListAllthefollower = async( email : string)=>{
 let data= [] as any
         try {
