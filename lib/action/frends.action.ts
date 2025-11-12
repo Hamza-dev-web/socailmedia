@@ -31,7 +31,7 @@ export const ListUsers = async(email:string)=>{
                     ,[
                      Query.equal("email" , [email])
                  ]);
-                 console.log("ids  :" , documents.receverId, documents.senderId,"user", user )
+                 console.log("ids  :" , documents.receverId, documents.senderId,"user", user ,email)
        const  Potentielfrends =  await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
@@ -220,7 +220,6 @@ export const handleAccept =async( senderId :string, email :string) =>{
                     })
 
          
-            if( currentuser.documents[0].frends.length > 1) {
                 data   ={
                     name : currentuser.documents[0].name ,
                     email :currentuser.documents[0].email ,
@@ -233,23 +232,8 @@ export const handleAccept =async( senderId :string, email :string) =>{
                     ] ,
               save :currentuser.documents[0].save
       
-            }
-        }
-            else if(currentuser.documents[0].frends.length  == 1) {
-                data   ={
-    
-                    name : currentuser.documents[0].name ,
-                    email :currentuser.documents[0].email ,
-                    image:currentuser.documents[0].image ,
-                    index :currentuser.documents[0].index,
-                    frends : [... currentuser.documents[0].frends,{
-                      ...frendsrequest.documents[0],
-                      Accept :true
-                    }
-                    ] ,
-              save :currentuser.documents[0].save
-      
-            }
+  
+             
       
             }
                 
