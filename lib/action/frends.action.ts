@@ -161,7 +161,7 @@ export const HandleThefollow = async (
         image: documents.image,
         index: documents.index,
         Accept: false,
-        status: "pending", // receiver sees it as pending
+        status: "sending", // receiver sees it as pending
       },
     ];
 
