@@ -109,7 +109,7 @@ export const HandleThefollow = async (
     const existing = await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
-      [Query.equal("pairId", [pairId])]
+      [Query.equal("PairId", [pairId])]
     );
 
     if (existing.documents.length > 0) {
