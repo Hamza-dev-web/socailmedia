@@ -103,17 +103,17 @@ export const HandleThefollow = async (
     const receverId = String(documents.receverId);
 
     // Create a unique, order-independent pair ID
-    const pairId = [senderId, receverId].sort().join("_");
+    const PairId = [senderId, receverId].sort().join("_");
 
     // 2️⃣ Check if friendship already exists
     const existing = await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
-      [Query.equal("PairId", pairId)]
+      [Query.equal("PairId", PairId)]
     );
 
     if (existing.documents.length > 0) {
-      console.log("Friendship already exists:", pairId);
+      console.log("Friendship already exists:", PairId);
       return "already_exists";
     }
 
@@ -123,7 +123,7 @@ export const HandleThefollow = async (
       process.env.FRENDS_COLLECTION as string,
       ID.unique(),
       {
-        pairId,
+        PairId,
         senderId,
         receverId,
         username: documents.username,
@@ -161,7 +161,8 @@ export const HandleThefollow = async (
         image: documents.image,
         index: documents.index,
         Accept: false,
-        status: "sending", // receiver sees it as pending
+        status: "sending", 
+        PairId// receiver sees it as pending
       },
     ];
 
