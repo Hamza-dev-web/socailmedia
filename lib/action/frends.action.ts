@@ -131,7 +131,6 @@ export const HandleThefollow = async (
         index: documents.index,
         Accept: false, // Not yet accepted
         status: "sending", // Optional custom field for clarity
-        createdAt: new Date().toISOString(),
       }
     );
 
