@@ -168,12 +168,12 @@ export const HandleThefollow = async (
       receiverDoc.$id,
       { frends: receiverFriends }
     );
-     const PotentielDuplicate = await database.listDocuments(
+    /* 
+    const PotentielDuplicate = await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
       [Query.equal("PairId", PairId)]
     );
-    /*
     if(PotentielDuplicate.documents.length >= 2) {
      const update = PotentielDuplicate.documents.shift()
  await database.updateDocument(
