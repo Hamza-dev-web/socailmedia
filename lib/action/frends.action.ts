@@ -166,7 +166,7 @@ export const HandleThefollow = async (
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       receiverDoc.$id,
-      { frends: receiverFriends }
+      { ...receiverDoc,frends: receiverFriends }
     );
     /* 
     const PotentielDuplicate = await database.listDocuments(
