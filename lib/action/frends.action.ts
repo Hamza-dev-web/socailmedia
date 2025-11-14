@@ -88,19 +88,16 @@ export const ListUsers = async(email:string)=>{
 
 
 export const HandleThefollow = async (
-  documents: {
-    index: number;
-    image: string;
-    receverId: string;
-    senderId: string;
-    username: string;
-  },
-  email: string
+    index: number,
+    image: string,
+    receverId: string,
+    senderId: string,
+    username: string,
+    email: string
 ) => {
   try {
     // 1️⃣ Normalize IDs
-    const senderId = String(documents.senderId);
-    const receverId = String(documents.receverId);
+
 
     // Create a unique, order-independent pair ID
     const PairId = [senderId, receverId].sort().join("_");
@@ -126,9 +123,9 @@ export const HandleThefollow = async (
         PairId,
         senderId,
         receverId,
-        username: documents.username,
-        image: documents.image,
-        index: documents.index,
+        username: username,
+        image: image,
+        index: index,
         Accept: false, // Not yet accepted
         status: "sending", // Optional custom field for clarity
       }
@@ -154,11 +151,11 @@ export const HandleThefollow = async (
     const receiverFriends = [
       ...(receiverDoc.frends || []),
       {
-        username: documents.username,
+        username: username,
         senderId,
         receverId,
-        image: documents.image,
-        index: documents.index,
+        image: image,
+        index: index,
         Accept: false,
         status: "sending", 
         PairId// receiver sees it as pending
@@ -171,6 +168,21 @@ export const HandleThefollow = async (
       receiverDoc.$id,
       { frends: receiverFriends }
     );
+     const PotentielDuplicate = await database.listDocuments(
+      process.env.DATABASE_ID as string,
+      process.env.FRENDS_COLLECTION as string,
+      [Query.equal("PairId", PairId)]
+    );
+    /*
+    if(PotentielDuplicate.documents.length >= 2) {
+     const update = PotentielDuplicate.documents.shift()
+ await database.updateDocument(
+      process.env.DATABASE_ID as string,
+      process.env.FRENDS_COLLECTION as string,
+      PotentielDuplicate.documents[0]
+    );
+    }
+*/
 
     console.log("Receiver updated with pending friend request.");
     return "ok";
@@ -328,12 +340,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
                       Accept :true
                     }
                     ] ,
-              save :currentuser.documents[0].save
-      
-  
-             
-      
-            }
+              save :currentuser.documents[0].save}
                 
         
             await database.updateDocument(

@@ -7,6 +7,7 @@ import { useState } from "react"
 export const UserCard =({users , useremail , sectionId} :{users :{$id :string ,name: string , email :string , image :string , index:number  },sectionId :string  , useremail : string})=>{
  const [sending , setSending] =useState('Follow')
  const router = useRouter()
+ const [disble , setDisable] = useState(false)
  console.log("users" , users.$id , sectionId)
 return (
 <div className="flex flex-col items-center w-full mt-3" key={users.$id}>
@@ -47,25 +48,26 @@ return (
       {/* Follow Button */}
       <div
         className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
+      
+      >
+        <button className="font-bold text-white"    
         onClick={async () => {
+         setDisable(false)
           const status = await HandleThefollow(
-            {
-              index: users.index,
-              username: users.name as string,
-              image: users.image,
-              receverId :users.$id,
-              senderId: sectionId as string,
-            },
+            users.index,
+            users.name as string,
+            users.image,
+            users.$id,
+            sectionId as string,
             useremail as string
-          ) as string;
+          )
+        
 
           if (status === "ok") {
             console.log("ok");
             setSending("Sending");
           }
-        }}
-      >
-        <button className="font-bold text-white">{sending}</button>
+        }}>{sending}</button>
         <Image
           src="/fool.png"
           alt=""
