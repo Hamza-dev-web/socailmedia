@@ -125,7 +125,7 @@ console.log("recid" ,receverId, "sender" , senderId)
         status: "sending",
       }
     );
-
+console.log("recid" ,receverId, "sender" , senderId)
     console.log("Friend request created:", newFriend.$id);
 
     // 4️⃣ Find the receiver user by ID or email
