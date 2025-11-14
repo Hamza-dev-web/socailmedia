@@ -93,13 +93,8 @@ export const HandleThefollow = async (
     receverId: string,
     senderId: string,
     username: string,
-    email: string
 ) => {
   try {
-    // 1️⃣ Normalize IDs
-
-
-    // Create a unique, order-independent pair ID
     const PairId = [senderId, receverId].sort().join("_");
 
     // 2️⃣ Check if friendship already exists
@@ -126,8 +121,8 @@ export const HandleThefollow = async (
         username: username,
         image: image,
         index: index,
-        Accept: false, // Not yet accepted
-        status: "sending", // Optional custom field for clarity
+        Accept: false, 
+        status: "sending",
       }
     );
 
@@ -139,7 +134,7 @@ export const HandleThefollow = async (
       process.env.USERS_COLLECTION as string,
       [Query.equal("$id", receverId)]
     );
-
+console.log("recdoc" , receiverRes)
     if (receiverRes.documents.length === 0) {
       console.error("Receiver not found:", receverId);
       return "receiver_not_found";
@@ -166,7 +161,9 @@ export const HandleThefollow = async (
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       receiverDoc.$id,
-      { ...receiverDoc,frends: receiverFriends }
+      { ...receiverDoc,
+        frends: receiverFriends
+       }
     );
     /* 
     const PotentielDuplicate = await database.listDocuments(
