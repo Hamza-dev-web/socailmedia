@@ -296,7 +296,7 @@ export const DeleteRequest =async( senderId :string , receverId :string)=>{
 export const handleAccept =async( senderId :string, email :string) =>{
     try {
 
-        console.log("startt")
+        console.log(senderId)
         /*
         const userthatsended = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
