@@ -63,7 +63,7 @@ return (
             console.log("ok");
             setSending(status);
           }
-        }}>{status}</button>
+        }}>{sending}</button>
         <Image
           src="/fool.png"
           alt=""
