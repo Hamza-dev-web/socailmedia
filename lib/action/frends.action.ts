@@ -18,7 +18,7 @@ export const ListUsers = async(email:string)=>{
                process.env.DATABASE_ID as string,
                process.env.USERS_COLLECTION  as string,
                [Query.notEqual("email" , email),
-                Query.notEqual("$id" , FinalListofUsers)
+                Query.contains("$id" , FinalListofUsers)
                ]);
                console.log('follower' ,listoffollower , FinalListofUsers,"users", listofusers)
           return listofusers.documents
