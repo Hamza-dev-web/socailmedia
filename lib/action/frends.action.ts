@@ -184,7 +184,7 @@ console.log("recdoc" , receiverRes)
 */
 
     console.log("Receiver updated with pending friend request.");
-    return "ok";
+    return "Sending"
   } catch (err: any) {
     console.error("Error in HandleFollow:", err.message || err);
     return "error";

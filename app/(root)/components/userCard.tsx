@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-export const UserCard =({users , useremail , sectionId} :{users :{$id :string ,name: string , email :string , image :string , index:number  },sectionId :string  , useremail : string})=>{
+export const UserCard =({users , useremail , sectionId} :{users :{$id :string ,name: string , email :string , image :string, status: string , index:number  },sectionId :string  , useremail : string})=>{
  const [sending , setSending] =useState('Follow')
  const router = useRouter()
  const [disble , setDisable] = useState(false)
@@ -59,11 +59,7 @@ return (
      sectionId,
      users.name,  
     )
-          if (status === "ok") {
-            console.log("ok");
-            setSending("Sending");
-          }
-        }}>{sending}</button>
+        }}>{users.status}</button>
         <Image
           src="/fool.png"
           alt=""
