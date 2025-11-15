@@ -11,7 +11,7 @@ export const ListUsers = async(email:string)=>{
                const listoffollower = await ListAllthefollower(email)
             let FinalListofUsers = []
             for (let i = 0 ; i < listoffollower.length ;i++){
-            FinalListofUsers=[...FinalListofUsers , listoffollower[i].$id]
+            FinalListofUsers=[...FinalListofUsers , listoffollower[i].senderId]
           }
           
   const docs = await database.listDocuments(
