@@ -63,7 +63,7 @@ return (
             console.log("ok");
             setSending(status);
           }
-        }}>{users.status  == "sending" ? "Follow" :users.status }</button>
+        }}>{status}</button>
         <Image
           src="/fool.png"
           alt=""
