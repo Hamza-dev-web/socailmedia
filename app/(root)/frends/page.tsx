@@ -35,7 +35,7 @@ let Usersshow = []
   users.length > 0 &&  (
 
     <Frends
-sectionId={sessionuser.documents[0].$id}
+sessionuser={sessionuser}
 clerkUser={{
   id :clerkUser.id ,
   username : `${clerkUser.firstName}${clerkUser.lastName}`,

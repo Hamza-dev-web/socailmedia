@@ -4,11 +4,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-export const UserCard =({users , useremail , sectionId} :{users :{$id :string ,name: string , email :string , image :string, status: string , index:number  },sectionId :string  , useremail : string})=>{
+export const UserCard =({users , useremail , sessionuser} :{users :{$id :string ,name: string , email :string , image :string, status: string , index:number  },sessionuser :any  , useremail : string})=>{
  const [sending , setSending] =useState('Follow')
  const router = useRouter()
  const [disble , setDisable] = useState(false)
- console.log("users" , users.$id , sectionId)
+ console.log("users" , users.$id )
 return (
 <div className="flex flex-col items-center w-full mt-3" key={users.$id}>
   <div className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 rounded-xl mt-6">
@@ -53,11 +53,11 @@ return (
         <button className="font-bold text-white"    
         onClick={async () => {
           const status = await HandleThefollow(
-    users.index,
-     users.image,
+      sessionuser.documents[0].index,
+       sessionuser.documents[0].image,
      users.$id,
-     sectionId,
-     users.name,  
+     sessionuser.documents[0].$id,
+       sessionuser.documents[0].name,  
     )
   if (status === "Sending") {
             console.log("ok");
