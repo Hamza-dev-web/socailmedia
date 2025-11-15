@@ -327,26 +327,24 @@ export const handleAccept =async( senderId :string, email :string) =>{
                     process.env.FRENDS_COLLECTION  as string,frendsrequest.documents[0].$id ,{
                         ...frendsrequest.documents[0],
                         Accept :true,
+                        status:"Frends"
                     })
                   
-/*
-         
                 data   ={
  ...currentuser.documents[0],              
     frends : [... currentuser.documents[0].frends,{
-                Accept :true
+                Accept :true,
+                status:"Frends"
                     }
                     ] }
                 
         
             await database.updateDocument(
             process.env.DATABASE_ID as string,
-            process.env.USERS_COLLECTION  as string,currentuser.documents[0].$id ,data)
+            process.env.USERS_COLLECTION  as string,senderId,data)
           }
-             console.log("done"  , data )
-             */
+        
           return "Accept"
-                  }
             }
     catch (err :any) {
         console.log(err)
