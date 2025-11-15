@@ -319,7 +319,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
       
       
          if(!currentuser && !frendsrequest ) return
-         /*
+         
          let data ={}
          if(currentuser.documents[0].frends.length > 0  ){
              const updatedfrends =   await database.updateDocument(
@@ -328,7 +328,8 @@ export const handleAccept =async( senderId :string, email :string) =>{
                         ...frendsrequest.documents[0],
                         Accept :true,
                     })
-
+                  
+/*
          
                 data   ={
  ...currentuser.documents[0],              
@@ -345,6 +346,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
              console.log("done"  , data )
              */
           return "Accept"
+                  }
             }
     catch (err :any) {
         console.log(err)
