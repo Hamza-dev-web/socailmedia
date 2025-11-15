@@ -1,21 +1,26 @@
 "use server"
 import { database, users } from "../appwrite/config"
 import { ID, Query } from "node-appwrite";
-import { currentUser } from "@clerk/nextjs/server";
 
 export const ListUsers = async(email:string)=>{
         try {
-            const  newDocuments =  await database.listDocuments(
-               process.env.DATABASE_ID as string,
-               process.env.USERS_COLLECTION  as string,
-               []);
+               /*
             if(newDocuments.documents.length > 0 ){
                 const usertoRetours = newDocuments.documents.filter((users) => users.email !=email as string)
-        return         usertoRetours
-            }
-            else {
-                return []
-            }
+                */
+               const listoffollower = await ListAllthefollower(email)
+            let FinalListofUsers = []
+            for (let i = 0 ; i < listoffollower.length ;i++){
+            FinalListofUsers=[...FinalListofUsers , listoffollower[i].$id]
+          }
+          
+   const  listofusers =  await database.listDocuments(
+               process.env.DATABASE_ID as string,
+               process.env.USERS_COLLECTION  as string,
+               [Query.notEqual("email" , email),
+                Query.notEqual("$id" , FinalListofUsers)
+               ]);
+          return listofusers.documents
         }
         catch(err :any) {
             console.log(err)
@@ -156,6 +161,8 @@ console.log("recdoc" , receiverRes)
        frends: receiverFriends
        }
     );
+
+
     /* 
     const PotentielDuplicate = await database.listDocuments(
       process.env.DATABASE_ID as string,
