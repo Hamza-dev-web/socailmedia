@@ -52,17 +52,13 @@ return (
       >
         <button className="font-bold text-white"    
         onClick={async () => {
-         setDisable(false)
           const status = await HandleThefollow(
-            users.index,
-            users.name as string,
-            users.image,
-            users.$id,
-            sectionId as string,
-            useremail as string
-          )
-        
-
+    users.index,
+     users.image,
+     users.$id,
+     sectionId,
+     users.name,  
+    )
           if (status === "ok") {
             console.log("ok");
             setSending("Sending");
