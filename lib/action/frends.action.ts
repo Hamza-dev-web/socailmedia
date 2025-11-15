@@ -95,9 +95,6 @@ const filteredusers = docs.documents.filter(
         }
     }
         */
-       
-
-
 export const HandleThefollow = async (
     index: number,
     image: string,
@@ -349,4 +346,4 @@ export const handleAccept =async( senderId :string, email :string) =>{
     catch (err :any) {
         console.log(err)
     }
-}
+} 
