@@ -59,7 +59,11 @@ return (
      sectionId,
      users.name,  
     )
-        }}>{users.status}</button>
+  if (status === "Sending") {
+            console.log("ok");
+            setSending(status);
+          }
+        }}>{users.status  == "sending" ? "Follow" :users.status }</button>
         <Image
           src="/fool.png"
           alt=""
