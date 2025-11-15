@@ -145,24 +145,15 @@ console.log("recdoc" , receiverRes)
     // 5️⃣ Update receiver’s friend list
     const receiverFriends = [
       ...(receiverDoc.frends || []),
-      {
-        username: username,
-        senderId,
-        receverId,
-        image: image,
-        index: index,
-        Accept: false,
-        status: "sending", 
-        PairId// receiver sees it as pending
-      },
+     newFriend.$id
     ];
 
     await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       receiverDoc.$id,
-      { ...receiverDoc,
-        frends: receiverFriends
+      { 
+       frends: receiverFriends
        }
     );
     /* 
