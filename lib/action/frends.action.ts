@@ -14,14 +14,19 @@ export const ListUsers = async(email:string)=>{
             FinalListofUsers=[...FinalListofUsers , listoffollower[i].$id]
           }
           
-   const  listofusers =  await database.listDocuments(
-               process.env.DATABASE_ID as string,
-               process.env.USERS_COLLECTION  as string,
-               [Query.notEqual("email" , email),
-                Query.contains("$id" , FinalListofUsers)
-               ]);
-               console.log('follower' ,listoffollower , FinalListofUsers,"users", listofusers)
-          return listofusers.documents
+  const docs = await database.listDocuments(
+  process.env.DATABASE_ID!,
+  process.env.USERS_COLLECTION!,
+  [
+    Query.notEqual("email", email)
+  ]
+);
+
+const filteredusers = docs.documents.filter(
+  doc => !FinalListofUsers.includes(doc.$id)
+);
+               console.log('follower' ,listoffollower , FinalListofUsers,"users", filteredusers)
+          return filteredusers
         }
         catch(err :any) {
             console.log(err)
