@@ -310,7 +310,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
        [      Query.equal("email" ,email)]        
          )
           const frendsrequest = await database.listDocuments(process.env.DATABASE_ID as string,
-            process.env.USERS_COLLECTION  as string,
+            process.env.FRENDS_COLLECTION  as string,
        [      Query.equal("senderId" ,senderId),
               Query.equal("receverId" ,currentuser.documents[0].$id)
        ]        
@@ -319,6 +319,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
       
       
          if(!currentuser && !frendsrequest ) return
+         /*
          let data ={}
          if(currentuser.documents[0].frends.length > 0  ){
              const updatedfrends =   await database.updateDocument(
@@ -330,16 +331,11 @@ export const handleAccept =async( senderId :string, email :string) =>{
 
          
                 data   ={
-                    name : currentuser.documents[0].name ,
-                    email :currentuser.documents[0].email ,
-                    image:currentuser.documents[0].image ,
-                    index :currentuser.documents[0].index,
-                    frends : [... currentuser.documents[0].frends,{
-                      ...frendsrequest.documents[0],
-                      Accept :true
+ ...currentuser.documents[0],              
+    frends : [... currentuser.documents[0].frends,{
+                Accept :true
                     }
-                    ] ,
-              save :currentuser.documents[0].save}
+                    ] }
                 
         
             await database.updateDocument(
@@ -347,6 +343,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
             process.env.USERS_COLLECTION  as string,currentuser.documents[0].$id ,data)
           }
              console.log("done"  , data )
+             */
           return "Accept"
             }
     catch (err :any) {
