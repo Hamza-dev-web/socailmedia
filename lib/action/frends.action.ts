@@ -20,6 +20,7 @@ export const ListUsers = async(email:string)=>{
                [Query.notEqual("email" , email),
                 Query.notEqual("$id" , FinalListofUsers)
                ]);
+               console.log('follower' ,listoffollower , FinalListofUsers,"users", listofusers)
           return listofusers.documents
         }
         catch(err :any) {
@@ -101,7 +102,6 @@ export const HandleThefollow = async (
 ) => {
   try {
     const PairId = [senderId, receverId].sort().join("_");
-console.log("recid" ,receverId, "sender" , senderId)
     // 2️⃣ Check if friendship already exists
     const existing = await database.listDocuments(
       process.env.DATABASE_ID as string,
@@ -130,8 +130,7 @@ console.log("recid" ,receverId, "sender" , senderId)
         status: "sending",
       }
     );
-console.log("recid" ,receverId, "sender" , senderId,"hh")
-    console.log("Friend request created:", newFriend.$id);
+
 
     // 4️⃣ Find the receiver user by ID or email
     const receiverRes = await database.listDocuments(
