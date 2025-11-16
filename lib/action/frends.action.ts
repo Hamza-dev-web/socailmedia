@@ -23,7 +23,7 @@ export const ListUsers = async(email:string)=>{
     Query.notEqual("email", email),
     Query.notEqual("PairId", FinalListofUsers[i].PairId ),
   ])
-  console.log(listofusers)
+  console.log("the list",listofusers)
 if(listofusers.documents.length > 0) finallist.push(listofusers.documents)
 
           }
