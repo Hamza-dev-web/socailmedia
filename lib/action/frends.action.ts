@@ -7,27 +7,25 @@ export const ListUsers = async(email:string)=>{
                /*
             if(newDocuments.documents.length > 0 ){
                 const usertoRetours = newDocuments.documents.filter((users) => users.email !=email as string)
-                */
-  
+             
                const listoffollower = await ListAllthefollower(email)
             let FinalListofUsers = []
             for (let i = 0 ; i < listoffollower.length ;i++){
-            FinalListofUsers=[...FinalListofUsers , listoffollower[i].PairId]
+            FinalListofUsers=[...FinalListofUsers , listoffollower[i].$id]
           }
           let finallist=[]
-          for(let i = 0 ; i<listoffollower.length ;i++){
-         const  listofusers = await database.listDocuments(
+            */
+          const  listofusers = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.USERS_COLLECTION!,
   [
     Query.notEqual("email", email),
-    Query.notEqual("PairId", FinalListofUsers[i].PairId ),
+
   ])
   console.log("the list",listofusers)
-if(listofusers.documents.length > 0) finallist.push(listofusers.documents)
+//if(listofusers.documents.length > 0) .push(listofusers.documents)
 
-          }
-       return finallist
+       return listofusers
 /*
 const filteredusers = docs.documents.filter(
   doc => !FinalListofUsers.includes(doc.$id)
@@ -197,7 +195,7 @@ console.log("recdoc" , receiverRes)
   }
 };
 
-    export const ListAllthefollower = async( email : string)=>{
+export const ListAllthefollower = async( email : string)=>{
 let data= [] as any
         try {
 
@@ -334,24 +332,22 @@ export const handleAccept =async( senderId :string, email :string) =>{
                         Accept :true,
                         status:"Frends"
                     })
-                    /*
+            
                   
                 data   ={
             ...currentuser.documents[0],              
-           frends : [{
+           frends : [
             ...currentuser.documents[0].frends,
-                Accept :true,
-                status:"Frends"
-           }
+              currentuser.documents[0].frends.push(frendsrequest)
                     ] }
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
         
             await database.updateDocument(
             process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
-            senderId,
+            currentuser.documents[0].$id,
             data)
-            */
+            
           }
         
           return "Accept"
@@ -360,3 +356,4 @@ export const handleAccept =async( senderId :string, email :string) =>{
         console.log(err)
     }
 } 
+
