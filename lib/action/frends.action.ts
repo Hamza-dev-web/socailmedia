@@ -103,6 +103,7 @@ export const HandleThefollow = async (
     username: string,
 ) => {
   try {
+    console.log("userName :",username)
     const PairId = [senderId, receverId].sort().join("_");
     // 2️⃣ Check if friendship already exists
     const existing = await database.listDocuments(
