@@ -20,7 +20,6 @@ export const ListUsers = async(email:string)=>{
   process.env.USERS_COLLECTION!,
   [
     Query.notEqual("email", email),
-
   ])
   console.log("the list",listofusers)
 //if(listofusers.documents.length > 0) .push(listofusers.documents)
