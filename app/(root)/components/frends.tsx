@@ -56,8 +56,10 @@ console.log("session" ,sessionuser)
         <div className="flex gap-4 items-center">
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
-            onClick={async () =>
+            onClick={async () =>{
               await handleAccept( usr.senderId,clerkUser && clerkUser.email)
+              window.location.reload()
+            }
             }
           >
             <Image

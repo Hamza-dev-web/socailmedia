@@ -326,15 +326,15 @@ export const handleAccept =async( senderId :string, email :string) =>{
                         Accept :true,
                         status:"Frends"
                     })
+                    /*
                   
                 data   ={
             ...currentuser.documents[0],              
-           frends : [
-            ...currentuser.documents[0].frends
-            ,{
+           frends : [{
+            ...currentuser.documents[0].frends,
                 Accept :true,
                 status:"Frends"
-                    }
+           }
                     ] }
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
         
@@ -343,6 +343,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
             process.env.USERS_COLLECTION  as string,
             senderId,
             data)
+            */
           }
         
           return "Accept"
