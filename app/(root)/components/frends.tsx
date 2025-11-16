@@ -88,7 +88,6 @@ console.log("session" ,sessionuser)
         </div>
       ) : (
         <>
-          {satus == true && (
             <div className="flex gap-3 items-center">
               <Image
                 src="/check.png"
@@ -107,7 +106,6 @@ console.log("session" ,sessionuser)
                 onClick={() => router.push(`${usr.index}/messages`)}
               />
             </div>
-          )}
         </>
       )}
     </div>      
