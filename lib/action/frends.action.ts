@@ -294,7 +294,6 @@ export const DeleteRequest =async( senderId :string , receverId :string)=>{
 export const handleAccept =async( senderId :string, email :string) =>{
     try {
 
-        console.log(senderId)
         /*
         const userthatsended = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
@@ -313,33 +312,37 @@ export const handleAccept =async( senderId :string, email :string) =>{
               Query.equal("receverId" ,currentuser.documents[0].$id)
        ]        
          )
-         console.log(frendsrequest)
+        
       
       
          if(!currentuser && !frendsrequest ) return
-         
          let data ={}
          if(currentuser.documents[0].frends.length > 0  ){
-             const updatedfrends =   await database.updateDocument(
+                   await database.updateDocument(
                     process.env.DATABASE_ID as string,
-                    process.env.FRENDS_COLLECTION  as string,frendsrequest.documents[0].$id ,{
-                        ...frendsrequest.documents[0],
+                    process.env.FRENDS_COLLECTION  as string,
+                    frendsrequest.documents[0].$id ,
+                    {
                         Accept :true,
                         status:"Frends"
                     })
                   
                 data   ={
- ...currentuser.documents[0],              
-    frends : [... currentuser.documents[0].frends,{
+            ...currentuser.documents[0],              
+           frends : [
+            ...currentuser.documents[0].frends
+            ,{
                 Accept :true,
                 status:"Frends"
                     }
                     ] }
-                
+                 console.log("frends",frendsrequest.documents[0], "data :" , data )
         
             await database.updateDocument(
             process.env.DATABASE_ID as string,
-            process.env.USERS_COLLECTION  as string,senderId,data)
+            process.env.USERS_COLLECTION  as string,
+            senderId,
+            data)
           }
         
           return "Accept"
