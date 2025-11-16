@@ -8,12 +8,12 @@ import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 export default  function Frends({
-  sectionId,  
+  sessionuser,  
   users ,
     listOfFollow,
     clerkUser,
 }:{
-    sectionId :string ,
+    sessionuser :any ,
     users :  any ,
     listOfFollow : any[],
     clerkUser :{id :string , username:string , email:string}
@@ -26,17 +26,17 @@ const [searchedUser , setSearched] =useState([])
 useEffect(()=>{
   if(follwer?.length > 0 ){
     for(let j =0 ; j<follwer.length ;j++){
-      setStatus(follwer[j].Accept)
+      setStatus(follwer[j].status)
     }
   }
 } ,[])
-console.log("Follower" ,follwer)
+console.log("session" ,sessionuser)
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
   {listOfFollow && listOfFollow.length > 0 &&  listOfFollow.map((usr: any) => (
    <>
-   {usr.senderId != sectionId  ? (
+   {usr.senderId != sessionuser.documents[0].$id  ? (
     <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
@@ -72,7 +72,7 @@ console.log("Follower" ,follwer)
 
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
-            onClick={async () => await DeleteRequest(usr.$id , sectionId)}
+            onClick={async () => await DeleteRequest(usr.$id , sessionuser.documents[0].$id )}
           >
             <Image
               src="/delete.png"
@@ -177,7 +177,12 @@ console.log("Follower" ,follwer)
       users
         .filter((userd: { email: string }) => userd?.email != clerkUser?.email)
         .map((userto: any) => (
-          <UserCard sectionId={sectionId} key={userto.$id} useremail={clerkUser.email as string} users={userto} />
+          <UserCard 
+           sessionuser={sessionuser} 
+           key={userto.$id} 
+           useremail={clerkUser.email as string} 
+           users={userto} 
+           />
         ))}
   </div>
 </div>
