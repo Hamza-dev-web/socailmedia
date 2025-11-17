@@ -322,9 +322,6 @@ export const handleAccept =async( senderId :string, email :string) =>{
               Query.equal("receverId" ,currentuser.documents[0].$id)
        ]        
          )
-        
-      
-      
          if(!currentuser && !frendsrequest ) return
          let data ={}
          if(currentuser.documents[0].frends.length > 0  ){
@@ -336,24 +333,18 @@ export const handleAccept =async( senderId :string, email :string) =>{
                         Accept :true,
                         status:"Frends"
                     })
-            
-                  
                 data   ={
             ...currentuser.documents[0],              
            frends : [
-            ...currentuser.documents[0].frends,
               currentuser.documents[0].frends.push(frendsrequest)
                     ] }
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
-        
             await database.updateDocument(
             process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
             currentuser.documents[0].$id,
-            data)
-            
+            data) 
           }
-        
           return "Accept"
             }
     catch (err :any) {
