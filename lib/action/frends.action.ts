@@ -153,6 +153,10 @@ console.log("recdoc" , receiverRes)
       ...(receiverDoc.frends || []),
      newFriend.$id
     ];
+    const updatedPairId = [
+  ...(receiverDoc.documents?.[0]?.PairId || []),
+  PairId
+];
     console.log(receiverFriends)
 
     await database.updateDocument(
@@ -165,7 +169,7 @@ console.log("recdoc" , receiverRes)
         [PairId]
         */
       { 
-    //   PairId:receiverDoc.documents[0].PairId.push(PairId),
+    PairId:updatedPairId,
        frends: receiverFriends
        }
     );
