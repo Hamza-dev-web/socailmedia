@@ -159,6 +159,7 @@ console.log("recdoc" , receiverRes)
       ...(receiverDoc.frends || []),
      newFriend.$id
     ];
+    console.log(receiverFriends)
 
     await database.updateDocument(
       process.env.DATABASE_ID as string,
