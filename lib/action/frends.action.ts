@@ -24,7 +24,7 @@ export const ListUsers = async(email:string)=>{
   console.log("the list",listofusers)
 //if(listofusers.documents.length > 0) .push(listofusers.documents)
 
-       return listofusers
+       return listofusers.documents
 /*
 const filteredusers = docs.documents.filter(
   doc => !FinalListofUsers.includes(doc.$id)
