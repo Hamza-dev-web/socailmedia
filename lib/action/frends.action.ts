@@ -165,7 +165,7 @@ console.log("recdoc" , receiverRes)
         [PairId]
         */
       { 
-       PairId:receiverDoc.documents[0].PairId.push(PairId),
+    //   PairId:receiverDoc.documents[0].PairId.push(PairId),
        frends: receiverFriends
        }
     );
