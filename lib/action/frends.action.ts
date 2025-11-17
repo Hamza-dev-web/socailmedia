@@ -165,7 +165,7 @@ console.log("recdoc" , receiverRes)
       process.env.USERS_COLLECTION as string,
       receiverDoc.$id,
       { 
-        PairId:[ ...receiverDoc[0].documents.PairId , PairId],
+        PairId:[ ...receiverDoc.documents[0].PairId , PairId],
        frends: receiverFriends
        }
     );
