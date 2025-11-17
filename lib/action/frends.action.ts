@@ -138,9 +138,6 @@ export const HandleThefollow = async (
         status: "sending",
       }
     );
-
-
-    // 4️⃣ Find the receiver user by ID or email
     const receiverRes = await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
@@ -151,10 +148,7 @@ console.log("recdoc" , receiverRes)
       console.error("Receiver not found:", receverId);
       return "receiver_not_found";
     }
-
     const receiverDoc = receiverRes.documents[0];
-
-    // 5️⃣ Update receiver’s friend list
     const receiverFriends = [
       ...(receiverDoc.frends || []),
      newFriend.$id
@@ -165,8 +159,13 @@ console.log("recdoc" , receiverRes)
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       receiverDoc.$id,
+      /*
+      receiverDoc.documents[0].PairId.length > 0 ?
+        [...receiverDoc.documents[0].PairId , PairId ]: 
+        [PairId]
+        */
       { 
-        PairId:receiverDoc.documents[0].PairId.length > 0 ? [...receiverDoc.documents[0].PairId , PairId ]: [PairId],
+       PairId:receiverDoc.documents[0].PairId.push(PairId),
        frends: receiverFriends
        }
     );
