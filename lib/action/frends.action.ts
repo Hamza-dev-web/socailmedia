@@ -21,7 +21,19 @@ export const ListUsers = async(email:string)=>{
   [
     Query.notEqual("email", email),
   ])
-  console.log("the list",listofusers)
+        const  currentUsers = await database.listDocuments(
+  process.env.DATABASE_ID!,
+  process.env.USERS_COLLECTION!,
+  [
+    Query.equal("email", email),
+  ])
+  const filtred =listofusers.documents.filter((itm) => 
+    currentUsers.documents.map((user) =>
+  user.PairId.map((pairid) => pairid != itm.PairdId.map((pairdid2) => pairdid2))
+    ))
+  console.log("the list",filtred)
+    return filtred
+
 //if(listofusers.documents.length > 0) .push(listofusers.documents)
 
        return listofusers.documents
@@ -171,7 +183,7 @@ console.log("recdoc" , receiverRes)
      await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
-      receverId,
+      receiverDoc.$id,
       { 
     PairId:updatedPairId,
        frends: receiverFriends
