@@ -27,12 +27,20 @@ export const ListUsers = async(email:string)=>{
   [
     Query.equal("email", email),
   ])
-  const filtred =listofusers.documents.filter((itm) => 
-    currentUsers.documents.map((user) =>
-  user.PairId.map((pairid) => pairid != itm.PairdId.map((pairdid2) => pairdid2))
-    ))
-  console.log("the list",filtred)
-    return filtred
+ const currentPairIds = currentUsers.documents[0]?.PairId ?? [];
+
+// Filter out users who share ANY PairId
+const filtered = listofusers.documents.filter(user => {
+  const userPairIds = user.PairId ?? [];
+
+  // check if pairs intersect
+  const hasCommonPair = userPairIds.some((id :string) => currentPairIds.includes(id));
+
+  return !hasCommonPair; // keep users with NO common PairIds
+});
+
+console.log("the list", filtered);
+return filtered;
 
 //if(listofusers.documents.length > 0) .push(listofusers.documents)
 
