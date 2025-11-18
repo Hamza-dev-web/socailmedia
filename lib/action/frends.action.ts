@@ -182,7 +182,7 @@ console.log("recdoc" , receiverRes)
     await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
-      senderId,
+      receiverDoc.$id,
       { 
     PairId:updatedPairId,
        frends: receiverFriends
@@ -191,7 +191,7 @@ console.log("recdoc" , receiverRes)
      await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
-      receiverDoc.$id,
+      senderId,
       { 
     PairId:updatedPairId,
        }
