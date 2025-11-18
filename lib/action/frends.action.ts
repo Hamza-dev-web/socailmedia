@@ -194,7 +194,6 @@ console.log("recdoc" , receiverRes)
       receiverDoc.$id,
       { 
     PairId:updatedPairId,
-       frends: receiverFriends
        }
     );
 
@@ -348,6 +347,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
               Query.equal("receverId" ,currentuser.documents[0].$id)
        ]        
          )
+               console.log(senderId, currentuser.documents[0].$id)
          if(!currentuser && !frendsrequest ) return
          let data ={}
          if(currentuser.documents[0].frends.length > 0  ){
@@ -359,17 +359,35 @@ export const handleAccept =async( senderId :string, email :string) =>{
                         Accept :true,
                         status:"Frends"
                     })
-                data   ={
-            ...currentuser.documents[0],              
-           frends : [
-              currentuser.documents[0].frends.push(frendsrequest)
-                    ] }
+        const newFriend = await database.createDocument(
+      process.env.DATABASE_ID as string,
+      process.env.FRENDS_COLLECTION as string,
+      ID.unique(),
+      {
+       PairdId: frendsrequest.documents[0].PairId,
+        senderId,
+        receverId:currentuser.documents[0].$id,
+        username: currentuser.documents[0].username,
+        image: currentuser.documents[0].image,
+        index: currentuser.documents[0].index,
+        Accept: true, 
+        status: "Frends",
+      }
+    );
+
+ const { frends = [], ...rest } = currentuser.documents[0];
+
+const data = {
+  ...rest,
+  frends: [...frends, newFriend]
+};
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
             await database.updateDocument(
             process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
             senderId,
-            data) 
+            data
+          ) 
           }
           return "Accept"
             }
