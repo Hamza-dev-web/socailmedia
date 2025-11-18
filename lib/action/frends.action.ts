@@ -379,7 +379,6 @@ export const handleAccept =async( senderId :string, email :string) =>{
  const { frends = [], ...rest } = currentuser.documents[0];
 
 const data = {
-  ...rest,
   frends: [...frends, newFriend]
 };
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
