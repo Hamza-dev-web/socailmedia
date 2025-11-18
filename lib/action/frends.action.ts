@@ -337,6 +337,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
              
          )
        */
+
          const currentuser = await database.listDocuments(process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
        [      Query.equal("email" ,email)]        
@@ -348,21 +349,14 @@ export const handleAccept =async( senderId :string, email :string) =>{
        ]        
          )
                console.log(senderId, currentuser.documents[0].$id)
+                   const PairId = [senderId, currentuser.documents[0].$id].sort().join("_");
          if(!currentuser && !frendsrequest ) return
-                   await database.updateDocument(
-                    process.env.DATABASE_ID as string,
-                    process.env.FRENDS_COLLECTION  as string,
-                    frendsrequest.documents[0].$id ,
-                    {
-                        Accept :true,
-                        status:"Frends"
-                    })
-        const newFriend = await database.createDocument(
+       const newFriend = await database.createDocument(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
       ID.unique(),
       {
-       PairdId: frendsrequest.documents[0].PairId,
+       PairdId: PairId,
         senderId,
         receverId:currentuser.documents[0].$id,
         username: currentuser.documents[0].username,
@@ -372,6 +366,15 @@ export const handleAccept =async( senderId :string, email :string) =>{
         status: "Frends",
       }
     );
+         await database.updateDocument(
+                    process.env.DATABASE_ID as string,
+                    process.env.FRENDS_COLLECTION  as string,
+                    frendsrequest.documents[0].$id ,
+                    {
+                        Accept :true,
+                        status:"Frends"
+                    })
+        
 
  const { frends = [], ...rest } = currentuser.documents[0];
 
@@ -383,7 +386,7 @@ const data = {
             await database.updateDocument(
             process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
-            senderId,
+            currentuser.documents[0].$id,
             data
           ) 
           return "Accept"
