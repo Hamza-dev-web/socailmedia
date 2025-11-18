@@ -356,7 +356,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
       process.env.FRENDS_COLLECTION as string,
       ID.unique(),
       {
-       PairdId: PairId,
+       PairId: PairId,
         senderId,
         receverId:currentuser.documents[0].$id,
         username: currentuser.documents[0].username,
