@@ -387,7 +387,7 @@ const data = {
             await database.updateDocument(
             process.env.DATABASE_ID as string,
             process.env.USERS_COLLECTION  as string,
-            senderId,
+            currentuser.documents[0].$id,
             data
           ) 
           return "Accept"
