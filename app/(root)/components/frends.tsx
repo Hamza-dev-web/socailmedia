@@ -21,7 +21,7 @@ export default  function Frends({
 }) {
 const [search , setSearch] =useState("")
 const router = useRouter()
-const [satus , setStatus] =useState(false)
+const [satus , setStatus] =useState(true)
 const [follwer , setFollower] =useState(listOfFollow)
 const [searchedUser , setSearched] =useState([])
 useEffect(()=>{
