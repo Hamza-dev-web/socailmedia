@@ -385,9 +385,11 @@ const data = {
 };
 */
 const data = {
-  frends:  currentuser.documents[0].frends.push(newFriend.$id)
+  frends: [
+    ...currentuser.documents[0].frends,
+    newFriend.$id
+  ]
 };
-
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
             await database.updateDocument(
             process.env.DATABASE_ID as string,
