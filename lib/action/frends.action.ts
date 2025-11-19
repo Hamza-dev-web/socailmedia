@@ -351,6 +351,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
                console.log(senderId, currentuser.documents[0].$id)
                    const PairId = [senderId, currentuser.documents[0].$id].sort().join("_");
          if(!currentuser && !frendsrequest ) return
+         /*
        const newFriend = await database.createDocument(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
@@ -366,6 +367,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
         status: "Frends",
       }
     );
+    */
          await database.updateDocument(
                     process.env.DATABASE_ID as string,
                     process.env.FRENDS_COLLECTION  as string,
@@ -379,7 +381,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
  const { frends = [], ...rest } = currentuser.documents[0];
 
 const data = {
-  frends: [...frends, newFriend]
+  frends: [...frends, frendsrequest.documents]
 };
                  console.log("frends",frendsrequest.documents[0], "data :" , data )
             await database.updateDocument(
