@@ -7,6 +7,7 @@ import { GetSearchedUsers, getUsers } from "@/lib/action/user.action";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 export default  function Frends({
   sessionuser,  
   users ,
@@ -54,11 +55,14 @@ console.log("session" ,sessionuser)
 
       {usr.Accept === false ? (
         <div className="flex gap-4 items-center">
-          <div
+          <Button
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
+            disabled={satus}
             onClick={async () =>{
+              setStatus(true)
               await handleAccept( usr.senderId,clerkUser && clerkUser.email)
               window.location.reload()
+              setStatus(false)
             }
             }
           >
@@ -69,8 +73,8 @@ console.log("session" ,sessionuser)
               width={30}
               height={30}
             />
-            <button className="font-bold text-white">Accept</button>
-          </div>
+            <button className="font-bold text-white" >Accept</button>
+          </Button>
 
           <div
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
