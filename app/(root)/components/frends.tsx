@@ -57,7 +57,7 @@ console.log("session" ,sessionuser)
         <div className="flex gap-4 items-center">
           <Button
             className="flex gap-2 items-center p-2 rounded-2xl bg-red-500 hover:bg-purple-500 cursor-pointer"
-            disabled={satus}
+          
             onClick={async () =>{
               setStatus(true)
               await handleAccept( usr.senderId,clerkUser && clerkUser.email)
