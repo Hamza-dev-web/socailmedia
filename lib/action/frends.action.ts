@@ -360,7 +360,7 @@ export const handleAccept =async( senderId :string, email :string) =>{
        PairId: PairId,
         senderId,
         receverId:currentuser.documents[0].$id,
-        username: currentuser.documents[0].username,
+        username: currentuser.documents[0].name,
         image: currentuser.documents[0].image,
         index: currentuser.documents[0].index,
         Accept: true, 
