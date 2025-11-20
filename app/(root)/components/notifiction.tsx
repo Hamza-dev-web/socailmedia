@@ -1,5 +1,5 @@
 
-import { GetNotifiction } from "@/lib/action/user.action"
+import { GetNotifiction } from "@/lib/action/notification&Comments.action"
 import { currentUser } from "@clerk/nextjs/server"
 import Image from "next/image"
 export default async function Notifictation (){

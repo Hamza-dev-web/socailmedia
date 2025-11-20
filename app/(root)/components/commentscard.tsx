@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { updateComments, DeleteComments } from "@/lib/action/user.action"
+import { updateComments, DeleteComments } from "@/lib/action/notification&Comments.action"
 import Image from "next/image"
 import { useState } from "react"
 export function CommentsCard({post ,comment , user} :{post:any ,comment :{ $id:string,comments :string , poster :string} , user:any}){

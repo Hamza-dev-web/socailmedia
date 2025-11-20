@@ -1,9 +1,9 @@
 "use client"
-import { DeleteRequest, handleAccept, ListAllthefollower, ListUsers } from "@/lib/action/frends.action";
+import { DeleteRequest, handleAccept } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";
-import { GetSearchedUsers, getUsers } from "@/lib/action/user.action";
+import { GetSearchedUsers } from "@/lib/action/user.action";
 import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";

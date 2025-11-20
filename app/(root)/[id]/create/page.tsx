@@ -17,7 +17,8 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { CreatePosts, getUsers } from "@/lib/action/user.action"
+import {  getUsers } from "@/lib/action/user.action"
+import { CreatePosts } from "@/lib/action/posts.action"
 import { useRouter } from "next/navigation"
 import { useUser } from "@clerk/clerk-react"
 export default function Create ({params:{id}} :{params:{id :string}}){

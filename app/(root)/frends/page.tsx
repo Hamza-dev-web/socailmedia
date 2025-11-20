@@ -1,6 +1,6 @@
 
 
-import { DeleteRequest, handleAccept, ListAllthefollower, ListUsers } from "@/lib/action/frends.action";
+import {  ListAllthefollower, ListUsers } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";

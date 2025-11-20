@@ -1,14 +1,12 @@
 
 import React, { useEffect } from 'react';
-import { CreateUsers, getPostesByPosterName, GetUserDetails } from '@/lib/action/user.action';
+import {  getPostesByPosterName, GetUserDetails } from '@/lib/action/user.action';
 import { PostsUsersCard } from '../../components/postCard';
 import { ListAllthefollower } from '@/lib/action/frends.action';
 export default async  function  Create ({params:{id}} :{params:{id :string}}){
 const user = await GetUserDetails(id)
 if(!user) return
 const posts = await getPostesByPosterName(user.name as string)
-
-console.log(posts)
 
 
 if(!posts) return

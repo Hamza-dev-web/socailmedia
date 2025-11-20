@@ -1,4 +1,5 @@
-import {  GetAllPosts, getUsers } from "@/lib/action/user.action";
+import {   getUsers } from "@/lib/action/user.action";
+import { GetAllPosts } from "@/lib/action/posts.action";
 import { currentUser } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,7 +19,6 @@ export default async function Home() {
  const posts= await GetAllPosts()
  const clerkuser = await currentUser()
  const userdb = await getUsers(clerkuser.emailAddresses[0].emailAddress)
- console.log("user of page main",userdb)
  if(!userdb) return
   return (
     <div className="w-full max-w-screen-xl mx-auto px-4 py-6 flex flex-col items-center rounded-md bg-gradient-to-r from-gray-200 via-blue-300 to-slate-800 shadow-lg">

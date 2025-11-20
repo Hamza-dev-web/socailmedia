@@ -2,8 +2,9 @@
 import React, { useEffect } from 'react';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import Image from 'next/image';
-import { CreateUsers, GetAllSavePosts, getPostesByPosterName, GetUserDetails, getUsers } from '@/lib/action/user.action';
+import { CreateUsers, getPostesByPosterName, GetUserDetails, getUsers } from '@/lib/action/user.action';
 import { useRouter } from "next/navigation"
+import { GetAllSavePosts } from '@/lib/action/posts.action';
 import { useUser } from "@clerk/clerk-react"
 import { UserCard } from '../../components/userCard';
 import { PostsCard, PostsUsersCard } from '../../components/postCard';

@@ -1,5 +1,5 @@
 "use client"
-import { DeleteAsavedPost, deleteUserPost, handleTheLike, SaveAPost } from "@/lib/action/user.action";
+import { DeleteAsavedPost, deleteUserPost, handleTheLike, SaveAPost } from "@/lib/action/posts.action";
 import { Post } from "../page";
 import Image from "next/image";
 import { Comments } from "./comments";
