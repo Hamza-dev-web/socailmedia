@@ -24,7 +24,6 @@ comments: [],
 userImage : documents.userImage,
 posterName : documents.posterName ,
 index ,
-type :"post"
        }
 
         
@@ -37,7 +36,9 @@ type :"post"
         ID.unique(), {
 username : documents.posterName,
  posterName : documents.posterName ,
-userimage : documents.userImage
+userimage : documents.userImage,
+type :"post"
+
         }
  
          
