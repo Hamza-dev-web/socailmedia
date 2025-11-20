@@ -23,7 +23,8 @@ image :documents.image,
 comments: [],
 userImage : documents.userImage,
 posterName : documents.posterName ,
-index 
+index ,
+type :"post"
        }
 
         
