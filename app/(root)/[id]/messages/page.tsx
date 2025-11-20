@@ -15,8 +15,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getUsersToMessage } from "@/lib/action/frends.action";
 import axios from "axios"
-import { useUser } from "@clerk/clerk-react";
-import { CreateMessages, getAllMessage, GetUserDetails, getUsers } from "@/lib/action/user.action";
+import { useUser } from "@clerk/clerk-react"
+import {GetUserDetails, getUsers} from "@/lib/action/user.action";
+import { CreateMessages, getAllMessage } from "@/lib/action/messages.action";
   
 
 
