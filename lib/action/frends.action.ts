@@ -339,39 +339,36 @@ export const handleAccept =async( senderId :string, email :string) =>{
        */
 
   // 1️⃣ Get current user
+// 1️⃣ Get current user
 const currentuser = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.USERS_COLLECTION!,
   [Query.equal("email", email)]
 );
- const PairId = [senderId, currentuser.documents[0].$id].sort().join("_");
+
 if (!currentuser.documents.length) {
   throw new Error("User not found");
 }
 
 const userDoc = currentuser.documents[0];
 
+// Compute PairId
+const PairId = [senderId, userDoc.$id].sort().join("_");
+
 // 2️⃣ Get friend request
-const frendsrequest = await database.listDocuments(
+const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.FRENDS_COLLECTION!,
-  [
-    Query.equal("PairId", PairId),
-
-  ]
+  [Query.equal("PairId", PairId)]
 );
 
-if (!frendsrequest.documents.length) {
+if (!friendRequest.documents.length) {
   throw new Error("Friend request not found");
 }
 
-const requestDoc = frendsrequest.documents[0];
+const requestDoc = friendRequest.documents[0];
 
-console.log(senderId, userDoc.$id);
-
-// 3️⃣ Pair ID
-
-// 4️⃣ Create new friend (must be first)
+// 3️⃣ Create new friend entry
 const newFriend = await database.createDocument(
   process.env.DATABASE_ID!,
   process.env.FRENDS_COLLECTION!,
@@ -388,8 +385,8 @@ const newFriend = await database.createDocument(
   }
 );
 
-// 5️⃣ Prepare update operations
-const updateExistingFriendRequest = database.updateDocument(
+// 4️⃣ Update existing friend request
+const updateRequest = database.updateDocument(
   process.env.DATABASE_ID!,
   process.env.FRENDS_COLLECTION!,
   requestDoc.$id,
@@ -398,22 +395,24 @@ const updateExistingFriendRequest = database.updateDocument(
     status: "Frends",
   }
 );
-const frends = userDoc.frends.push(newFriend.$id)
-const updateUserFriends = database.updateDocument(
+
+// 5️⃣ Update user friend list (PROPRE — pas de push)
+const updatedFriends = [...userDoc.frends, newFriend.$id];
+
+const updateUser = database.updateDocument(
   process.env.DATABASE_ID!,
   process.env.USERS_COLLECTION!,
   senderId,
   {
-    frends,
+    frends: updatedFriends,
   }
 );
 
-// 6️⃣ Run both updates **in parallel**
-await Promise.all([
-  updateUserFriends,
-    updateExistingFriendRequest,
-]);
+// 6️⃣ Execute in parallel (une seule fois chacun)
+await Promise.all([updateRequest, updateUser]);
+
 return "Accept";
+
 
             }
     catch (err :any) {
