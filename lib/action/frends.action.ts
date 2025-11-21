@@ -398,13 +398,13 @@ const updateExistingFriendRequest = database.updateDocument(
     status: "Frends",
   }
 );
-
+const frends = userDoc.frends.push(newFriend.$id)
 const updateUserFriends = database.updateDocument(
   process.env.DATABASE_ID!,
   process.env.USERS_COLLECTION!,
   senderId,
   {
-    frends: [...(userDoc.frends || []), newFriend.$id],
+    frends,
   }
 );
 
