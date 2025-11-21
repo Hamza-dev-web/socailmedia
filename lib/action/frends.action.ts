@@ -185,6 +185,7 @@ console.log("recdoc" , receiverRes)
       receiverDoc.$id,
       { 
     PairId:updatedPairId,
+       frends: receiverFriends
        }
     );
      await database.updateDocument(
@@ -410,10 +411,9 @@ const updateUserFriends = database.updateDocument(
 
 // 6️⃣ Run both updates **in parallel**
 await Promise.all([
-  updateExistingFriendRequest,
   updateUserFriends,
+    updateExistingFriendRequest,
 ]);
-
 return "Accept";
 
             }
