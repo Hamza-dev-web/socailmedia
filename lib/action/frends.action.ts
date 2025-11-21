@@ -344,7 +344,7 @@ const currentuser = await database.listDocuments(
   process.env.USERS_COLLECTION!,
   [Query.equal("email", email)]
 );
-
+ const PairId = [senderId, currentuser.documents[0].$id].sort().join("_");
 if (!currentuser.documents.length) {
   throw new Error("User not found");
 }
@@ -356,8 +356,8 @@ const frendsrequest = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.FRENDS_COLLECTION!,
   [
-    Query.equal("senderId", senderId),
-    Query.equal("receverId", userDoc.$id),
+    Query.equal("PairId", PairId),
+
   ]
 );
 
@@ -370,7 +370,6 @@ const requestDoc = frendsrequest.documents[0];
 console.log(senderId, userDoc.$id);
 
 // 3️⃣ Pair ID
-const PairId = [senderId, userDoc.$id].sort().join("_");
 
 // 4️⃣ Create new friend (must be first)
 const newFriend = await database.createDocument(
