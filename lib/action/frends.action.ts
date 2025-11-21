@@ -185,7 +185,6 @@ console.log("recdoc" , receiverRes)
       receiverDoc.$id,
       { 
     PairId:updatedPairId,
-       frends: receiverFriends
        }
     );
      await database.updateDocument(
