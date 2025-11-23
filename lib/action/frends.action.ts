@@ -317,7 +317,9 @@ export const DeleteRequest =async( senderId :string , receverId :string)=>{
         
             await database.updateDocument(
             process.env.DATABASE_ID as string,
-            process.env.USERS_COLLECTION  as string,user.documents[0].$id ,updatedData)
+            process.env.USERS_COLLECTION  as string,
+            user.documents[0].$id ,
+            updatedData)
           
             return console.log("ok")
 
@@ -337,9 +339,6 @@ export const handleAccept =async( senderId :string, email :string) =>{
              
          )
        */
-
-  // 1️⃣ Get current user
-// 1️⃣ Get current user
 const currentuser = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.USERS_COLLECTION!,
@@ -397,16 +396,7 @@ const updateRequest = database.updateDocument(
 );
 
 // 5️⃣ Update user friend list (PROPRE — pas de push)
-const updatedFriends = [...userDoc.frends, newFriend.$id];
 
-const updateUser = database.updateDocument(
-  process.env.DATABASE_ID!,
-  process.env.USERS_COLLECTION!,
-  senderId,
-  {
-    frends: updatedFriends,
-  }
-);
 
 // 6️⃣ Execute in parallel (une seule fois chacun)
 await Promise.all([updateRequest]);
