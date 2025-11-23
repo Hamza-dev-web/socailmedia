@@ -1,5 +1,5 @@
 "use client"
-import { DeleteRequest, handleAccept } from "@/lib/action/frends.action";
+import { DeleteRequest, handleAccept, UpdateTheState } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";
@@ -60,8 +60,9 @@ console.log("session" ,sessionuser)
           
             onClick={async () =>{
               setStatus(true)
-              await handleAccept( usr.senderId,clerkUser && clerkUser.email)
-              window.location.reload()
+             const {Id , userId} = await handleAccept( usr.senderId,clerkUser && clerkUser.email)
+             await UpdateTheState(Id , userId) 
+             window.location.reload()
               setStatus(false)
             }
             }

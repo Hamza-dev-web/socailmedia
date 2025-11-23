@@ -409,9 +409,9 @@ const updateUser = database.updateDocument(
 );
 
 // 6️⃣ Execute in parallel (une seule fois chacun)
-await Promise.all([updateRequest, updateUser]);
+await Promise.all([updateRequest]);
 
-return "Accept";
+return {Id :newFriend.$id , userId :currentuser.documents[0].$id };
 
 
             }
@@ -419,4 +419,39 @@ return "Accept";
         console.log(err)
     }
 } 
+export const UpdateTheState = async (id :string , userId :string)=> {
+  try {
+   const currentuser = await database.listDocuments(
+  process.env.DATABASE_ID!,
+  process.env.USERS_COLLECTION!,
+  [Query.equal("$id", userId)]
+);
 
+if (!currentuser.documents.length) {
+  throw new Error("User not found");
+}
+
+const userDoc = currentuser.documents[0];
+   const friendRequest = await database.listDocuments(
+  process.env.DATABASE_ID!,
+  process.env.FRENDS_COLLECTION!,
+  [Query.equal("$id", id)]
+);
+const requestDoc = friendRequest.documents[0];
+
+    const updatedFriends = [...userDoc.frends, requestDoc.$id];
+await  database.updateDocument(
+  process.env.DATABASE_ID!,
+  process.env.USERS_COLLECTION!,
+  id,
+  {
+    frends: updatedFriends,
+  }
+);
+return "Accept"
+
+  }
+  catch (err :any) {
+    console.log(err)
+  }
+}
