@@ -371,7 +371,7 @@ const newFriend = await database.createDocument(
 );
 
 // 4️⃣ Update existing friend request
-const updateRequest = database.updateDocument(
+const updateRequest = await database.updateDocument(
   process.env.DATABASE_ID!,
   process.env.FRENDS_COLLECTION!,
   requestDoc.$id,
@@ -380,12 +380,6 @@ const updateRequest = database.updateDocument(
     status: "Frends",
   }
 );
-
-// 5️⃣ Update user friend list (PROPRE — pas de push)
-
-
-// 6️⃣ Execute in parallel (une seule fois chacun)
-await Promise.all([updateRequest]);
 
 return {Id :newFriend.$id , userId :currentuser.documents[0].$id };
 
