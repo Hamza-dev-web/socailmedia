@@ -227,27 +227,17 @@ console.log("recdoc" , receiverRes)
 export const ListAllthefollower = async( email : string)=>{
 let data= [] as any
         try {
-
-           
-                const  user =  await database.listDocuments(
-                    process.env.DATABASE_ID as string,
-                    process.env.USERS_COLLECTION  as string
-                    ,[
-                     Query.equal("email" , [email])
-                 ]
-                     
-                 );
-        
-             
-                   
-                  
-           return user.documents[0].frends
+const  user =  await database.listDocuments(
+process.env.DATABASE_ID as string,
+process.env.USERS_COLLECTION  as string
+,[Query.equal("email" , [email])]);
+  return user.documents[0].frends
         }
         catch(err :any) {
             console.log(err)
         }
     }
-    export const getUsersToMessage =async (index :number)=>{
+export const getUsersToMessage =async (index :number)=>{
         try {
       
             const  newDocuments =  await database.listDocuments(
@@ -303,23 +293,19 @@ export const DeleteRequest =async( senderId :string , receverId :string)=>{
             process.env.FRENDS_COLLECTION  as string, frendsrequest.documents[0].$id)
            const data = user.documents[0].frends.filter((rqs:any) => rqs.$id != frendsrequest.documents[0].$id) 
     const updatedData   ={
-    
-                    name : user.documents[0].name ,
-                    email :user.documents[0].email ,
-                    image:user.documents[0].image ,
-                    index :user.documents[0].index,
-                    frends :data
-                    ,
-              save :user.documents[0].save
-      
-            }
-                
-        
-            await database.updateDocument(
-            process.env.DATABASE_ID as string,
-            process.env.USERS_COLLECTION  as string,
-            user.documents[0].$id ,
-            updatedData)
+name : user.documents[0].name ,
+email :user.documents[0].email ,
+image:user.documents[0].image ,
+index :user.documents[0].index,
+frends :data,
+save :user.documents[0].save
+}
+await database.updateDocument(
+process.env.DATABASE_ID as string,
+process.env.USERS_COLLECTION  as string,
+user.documents[0].$id ,
+updatedData
+)
           
             return console.log("ok")
 
@@ -438,6 +424,7 @@ await  database.updateDocument(
     frends: updatedFriends,
   }
 );
+console.log("OK")
 return "Accept"
 
   }
