@@ -380,10 +380,7 @@ const updateRequest = await database.updateDocument(
     status: "Frends",
   }
 );
-
 return {Id :newFriend.$id , userId :currentuser.documents[0].$id };
-
-
             }
     catch (err :any) {
         console.log(err)
