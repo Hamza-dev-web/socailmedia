@@ -432,6 +432,7 @@ return "Accept"
       process.env.USERS_COLLECTION as string,
       [Query.equal("email", userId)]
     );
+    console.log("test",currentUser)
   const follower =    await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
