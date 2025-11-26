@@ -188,7 +188,7 @@ console.log("recdoc" , receiverRes)
     receivedRequest:  receiverFriends
        }
     );
-
+/*
  const newSender = await database.createDocument(
       process.env.DATABASE_ID as string,
       process.env.SENDER_COLLECTION as string,
@@ -209,13 +209,14 @@ console.log("recdoc" , receiverRes)
       ...(senderDoc.senderRequest || []),
      senderDoc.$id
     ];
+    */
    await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       senderId,
       { 
     PairId:updatedPairId,
-senderRequest :senderFriends
+
        }
     )    
 
