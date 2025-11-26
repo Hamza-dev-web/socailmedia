@@ -215,7 +215,7 @@ console.log("recdoc" , receiverRes)
       senderId,
       { 
     PairId:updatedPairId,
-senderRequest :senderDoc
+senderRequest :senderFriends
        }
     )    
 
