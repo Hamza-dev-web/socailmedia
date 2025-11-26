@@ -133,7 +133,7 @@ export const HandleThefollow = async (
     // 2️⃣ Check if friendship already exists
     const existing = await database.listDocuments(
       process.env.DATABASE_ID as string,
-      process.env.FRENDS_COLLECTION as string,
+      process.env.RECEIVED_COLLECTION as string,
       [Query.equal("PairId", PairId)]
     );
 
