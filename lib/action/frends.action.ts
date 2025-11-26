@@ -145,7 +145,7 @@ export const HandleThefollow = async (
     // 3️⃣ Create a friend record (marked as sending / pending)
     const newFriend = await database.createDocument(
       process.env.DATABASE_ID as string,
-      process.env.FRENDS_COLLECTION as string,
+      process.env.RECEIVED_COLLECTION as string,
       ID.unique(),
       {
         PairId,
@@ -170,7 +170,7 @@ console.log("recdoc" , receiverRes)
     }
     const receiverDoc = receiverRes.documents[0];
     const receiverFriends = [
-      ...(receiverDoc.frends || []),
+      ...(receiverDoc.receivedRequest || []),
      newFriend.$id
     ];
     const updatedPairId = [
@@ -185,19 +185,39 @@ console.log("recdoc" , receiverRes)
       receiverDoc.$id,
       { 
     PairId:updatedPairId,
-    frends:   newFriend.$id
+    receivedRequest:  receiverFriends
        }
     );
-     await database.updateDocument(
+
+ const newSender = await database.createDocument(
+      process.env.DATABASE_ID as string,
+      process.env.SENDER_COLLECTION as string,
+      ID.unique(),
+      {
+        PairId,
+        senderId,
+        receverId,
+        username: username,
+        image: image,
+        index: index,
+        Accept: false, 
+        status: "sending",
+      }
+    );
+      const senderDoc = newSender.documents[0];
+    const senderFriends = [
+      ...(senderDoc.senderRequest || []),
+     senderDoc.$id
+    ];
+   await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       senderId,
       { 
     PairId:updatedPairId,
+senderRequest :senderDoc
        }
-    )
-
-    
+    )    
 
 
 
@@ -432,7 +452,7 @@ return "Accept"
       process.env.USERS_COLLECTION as string,
       [Query.equal("email", userId)]
     );
-    console.log("test",currentUser)
+    console.log("test",currentUser ,)
   const follower =    await database.listDocuments(
       process.env.DATABASE_ID as string,
       process.env.FRENDS_COLLECTION as string,
