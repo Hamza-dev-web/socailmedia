@@ -1,6 +1,6 @@
 
 
-import {  HandleAccepto, ListAllthefollower, ListUsers } from "@/lib/action/frends.action";
+import {   GetAllFrends, ListAllthefollower, ListUsers } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";
@@ -15,6 +15,8 @@ export default  async function Home() {
   const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
 const sessionuser = await getUsers(clerkUser.emailAddresses[0].emailAddress)
 if(!sessionuser) return 
+const frends = await GetAllFrends(sessionuser.documents[0].$id as string)
+
 console.log('Follower' ,Follower)
 /*
 let Usersshow = []
@@ -36,6 +38,7 @@ let Usersshow = []
 
     <Frends
 sessionuser={sessionuser}
+Frends={frends}
 clerkUser={{
   id :clerkUser.id ,
   username : `${clerkUser.firstName}${clerkUser.lastName}`,

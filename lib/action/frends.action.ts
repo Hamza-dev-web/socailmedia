@@ -345,26 +345,23 @@ updatedData
 export const handleAccept =async( senderId :string, email :string) =>{
     try {
 
-        /*
-        const userthatsended = await database.listDocuments(process.env.DATABASE_ID as string,
-            process.env.USERS_COLLECTION  as string,
-       [      Query.equal("$id" , senderId)]
-     
-             
-         )
-       */
 const currentuser = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.USERS_COLLECTION!,
   [Query.equal("email", email)]
 );
+const frendsuser = await database.listDocuments(
+  process.env.DATABASE_ID!,
+  process.env.USERS_COLLECTION!,
+  [Query.equal("$id", senderId)]
+);
 
-if (!currentuser.documents.length) {
+if (!currentuser.documents.length ||frendsuser.documents.length ) {
   throw new Error("User not found");
 }
 
 const userDoc = currentuser.documents[0];
-
+const frendsDoc = frendsuser.documents[0];
 // Compute PairId
 const PairId = [senderId, userDoc.$id].sort().join("_");
 
@@ -382,7 +379,7 @@ if (!friendRequest.documents.length) {
 const requestDoc = friendRequest.documents[0];
 
 // 3️⃣ Create new friend entry
-const newFriend = await database.createDocument(
+const newFriend1 = await database.createDocument(
   process.env.DATABASE_ID!,
   process.env.SENDER_COLLECTIONs!,
   ID.unique(),
@@ -397,7 +394,21 @@ const newFriend = await database.createDocument(
     status: "Frends",
   }
 );
-
+const newFriend2 = await database.createDocument(
+  process.env.DATABASE_ID!,
+  process.env.SENDER_COLLECTIONs!,
+  ID.unique(),
+  {
+    PairId,
+    senderId,
+    receverId: frendsDoc.$id,
+    username: frendsDoc.name,
+    image: frendsDoc.image,
+    index: frendsDoc.index,
+    Accept: true,
+    status: "Frends",
+  }
+);
 // 4️⃣ Update existing friend request
 
     await database.updateDocument(
@@ -405,7 +416,7 @@ const newFriend = await database.createDocument(
       process.env.USERS_COLLECTION as string,
       senderId,
       { 
-    senderRequest:  newFriend.$id
+    senderRequest:  newFriend2.$id
        }
     );
         await database.updateDocument(
@@ -413,7 +424,7 @@ const newFriend = await database.createDocument(
       process.env.USERS_COLLECTION as string,
       currentuser.documents[0].$id,
       { 
-    senderRequest:  newFriend.$id
+    senderRequest:  newFriend1.$id
        }
     );
       
@@ -427,7 +438,7 @@ const newFriend = await database.createDocument(
         console.log(err)
     }
 } 
-export const UpdateTheState = async (id :string , userId :string)=> {
+export const GetAllFrends = async ( userId :string)=> {
   try {
    const currentuser = await database.listDocuments(
   process.env.DATABASE_ID!,
@@ -442,83 +453,15 @@ if (!currentuser.documents.length) {
 const userDoc = currentuser.documents[0];
    const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
-  process.env.FRENDS_COLLECTION!,
-  [Query.equal("$id", id)]
+  process.env.SENDER_COLLECTION!,
+  [Query.equal("$id", userDoc.senderRequest)]
 );
-const requestDoc = friendRequest.documents[0];
+return friendRequest.documents;
 
-    const updatedFriends = [...userDoc.frends, requestDoc.$id];
-await  database.updateDocument(
-  process.env.DATABASE_ID!,
-  process.env.USERS_COLLECTION!,
-  id,
-  {
-    frends: updatedFriends,
-  }
-);
-console.log("OK")
-return "Accept"
 
   }
   catch (err :any) {
     console.log(err)
   }
 }
-    export async function HandleAccepto  (userId :string){
-      try {
-    const currentUser = await database.listDocuments(
-      process.env.DATABASE_ID as string,
-      process.env.USERS_COLLECTION as string,
-      [Query.equal("email", userId)]
-    );
-    console.log("test",currentUser ,)
-  const follower =    await database.listDocuments(
-      process.env.DATABASE_ID as string,
-      process.env.FRENDS_COLLECTION as string,
-      [Query.equal("$id", currentUser.documents[0].frends)]
-    );
-return follower.documents
-        
-
-      }
-      catch(err :any) {
-        console.log(err)
-      }
-    }
-    export const UpdateTheState2 = async (id :string , userId :string)=> {
-  try {
-   const currentuser = await database.listDocuments(
-  process.env.DATABASE_ID!,
-  process.env.USERS_COLLECTION!,
-  [Query.equal("$id", userId)]
-);
-
-if (!currentuser.documents.length) {
-  throw new Error("User not found");
-}
-
-const userDoc = currentuser.documents[0];
-   const friendRequest = await database.listDocuments(
-  process.env.DATABASE_ID!,
-  process.env.FRENDS_COLLECTION!,
-  [Query.equal("$id", id)]
-);
-const requestDoc = friendRequest.documents[0];
-
-    const updatedFriends = [...userDoc.frends, requestDoc.$id];
-await  database.updateDocument(
-  process.env.DATABASE_ID!,
-  process.env.USERS_COLLECTION!,
-  id,
-  {
-    frends: updatedFriends,
-  }
-);
-console.log("OK")
-return "Accept"
-
-  }
-  catch (err :any) {
-    console.log(err)
-  }
-}
+    

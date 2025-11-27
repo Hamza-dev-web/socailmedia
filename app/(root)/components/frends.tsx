@@ -1,5 +1,5 @@
 "use client"
-import { DeleteRequest, handleAccept, UpdateTheState } from "@/lib/action/frends.action";
+import { DeleteRequest, handleAccept, GetAllFrends } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";
@@ -35,6 +35,7 @@ console.log("session" ,sessionuser)
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
+ <h1> Invitation </h1>
   {listOfFollow && listOfFollow.length > 0 &&  listOfFollow.map((usr: any) => (
    <>
    {usr.senderId != sessionuser.documents[0].$id  ? (
