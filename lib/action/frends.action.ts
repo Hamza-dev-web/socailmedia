@@ -355,7 +355,7 @@ const frendsuser = await database.listDocuments(
   process.env.USERS_COLLECTION!,
   [Query.equal("$id", senderId)]
 );
-
+console.log(currentuser , frendsuser)
 if (!currentuser.documents.length ||frendsuser.documents.length ) {
   throw new Error("User not found");
 }
@@ -445,11 +445,9 @@ export const GetAllFrends = async ( userId :string)=> {
   process.env.USERS_COLLECTION!,
   [Query.equal("$id", userId)]
 );
-
 if (!currentuser.documents.length) {
   throw new Error("User not found");
 }
-
 const userDoc = currentuser.documents[0];
    const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
@@ -457,8 +455,6 @@ const userDoc = currentuser.documents[0];
   [Query.equal("$id", userDoc.senderRequest)]
 );
 return friendRequest.documents;
-
-
   }
   catch (err :any) {
     console.log(err)
