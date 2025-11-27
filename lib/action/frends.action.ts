@@ -371,7 +371,7 @@ const PairId = [senderId, userDoc.$id].sort().join("_");
 // 2️⃣ Get friend request
 const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
-  process.env.FRENDS_COLLECTION!,
+  process.env.RECEIVED_COLLECTION!,
   [Query.equal("PairId", PairId)]
 );
 
@@ -384,7 +384,7 @@ const requestDoc = friendRequest.documents[0];
 // 3️⃣ Create new friend entry
 const newFriend = await database.createDocument(
   process.env.DATABASE_ID!,
-  process.env.FRENDS_COLLECTION!,
+  process.env.SENDER_COLLECTIONs!,
   ID.unique(),
   {
     PairId,
@@ -399,17 +399,30 @@ const newFriend = await database.createDocument(
 );
 
 // 4️⃣ Update existing friend request
-const updateRequest = await database.updateDocument(
+
+    await database.updateDocument(
+      process.env.DATABASE_ID as string,
+      process.env.USERS_COLLECTION as string,
+      senderId,
+      { 
+    senderRequest:  newFriend.$id
+       }
+    );
+        await database.updateDocument(
+      process.env.DATABASE_ID as string,
+      process.env.USERS_COLLECTION as string,
+      currentuser.documents[0].$id,
+      { 
+    senderRequest:  newFriend.$id
+       }
+    );
+      
+ await database.deleteDocument(
   process.env.DATABASE_ID!,
-  process.env.FRENDS_COLLECTION!,
+  process.env.RECEIVED_COLLECTION!,
   requestDoc.$id,
-  {
-    Accept: true,
-    status: "Frends",
-  }
 );
-return {Id :newFriend.$id , userId :currentuser.documents[0].$id };
-            }
+}
     catch (err :any) {
         console.log(err)
     }

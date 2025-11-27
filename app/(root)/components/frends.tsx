@@ -60,8 +60,7 @@ console.log("session" ,sessionuser)
           
             onClick={async () =>{
               setStatus(true)
-             const {Id , userId} = await handleAccept( usr.senderId,clerkUser && clerkUser.email)
-             await UpdateTheState(Id , userId) 
+          await handleAccept( usr.senderId,clerkUser && clerkUser.email)
              window.location.reload()
               setStatus(false)
             }
