@@ -356,7 +356,7 @@ const frendsuser = await database.listDocuments(
   [Query.equal("$id", senderId)]
 );
 console.log(currentuser , frendsuser)
-if (!currentuser.documents.length ||frendsuser.documents.length ) {
+if (!currentuser.documents.length ||!frendsuser.documents.length ) {
   throw new Error("User not found");
 }
 
