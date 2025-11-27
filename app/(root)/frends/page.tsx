@@ -11,7 +11,7 @@ import { getUsers } from "@/lib/action/user.action";
 
 export default  async function Home() {
   const clerkUser = await currentUser()
-  const Follower = await HandleAccepto(clerkUser?.emailAddresses[0].emailAddress as string )
+  const Follower = await ListAllthefollower(clerkUser?.emailAddresses[0].emailAddress as string )
   const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
 const sessionuser = await getUsers(clerkUser.emailAddresses[0].emailAddress)
 if(!sessionuser) return 

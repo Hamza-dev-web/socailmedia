@@ -44,7 +44,7 @@ return filtered;
 
 //if(listofusers.documents.length > 0) .push(listofusers.documents)
 
-       return listofusers.documents
+    //   return listofusers.documents
 /*
 const filteredusers = docs.documents.filter(
   doc => !FinalListofUsers.includes(doc.$id)
@@ -185,7 +185,7 @@ console.log("recdoc" , receiverRes)
       receiverDoc.$id,
       { 
     PairId:updatedPairId,
-    receivedRequest:  receiverFriends
+    receivedRequest:  newFriend.$id
        }
     );
 /*
@@ -254,7 +254,12 @@ const  user =  await database.listDocuments(
 process.env.DATABASE_ID as string,
 process.env.USERS_COLLECTION  as string
 ,[Query.equal("email" , [email])]);
-  return user.documents[0].frends
+const friendRequest = await database.listDocuments(
+  process.env.DATABASE_ID!,
+  process.env.RECEIVED_COLLECTION!,
+  [Query.equal("PairId", user.documents[0].PairId )]
+);
+  return friendRequest.documents
         }
         catch(err :any) {
             console.log(err)
