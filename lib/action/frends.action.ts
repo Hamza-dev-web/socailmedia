@@ -381,7 +381,7 @@ const requestDoc = friendRequest.documents[0];
 // 3️⃣ Create new friend entry
 const newFriend1 = await database.createDocument(
   process.env.DATABASE_ID!,
-  process.env.SENDER_COLLECTIONs!,
+  process.env.SENDER_COLLECTION!,
   ID.unique(),
   {
     PairId,
@@ -396,7 +396,7 @@ const newFriend1 = await database.createDocument(
 );
 const newFriend2 = await database.createDocument(
   process.env.DATABASE_ID!,
-  process.env.SENDER_COLLECTIONs!,
+  process.env.SENDER_COLLECTION!,
   ID.unique(),
   {
     PairId,
