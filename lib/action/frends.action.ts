@@ -416,7 +416,7 @@ const newFriend2 = await database.createDocument(
       process.env.USERS_COLLECTION as string,
       senderId,
       { 
-    senderRequest:  newFriend2.$id
+    senderRequest:  newFriend1.$id
        }
     );
         await database.updateDocument(
@@ -424,7 +424,7 @@ const newFriend2 = await database.createDocument(
       process.env.USERS_COLLECTION as string,
       currentuser.documents[0].$id,
       { 
-    senderRequest:  newFriend1.$id
+    senderRequest:  newFriend2.$id
        }
     );
       
