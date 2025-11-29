@@ -455,7 +455,7 @@ for(let i= 0 ; i<userDoc.senderRequest.length ; i++){
 const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.SENDER_COLLECTION!,
-  [Query.equal("$id", userDoc.senderRequest[i])]
+  [Query.equal("$id", userDoc.senderRequest[i].$id)]
 );
 if(friendRequest.documents.length > 0) {
   list=[...list , friendRequest.documents]
