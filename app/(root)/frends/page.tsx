@@ -38,7 +38,7 @@ let Usersshow = []
 
     <Frends
 sessionuser={sessionuser}
-Frends={frends[0]}
+Frends={frends}
 clerkUser={{
   id :clerkUser.id ,
   username : `${clerkUser.firstName}${clerkUser.lastName}`,

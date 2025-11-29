@@ -450,7 +450,7 @@ console.log("allfrends",userDoc , "frends" ,userDoc.senderRequest)
 if (!currentuser.documents.length) {
   throw new Error("User not found");
 }
-let list =[]
+let list =null
 for(let i= 0 ; i<userDoc.senderRequest.length ; i++){
 const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
