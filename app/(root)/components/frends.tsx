@@ -29,7 +29,7 @@ const [searchedUser , setSearched] =useState([])
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
- {listOfInvitaion.length > 0 &&
+ {listOfInvitaion && listOfInvitaion.length > 0 &&
  <h1 className="text-5xl font-serif font-semibold text-center text-gray-800 tracking-wide 
            drop-shadow-sm mb-6">
   Invitation
@@ -117,13 +117,13 @@ const [searchedUser , setSearched] =useState([])
     )}
 </>
   ))}
-  {Frends.length > 0 &&
+  {Frends && Frends.length > 0 &&
  <h1 className="text-5xl font-serif font-semibold text-center text-gray-800 tracking-wide 
            drop-shadow-sm mb-6">
   Frends
 </h1>
 }
-{Frends&& Frends.length > 0 ?  Frends.map((usr: any) => (
+{Frends && Frends.length > 0 ?  Frends.map((usr: any) => (
   <>
             <div className="flex gap-3 items-center">
               <Image
@@ -147,6 +147,8 @@ const [searchedUser , setSearched] =useState([])
 ) ):
 <p></p>
 }
+
+{/* search section*/}
   <div className="flex flex-col items-center w-full px-4 mt-5">
     <div className="flex justify-between items-center w-full max-w-[1200px] mb-4">
       <img
