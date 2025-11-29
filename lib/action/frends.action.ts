@@ -445,12 +445,12 @@ export const GetAllFrends = async ( userId :string)=> {
   process.env.USERS_COLLECTION!,
   [Query.equal("$id", userId)]
 );
+const userDoc = currentuser.documents[0];
+console.log("allfrends",userDoc , "frends" ,userDoc.senderRequest)
 if (!currentuser.documents.length) {
   throw new Error("User not found");
 }
 
-const userDoc = currentuser.documents[0];
-console.log(userDoc.senderRequest)
 const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.SENDER_COLLECTION!,
