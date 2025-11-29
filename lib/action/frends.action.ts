@@ -410,13 +410,13 @@ const newFriend2 = await database.createDocument(
   }
 );
 // 4️⃣ Update existing friend request
-
+console.log("pro" , newFriend1.$id)
     await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
       senderId,
       { 
-    senderRequest:  newFriend1.$id
+    senderRequest:  newFriend1.$id 
        }
     );
         await database.updateDocument(
