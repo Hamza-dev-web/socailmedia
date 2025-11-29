@@ -125,6 +125,20 @@ const [searchedUser , setSearched] =useState([])
 }
 {Frends && Frends.length > 0 ?  Frends.map((usr: any) => (
   <>
+          <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
+      <div
+        className="flex gap-3 items-center cursor-pointer"
+        onClick={() => router.push(`${usr.$id}/user`)}
+      >
+        <img
+          src={usr.image}
+          alt=""
+          className="rounded-full"
+          width={30}
+          height={30}
+        />
+        <p className="font-black">{usr.username}</p>
+      </div>
             <div className="flex gap-3 items-center">
               <Image
                 src="/check.png"
@@ -142,6 +156,7 @@ const [searchedUser , setSearched] =useState([])
                 height={30}
                 onClick={() => router.push(`${usr.index}/messages`)}
               />
+            </div>
             </div>
         </>
 ) ):
