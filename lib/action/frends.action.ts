@@ -416,7 +416,7 @@ console.log("pro" , newFriend1.$id)
       process.env.USERS_COLLECTION as string,
       senderId,
       { 
-    senderRequest:  newFriend1.$id 
+    senderRequest:  [newFriend1.$id] 
        }
     );
         await database.updateDocument(
@@ -424,7 +424,7 @@ console.log("pro" , newFriend1.$id)
       process.env.USERS_COLLECTION as string,
       currentuser.documents[0].$id,
       { 
-    senderRequest:  newFriend2.$id
+    senderRequest: [ newFriend2.$id]
        }
     );
       
