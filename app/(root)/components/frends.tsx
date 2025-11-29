@@ -11,32 +11,30 @@ import { Button } from "@/components/ui/button";
 export default  function Frends({
   sessionuser,  
   users ,
-    listOfFollow,
+    listOfInvitaion,
+    Frends,
     clerkUser,
 }:{
     sessionuser :any ,
     users :  any ,
-    listOfFollow : any[],
+    Frends :any[]
+    listOfInvitaion : any[],
     clerkUser :{id :string , username:string , email:string}
 }) {
 const [search , setSearch] =useState("")
 const router = useRouter()
 const [satus , setStatus] =useState(true)
-const [follwer , setFollower] =useState(listOfFollow)
 const [searchedUser , setSearched] =useState([])
-useEffect(()=>{
-  if(follwer?.length > 0 ){
-    for(let j =0 ; j<follwer.length ;j++){
-      setStatus(follwer[j].status)
-    }
-  }
-} ,[])
-console.log("session" ,sessionuser)
+
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
- <h1> Invitation </h1>
-  {listOfFollow && listOfFollow.length > 0 &&  listOfFollow.map((usr: any) => (
+ {listOfInvitaion.length > 0 &&
+ <h1 className="text-5xl font-serif font-semibold text-center text-gray-800 tracking-wide 
+           drop-shadow-sm mb-6">
+  Invitation
+</h1> }
+  {listOfInvitaion&& listOfInvitaion.length > 0 &&  listOfInvitaion.map((usr: any) => (
    <>
    {usr.senderId != sessionuser.documents[0].$id  ? (
     <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
@@ -119,7 +117,36 @@ console.log("session" ,sessionuser)
     )}
 </>
   ))}
-
+  {Frends.length > 0 &&
+ <h1 className="text-5xl font-serif font-semibold text-center text-gray-800 tracking-wide 
+           drop-shadow-sm mb-6">
+  Frends
+</h1>
+}
+{Frends&& Frends.length > 0 ?  Frends.map((usr: any) => (
+  <>
+            <div className="flex gap-3 items-center">
+              <Image
+                src="/check.png"
+                alt=""
+                className="rounded-full"
+                width={30}
+                height={30}
+              />
+              <p className="text-white">Friends</p>
+              <Image
+                src="/mes.png"
+                alt=""
+                className="rounded-full cursor-pointer"
+                width={30}
+                height={30}
+                onClick={() => router.push(`${usr.index}/messages`)}
+              />
+            </div>
+        </>
+) ):
+<p></p>
+}
   <div className="flex flex-col items-center w-full px-4 mt-5">
     <div className="flex justify-between items-center w-full max-w-[1200px] mb-4">
       <img

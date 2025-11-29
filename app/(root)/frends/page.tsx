@@ -11,13 +11,13 @@ import { getUsers } from "@/lib/action/user.action";
 
 export default  async function Home() {
   const clerkUser = await currentUser()
-  const Follower = await ListAllthefollower(clerkUser?.emailAddresses[0].emailAddress as string )
+  const listOfInvitaion = await ListAllthefollower(clerkUser?.emailAddresses[0].emailAddress as string )
   const users = await ListUsers(clerkUser.emailAddresses[0].emailAddress)
 const sessionuser = await getUsers(clerkUser.emailAddresses[0].emailAddress)
 if(!sessionuser) return 
 const frends = await GetAllFrends(sessionuser.documents[0].$id as string)
 
-console.log('Follower' ,Follower)
+console.log('Invitation' ,listOfInvitaion, 'Follower',frends)
 /*
 let Usersshow = []
   for(let i=0 ; i< Follower?.length ;i++) {
@@ -45,7 +45,7 @@ clerkUser={{
   email :clerkUser.emailAddresses[0].emailAddress
 }}
 users={users}
-listOfFollow={Follower}
+listOfInvitaion={listOfInvitaion}
 /> 
   )
 }
