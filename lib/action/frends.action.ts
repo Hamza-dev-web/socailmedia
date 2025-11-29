@@ -458,7 +458,7 @@ const friendRequest = await database.listDocuments(
   [Query.equal("$id", userDoc.senderRequest[i])]
 );
 if(friendRequest.documents.length > 0) {
-  list=[...list , friendRequest]
+  list=[...list , friendRequest.documents]
 }
 
 }
