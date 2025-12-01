@@ -7,37 +7,57 @@ import { currentUser } from "@clerk/nextjs/server";
 import { comment } from "postcss";
 
 
-export const CreateMessages =async(documents :{userId : string , message : string}) =>{
+export const CreateMessages =async(documents :{userId : string,ReciverId :string , message : string}) =>{
 try {
     const newmessage = await database.createDocument(
         process.env.DATABASE_ID as string,
         process.env.MESSAGE_COLLECTION as string,
         ID.unique() , 
         {
-         userId :documents.userId,
+         CurrentUserId :documents.userId,
          message : documents.message
 
                    }
             )
-              const user = await database.listDocuments(
+              const currentUser  = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.USERS_COLLECTION as string,[
                 Query.equal("$id" , [documents.userId ])] )
-                if(!user ) return
-                console.log(user.documents[0].message)
-                await database.updateDocument(       process.env.DATABASE_ID as string,
-                    process.env.USERS_COLLECTION as string , documents.userId ,{
-                        ...user.documents[0],
+                   const ReciverUser = await database.listDocuments(
+                process.env.DATABASE_ID as string,
+                process.env.USERS_COLLECTION as string,[
+                Query.equal("$id" , [documents.ReciverId ])] )
+                if(!currentUser || !ReciverUser ) return
+                console.log(currentUser.documents[0].message)
+                await database.updateDocument(      
+                    process.env.DATABASE_ID as string,
+                    process.env.USERS_COLLECTION as string ,
+                     documents.userId ,{
+                        ...currentUser.documents[0],
                         message :[
-                            ...user.documents[0].message,
+                            ...currentUser.documents[0].message,
                             { 
-                               
+                               CurrentUserId :documents.userId,
+                               SenderId : documents.ReciverId,
                                 message :newmessage.message
                             }
                         ]
                     })
-                    return console.log("donne" , user.documents[0].message)
-
+                         await database.updateDocument(     
+                     process.env.DATABASE_ID as string,
+                    process.env.USERS_COLLECTION as string , 
+                    documents.ReciverId ,{
+                        ...currentUser.documents[0],
+                        message :[
+                            ...currentUser.documents[0].message,
+                            { 
+                               CurrentUserId :documents.userId,
+                               SenderId : documents.ReciverId,
+                                message :newmessage.message
+                            }
+                        ]
+                    })
+                    return console.log("donne" , currentUser.documents[0].message)
 }
 catch (err :any) {
 console.log(err)
@@ -57,24 +77,3 @@ catch(err :any){
     console.log(err)
 }
 }
-export const getUsersToMessage =async (index :string)=>{
-        try {
-      
-            const  newDocuments =  await database.listDocuments(
-               process.env.DATABASE_ID as string,
-               process.env.USERS_COLLECTION  as string
-               ,[
-               
-            ] );
-            
-                if(newDocuments.documents.length > 0  ){
-                    return newDocuments.documents.find((user) => user.index == index) 
-                }
-            
-          
-          
-            }
-        catch(err :any) {
-            console.log(err)
-        }
-    }
