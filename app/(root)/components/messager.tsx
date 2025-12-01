@@ -46,6 +46,7 @@ useEffect(() => {
 
   useEffect(()=>{
     const getUser =async() =>{
+      console.log(user.$id , userToTalkWith.$id)
       if(user.$id == undefined) return
       const message = await getAllMessage(user.$id as string)
       console.log(message)
@@ -128,7 +129,7 @@ className=" rounded-full"
         </div>
     <div className=" flex w-[580px] justify-between gap-2 mt-[500px]  ">
     <Input placeholder="Text" className=" w-[500px]" value={message} onChange={(e) => setMessages(e.target.value )}/>
-    <Button  onClick={async()=> await CreateMessages({userId :user.$id as string , message :message})} className=" gap-3">
+    <Button  onClick={async()=> await CreateMessages({userId :user.$id as string ,ReciverId :userToTalkWith.$id, message :message})} className=" gap-3">
     <Image 
     src="/send.png"
     alt=""
