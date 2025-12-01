@@ -1,14 +1,6 @@
 "use server"
-
-
-import { redirect } from "next/navigation";
-import { database, users } from "../appwrite/config";
-import { revalidatePath } from "next/cache";
-import { ID, Query } from "node-appwrite";
-import { currentUser } from "@clerk/nextjs/server";
-import { comment } from "postcss";
-
-
+import { database } from "../appwrite/config";
+import { ID } from "node-appwrite";
 export const handleTheComments = async (idPost :string    , comments:string , username :string)=>{
         try {
             const newComments = await database.createDocument(
@@ -55,7 +47,7 @@ await database.updateDocument(
 console.log(err)
         }
     }
- export const GetNotifiction =async ()=>{
+export const GetNotifiction =async ()=>{
                     try {
                 
                         const notifiction = await database.listDocuments(
@@ -71,8 +63,6 @@ console.log(err)
                         console.log(err)
                     }
                 }
-
-
 export const DeleteComments =async(id :string) =>{
     try {
         const newComments = await database.deleteDocument(

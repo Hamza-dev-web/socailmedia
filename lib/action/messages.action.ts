@@ -1,10 +1,7 @@
 "use server"
-import { redirect } from "next/navigation";
-import { database, users } from "../appwrite/config";
-import { revalidatePath } from "next/cache";
+import { database, users } from "../appwrite/config";;
 import { ID, Query } from "node-appwrite";
-import { currentUser } from "@clerk/nextjs/server";
-import { comment } from "postcss";
+
 
 
 export const CreateMessages =async(documents :{userId : string,ReciverId :string , message : string}) =>{
