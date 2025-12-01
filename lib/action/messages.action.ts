@@ -66,7 +66,7 @@ try {
 const user = await database.listDocuments(
   process.env.DATABASE_ID as string,
   process.env.USERS_COLLECTION as string,[
-  Query.equal("$id" , [userId ])] )
+  Query.equal("$id" , userId )] )
 return  user.documents[0].message
 
 }
