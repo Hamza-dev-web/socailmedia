@@ -244,7 +244,9 @@ export const DeleteRequest =async( senderId :string , receverId :string)=>{
          )
         await database.deleteDocument( 
             process.env.DATABASE_ID as string,
-            process.env.FRENDS_COLLECTION  as string, frendsrequest.documents[0].$id)
+            process.env.RECEIVED_COLLECTION  as string, 
+            frendsrequest.documents[0].$id)
+            /*/
            const data = user.documents[0].frends.filter((rqs:any) => rqs.$id != frendsrequest.documents[0].$id) 
     const updatedData   ={
 name : user.documents[0].name ,
@@ -260,6 +262,7 @@ process.env.USERS_COLLECTION  as string,
 user.documents[0].$id ,
 updatedData
 )
+*/
           
             return console.log("ok")
 
