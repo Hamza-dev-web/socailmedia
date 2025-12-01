@@ -82,7 +82,7 @@ className=" rounded-full"
 {
   user&&
   
-  user?.message?.length >0 && user.message.map((msg :any) =>(
+  user?.Discution?.length >0 && user.Discution.map((msg :any) =>(
   <div key={msg} className=" flex flex-col  justify-start  gap-2 mt-5  w-auto ">
   <div className="  gap-3 items-center   flex w-[150px] h-[30px] rounded-xl  bg-gray-400">
   <img 
@@ -104,7 +104,7 @@ className=" rounded-full"
 <div className=" flex w-[300px] flex-col ml-[250px]  mb-32">
 {
   userToTalkWith &&
-  userToTalkWith?.message?.length >0 && userToTalkWith.message.map((msg :any) =>(
+  userToTalkWith?.Discution?.length >0 && userToTalkWith.Discution.map((msg :any) =>(
   <div key={msg} className=" flex flex-col   justify-end   gap-2 mt-5  w-auto ">
   <div className="  gap-3 items-center   flex w-[150px] h-[30px] rounded-xl  bg-purple-400">
   <img 
