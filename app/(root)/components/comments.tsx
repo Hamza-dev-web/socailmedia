@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { handleTheComments } from "@/lib/action/user.action";
+import { handleTheComments } from "@/lib/action/notification&Comments.action";
 import { useEffect, useState } from "react";
 export function Comments ({idPost , username} :{idPost :string , username :string}){
     console.log(idPost)

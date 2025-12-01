@@ -1,11 +1,7 @@
 "use server"
-import { redirect } from "next/navigation";
-import { database, users } from "../appwrite/config";
-import { revalidatePath } from "next/cache";
+import { database } from "../appwrite/config";
 import { ID, Query } from "node-appwrite";
-import { currentUser } from "@clerk/nextjs/server";
-import { comment } from "postcss";
-import { GetUserDetails } from "./user.action";
+
 
 
 export const CreatePosts = async(documents :{title :string , like :number , image :string , userImage :string, posterName :string})=> {
@@ -84,7 +80,7 @@ return console.log("donne")
 
 
                 }
-                   export const GetAllSavePosts = async(id :string)=> {
+         export const GetAllSavePosts = async(id :string)=> {
             try {
                 const user = await database.listDocuments(
                     process.env.DATABASE_ID as string,

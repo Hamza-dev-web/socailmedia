@@ -1,5 +1,5 @@
 "use server"
-import { database, users } from "../appwrite/config"
+import { database } from "../appwrite/config"
 import { ID, Query } from "node-appwrite";
 
 export const ListUsers = async(email:string)=>{
@@ -188,28 +188,7 @@ console.log("recdoc" , receiverRes)
     receivedRequest:  newFriend.$id
        }
     );
-/*
- const newSender = await database.createDocument(
-      process.env.DATABASE_ID as string,
-      process.env.SENDER_COLLECTION as string,
-      ID.unique(),
-      {
-        PairId,
-        senderId,
-        receverId,
-        username: username,
-        image: image,
-        index: index,
-        Accept: false, 
-        status: "sending",
-      }
-    );
-      const senderDoc = newSender.documents[0];
-    const senderFriends = [
-      ...(senderDoc.senderRequest || []),
-     senderDoc.$id
-    ];
-    */
+
    await database.updateDocument(
       process.env.DATABASE_ID as string,
       process.env.USERS_COLLECTION as string,
@@ -219,26 +198,6 @@ console.log("recdoc" , receiverRes)
 
        }
     )    
-
-
-
-
-    /* 
-    const PotentielDuplicate = await database.listDocuments(
-      process.env.DATABASE_ID as string,
-      process.env.FRENDS_COLLECTION as string,
-      [Query.equal("PairId", PairId)]
-    );
-    if(PotentielDuplicate.documents.length >= 2) {
-     const update = PotentielDuplicate.documents.shift()
- await database.updateDocument(
-      process.env.DATABASE_ID as string,
-      process.env.FRENDS_COLLECTION as string,
-      PotentielDuplicate.documents[0]
-    );
-    }
-*/
-
     console.log("Receiver updated with pending friend request.");
     return "Sending"
   } catch (err: any) {
@@ -265,41 +224,8 @@ const friendRequest = await database.listDocuments(
             console.log(err)
         }
     }
-export const getUsersToMessage =async (index :number)=>{
-        try {
-      
-            const  newDocuments =  await database.listDocuments(
-               process.env.DATABASE_ID as string,
-               process.env.USERS_COLLECTION  as string
-               ,[
-               
-            ] );
-            
-                if(newDocuments.documents.length > 0  ){
-                    return newDocuments.documents.find((user) => user.index == index) 
-                }
-            
-          
-          
-            }
-        catch(err :any) {
-            console.log(err)
-        }
-    }
-/*
-    export const getallInvitation = async () =>{
-        try {
-await database.listDocuments(
-                    process.env.DATABASE_ID as string,
-                process.env.FRENDS_COLLECTION  as string,      
-                 [Query.equal("receverId" , )]
-)
-        }
-        catch (err :any) {
-            console.log(err)
-        }
-    }
-        */
+
+
 export const DeleteRequest =async( senderId :string , receverId :string)=>{
     try {
         const user = await database.listDocuments(process.env.DATABASE_ID as string,

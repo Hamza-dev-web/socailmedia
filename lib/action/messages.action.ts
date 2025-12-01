@@ -1,6 +1,4 @@
 "use server"
-
-
 import { redirect } from "next/navigation";
 import { database, users } from "../appwrite/config";
 import { revalidatePath } from "next/cache";
@@ -29,12 +27,7 @@ try {
                 console.log(user.documents[0].message)
                 await database.updateDocument(       process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string , documents.userId ,{
-                        name : user.documents[0].username,
-                        email : user.documents[0].email,
-                            image :user.documents[0].image,
-                            frends : user.documents[0].frends ,
-                            index  :user.documents[0].index,
-                            save :user.documents[0].save,
+                        ...user.documents[0],
                         message :[
                             ...user.documents[0].message,
                             { 
@@ -64,3 +57,24 @@ catch(err :any){
     console.log(err)
 }
 }
+export const getUsersToMessage =async (index :string)=>{
+        try {
+      
+            const  newDocuments =  await database.listDocuments(
+               process.env.DATABASE_ID as string,
+               process.env.USERS_COLLECTION  as string
+               ,[
+               
+            ] );
+            
+                if(newDocuments.documents.length > 0  ){
+                    return newDocuments.documents.find((user) => user.index == index) 
+                }
+            
+          
+          
+            }
+        catch(err :any) {
+            console.log(err)
+        }
+    }
