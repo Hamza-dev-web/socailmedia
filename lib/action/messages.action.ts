@@ -12,6 +12,7 @@ try {
         ID.unique() , 
         {
          CurrentUserId :documents.userId,
+           SenderId : documents.ReciverId,
          message : documents.message
 
                    }
@@ -31,7 +32,7 @@ try {
                     process.env.USERS_COLLECTION as string ,
                      documents.userId ,{
                         ...currentUser.documents[0],
-                        message :[
+                        Discution :[
                             ...currentUser.documents[0].message,
                             { 
                                CurrentUserId :documents.userId,
@@ -45,7 +46,7 @@ try {
                     process.env.USERS_COLLECTION as string , 
                     documents.ReciverId ,{
                         ...currentUser.documents[0],
-                        message :[
+                        Discution :[
                             ...currentUser.documents[0].message,
                             { 
                                CurrentUserId :documents.userId,
@@ -54,7 +55,7 @@ try {
                             }
                         ]
                     })
-                    return console.log("donne" , currentUser.documents[0].message)
+                    return console.log("donne" , currentUser.documents[0].Discution)
 }
 catch (err :any) {
 console.log(err)
@@ -67,7 +68,7 @@ const user = await database.listDocuments(
   process.env.DATABASE_ID as string,
   process.env.USERS_COLLECTION as string,[
   Query.equal("$id" , userId )] )
-return  user.documents[0].message
+return  user.documents[0].Discution
 
 }
 catch(err :any){

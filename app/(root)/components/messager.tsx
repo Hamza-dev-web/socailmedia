@@ -50,9 +50,10 @@ useEffect(() => {
       if(user.$id == undefined) return
       const message = await getAllMessage(user.$id as string)
       console.log(message)
-      if(message) {
-        setMessages(message as any)
-      }
+      if(message && message.length > 0) {
+        message.map((msg :any) =>{
+          setMessages(msg.msg as any)
+        })      }
           }
           getUser()
   },[user])
