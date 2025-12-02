@@ -6,17 +6,7 @@ import { ID, Query } from "node-appwrite";
 
 export const CreateMessages =async(documents :{userId : string,ReciverId :string , message : string}) =>{
 try {
-    const newmessage = await database.createDocument(
-        process.env.DATABASE_ID as string,
-        process.env.MESSAGE_COLLECTION as string,
-        ID.unique() , 
-        {
-         CurrentUserId :documents.userId,
-           SenderId : documents.ReciverId,
-         message : documents.message
-
-                   }
-            )
+    
               const currentUser  = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.USERS_COLLECTION as string,[
@@ -27,6 +17,18 @@ try {
                 Query.equal("$id" , [documents.ReciverId ])] )
                 if(!currentUser || !ReciverUser ) return
                 console.log(currentUser.documents[0].message)
+                const newmessage = await database.createDocument(
+        process.env.DATABASE_ID as string,
+        process.env.MESSAGE_COLLECTION as string,
+        ID.unique() , 
+        {
+         CurrentUserId :documents.userId,
+           SenderId : documents.ReciverId,
+         message : documents.message
+
+                   }
+            )
+    
                 await database.updateDocument(      
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string ,
@@ -45,9 +47,9 @@ try {
                      process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string , 
                     documents.ReciverId ,{
-                        ...currentUser.documents[0],
+                        ...ReciverUser.documents[0],
                         message :[
-                            ...currentUser.documents[0].message,
+                            ...ReciverUser.documents[0].message,
                             { 
                                CurrentUserId :documents.userId,
                                SenderId : documents.ReciverId,
