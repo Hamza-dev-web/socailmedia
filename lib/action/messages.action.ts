@@ -26,14 +26,14 @@ try {
                 process.env.USERS_COLLECTION as string,[
                 Query.equal("$id" , [documents.ReciverId ])] )
                 if(!currentUser || !ReciverUser ) return
-                console.log(currentUser.documents[0].message)
+                console.log(currentUser.documents[0].Discution)
                 await database.updateDocument(      
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string ,
                      documents.userId ,{
                         ...currentUser.documents[0],
                         Discution :[
-                            ...currentUser.documents[0].message,
+                            ...currentUser.documents[0].Discution,
                             { 
                                CurrentUserId :documents.userId,
                                SenderId : documents.ReciverId,
@@ -47,7 +47,7 @@ try {
                     documents.ReciverId ,{
                         ...currentUser.documents[0],
                         Discution :[
-                            ...currentUser.documents[0].message,
+                            ...currentUser.documents[0].Discution,
                             { 
                                CurrentUserId :documents.userId,
                                SenderId : documents.ReciverId,
