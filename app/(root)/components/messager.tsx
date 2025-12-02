@@ -54,9 +54,10 @@ useEffect(() => {
         message.map((msg :any) =>{
           setMessages(msg.msg as any)
         })      }
+         setMessages("")
           }
           getUser()
-  },[user])
+  },[allmessages])
 
   function handleSend (){
     socket.connect()
