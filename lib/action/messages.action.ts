@@ -26,14 +26,14 @@ try {
                 process.env.USERS_COLLECTION as string,[
                 Query.equal("$id" , [documents.ReciverId ])] )
                 if(!currentUser || !ReciverUser ) return
-                console.log(currentUser.documents[0].Discution)
+                console.log(currentUser.documents[0].message)
                 await database.updateDocument(      
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string ,
                      documents.userId ,{
                         ...currentUser.documents[0],
-                        Discution :[
-                            ...currentUser.documents[0].Discution,
+                        message :[
+                            ...currentUser.documents[0].message,
                             { 
                                CurrentUserId :documents.userId,
                                SenderId : documents.ReciverId,
@@ -46,8 +46,8 @@ try {
                     process.env.USERS_COLLECTION as string , 
                     documents.ReciverId ,{
                         ...currentUser.documents[0],
-                        Discution :[
-                            ...currentUser.documents[0].Discution,
+                        message :[
+                            ...currentUser.documents[0].message,
                             { 
                                CurrentUserId :documents.userId,
                                SenderId : documents.ReciverId,
@@ -55,7 +55,7 @@ try {
                             }
                         ]
                     })
-                    return console.log("donne" , currentUser.documents[0].Discution)
+                    return console.log("donne" , currentUser.documents[0].message)
 }
 catch (err :any) {
 console.log(err)
@@ -68,7 +68,7 @@ const user = await database.listDocuments(
   process.env.DATABASE_ID as string,
   process.env.USERS_COLLECTION as string,[
   Query.equal("$id" , userId )] )
-return  user.documents[0].Discution
+return  user.documents[0].message
 
 }
 catch(err :any){
