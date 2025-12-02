@@ -46,12 +46,14 @@ console.log(err)
              name : documents.username,
             email : documents.email,
                 image :documents.image,
-                frends : [] ,
+                receivedRequest:[],
+                senderRequest:[],
                 save :[],
                 index :id,
                 message :[]
             }
         )
+        
         console.log(userDb)
         await database.createDocument(
             process.env.DATABASE_ID as string  ,
