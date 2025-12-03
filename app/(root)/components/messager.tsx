@@ -18,7 +18,7 @@ import {GetUserDetails, getUsers} from "@/lib/action/user.action";
 import { CreateMessages, getAllMessage } from "@/lib/action/messages.action";
 export const Messager =({user , userToTalkWith} :{user :any ,userToTalkWith :any })=>{
     const [message , setMessages] = useState("")
-const [allmessages , setallmessages] =useState([])
+//const [allmessages , setallmessages] =useState([])
 const socket = io("http://localhost:3001/" ,{autoConnect :false});
 /*
 const {user} = useUser()
@@ -43,7 +43,6 @@ useEffect(() => {
    }
    onConnect()
 },[])
-
   useEffect(()=>{
     const getUser =async() =>{
       console.log(user.$id , userToTalkWith.$id)
@@ -57,8 +56,7 @@ useEffect(() => {
          setMessages("")
           }
           getUser()
-  },[allmessages])
-
+  },[message])
   function handleSend (){
     socket.connect()
       socket.emit("message", message)
@@ -87,13 +85,13 @@ className=" rounded-full"
   <div key={msg} className=" flex flex-col  justify-start  gap-2 mt-5  w-auto ">
   <div className="  gap-3 items-center   flex w-[150px] h-[30px] rounded-xl  bg-gray-400">
   <img 
-  src={user?.imageUrl && user.imageUrl as string}
+  src={user?.image && user.image as string}
   alt=""
   width={30}
   height={30}
   className=" rounded-full"
   />
-  <p>{user?.username }</p>
+  <p>{user?.name }</p>
   </div>
   <div className="flex ">
   <p>{msg.message && msg.message}</p>
@@ -131,7 +129,11 @@ className=" rounded-full"
         </div>
     <div className=" flex w-[580px] justify-between gap-2 mt-[500px]  ">
     <Input placeholder="Text" className=" w-[500px]" value={message} onChange={(e) => setMessages(e.target.value )}/>
-    <Button  onClick={async()=> await CreateMessages({userId :user.$id as string ,ReciverId :userToTalkWith.$id, message :message})} className=" gap-3">
+    <Button  onClick={async()=>{ 
+      await CreateMessages({userId :user.$id as string ,ReciverId :userToTalkWith.$id, message :message})
+      setMessages("")
+
+    }} className=" gap-3">
     <Image 
     src="/send.png"
     alt=""
