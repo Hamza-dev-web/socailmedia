@@ -46,11 +46,7 @@ console.log(err)
              name : documents.username,
             email : documents.email,
                 image :documents.image,
-                receivedRequest:[],
-                senderRequest:[],
-                save :[],
-                index :id,
-                message :[]
+                index :id,            
             }
         )
         
