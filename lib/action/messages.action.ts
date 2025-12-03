@@ -25,7 +25,6 @@ try {
          CurrentUserId :documents.userId,
            SenderId : documents.ReciverId,
          message : documents.message
-
                    }
             )
     
@@ -43,6 +42,7 @@ try {
                             }
                         ]
                     })
+                    /*
                          await database.updateDocument(     
                      process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string , 
@@ -57,6 +57,7 @@ try {
                             }
                         ]
                     })
+                        */
                     return console.log("donne" , currentUser.documents[0].message)
 }
 catch (err :any) {
