@@ -55,128 +55,138 @@ useEffect(() => {
         })      }
           }
           getUser()
-  },[CreateMessages])
+  },[message])
   function handleSend (){
     socket.connect()
       socket.emit("message", message)
      setMessages("")
   }
   return (
-<main className="w-full h-screen flex items-center justify-center bg-slate-100">
-  <div className="hidden md:flex flex-col w-full max-w-3xl h-[700px] bg-white shadow-xl rounded-md overflow-hidden">
+<main className="w-full h-[700px] flex items-center justify-center bg-slate-100 overflow-auto">
+
+  {/* DESKTOP CHAT BOX */}
+  <div className="hidden md:flex flex-col w-full max-w-3xl h-[700px] bg-white rounded-lg shadow-xl overflow-hidden">
 
     {/* HEADER */}
-    <div className="flex items-center gap-3 p-4 bg-purple-400 text-white">
+    <div className="flex items-center gap-3 p-4 bg-[#8a63d2] text-white shadow-md">
       <img
         src={userToTalkWith?.image}
-        alt=""
-        width={35}
-        height={35}
-        className="rounded-full"
+        className="w-10 h-10 rounded-full"
       />
-      <p className="font-semibold text-lg">{userToTalkWith?.name}</p>
+      <p className="text-lg font-semibold">{userToTalkWith?.name}</p>
     </div>
 
-    {/* MESSAGES AREA */}
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    {/* MESSAGES */}
+    <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-[#f1f2f6]">
 
-      {/* YOUR MESSAGES (Left) */}
+      {/* USER MESSAGES (LEFT) */}
       {user?.message?.map((msg: any, i: number) => (
-        <div key={i} className="flex items-start gap-2 w-full">
+        <div key={i} className="flex items-end gap-2 max-w-[70%]">
+
           <img
             src={user?.image}
-            width={32}
-            height={32}
-            className="rounded-full"
+            className="w-8 h-8 rounded-full"
           />
-          <div>
-            <p className="text-sm font-semibold">{user?.name}</p>
-            <div className="bg-gray-200 p-3 rounded-xl max-w-[250px]">
-              <p>{msg.message}</p>
+
+          <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
+
+            {/* Tail */}
+            <div className="absolute -left-2 bottom-0 w-0 h-0 
+              border-t-[10px] border-t-white
+              border-r-[10px] border-r-transparent">
             </div>
+
+            <p className="text-gray-900">{msg.message}</p>
           </div>
         </div>
       ))}
 
-      {/* OTHER USER MESSAGES (Right) */}
+      {/* OTHER USER MESSAGES (RIGHT) */}
       {userToTalkWith?.message?.map((msg: any, i: number) => (
-        <div key={i} className="flex items-start gap-2 w-full justify-end">
-          <div>
-            <p className="text-sm font-semibold text-right">{userToTalkWith?.name}</p>
-            <div className="bg-purple-400 text-white p-3 rounded-xl max-w-[250px]">
-              <p>{msg.message}</p>
+        <div key={i} className="flex justify-end items-end gap-2 max-w-[70%] ml-auto">
+
+          <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
+
+            {/* Tail */}
+            <div className="absolute -right-2 bottom-0 w-0 h-0 
+              border-t-[10px] border-t-[#0084ff]
+              border-l-[10px] border-l-transparent">
             </div>
+
+            <p>{msg.message}</p>
           </div>
+
           <img
             src={userToTalkWith?.image}
-            width={32}
-            height={32}
-            className="rounded-full"
+            className="w-8 h-8 rounded-full"
           />
         </div>
       ))}
 
     </div>
 
-    {/* MESSAGE INPUT */}
-    <div className="p-4 flex gap-3 bg-white border-t">
+    {/* INPUT AREA */}
+    <div className="p-4 flex items-center gap-3 bg-white border-t">
+
       <Input
         placeholder="Type a message..."
         className="flex-1"
         value={message}
         onChange={(e) => setMessages(e.target.value)}
       />
+
       <Button
         onClick={async () => {
           await CreateMessages({
-            userId: user.$id as string,
+            userId: user.$id,
             ReciverId: userToTalkWith.$id,
             message: message
           });
           setMessages("");
         }}
-        className="flex gap-2 items-center"
+        className="flex items-center gap-2 bg-[#8a63d2] hover:bg-[#734fba] text-white"
       >
-        <img src="/send.png" width={25} height={25} />
+        <img src="/send.png" className="w-5 h-5" />
         Send
       </Button>
     </div>
   </div>
 
-  {/* MOBILE VERSION */}
+  {/* MOBILE UI */}
   <div className="md:hidden flex flex-col w-full h-full bg-white">
-    <div className="flex items-center gap-3 p-3 bg-purple-400 text-white">
+
+    {/* Header */}
+    <div className="flex items-center gap-3 p-3 bg-[#8a63d2] text-white">
       <img
         src={userToTalkWith?.image}
-        width={30}
-        height={30}
-        className="rounded-full"
+        className="w-8 h-8 rounded-full"
       />
-      <p>{userToTalkWith?.name}</p>
+      <p className="font-semibold">{userToTalkWith?.name}</p>
     </div>
 
-    <div className="flex-1 p-3 overflow-y-auto space-y-4">
-      {/** Same pattern but full width on mobile */}
+    {/* Messages */}
+    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-[#f1f2f6]">
       {user?.message?.map((msg: any, i: number) => (
-        <div key={i} className="w-full">
-          <div className="bg-gray-200 p-3 rounded-xl w-fit max-w-[80%]">
+        <div key={i} className="flex items-start gap-2 max-w-[80%]">
+          <div className="bg-white p-3 rounded-2xl border shadow">
             {msg.message}
           </div>
         </div>
       ))}
 
       {userToTalkWith?.message?.map((msg: any, i: number) => (
-        <div key={i} className="w-full flex justify-end">
-          <div className="bg-purple-400 text-white p-3 rounded-xl max-w-[80%]">
+        <div key={i} className="flex justify-end max-w-[80%] ml-auto">
+          <div className="bg-[#0084ff] text-white p-3 rounded-2xl shadow">
             {msg.message}
           </div>
         </div>
       ))}
     </div>
 
-    <div className="flex p-3 gap-2 border-t">
+    {/* Input */}
+    <div className="flex p-3 gap-2 border-t bg-white">
       <Input
-        placeholder="Type..."
+        placeholder="Type a message..."
         className="flex-1"
         value={message}
         onChange={(e) => setMessages(e.target.value)}
@@ -190,12 +200,15 @@ useEffect(() => {
           });
           setMessages("");
         }}
+        className="bg-[#8a63d2] text-white hover:bg-[#6c4baa]"
       >
         Send
       </Button>
     </div>
   </div>
+
 </main>
+
 
 
   );
