@@ -53,6 +53,7 @@ useEffect(() => {
         message.map((msg :any) =>{
           setMessages(msg.msg as any)
         })      }
+        setMessages("")
           }
           getUser()
   },[message])
@@ -133,7 +134,11 @@ useEffect(() => {
             ReciverId: userToTalkWith.$id,
             message: message
           });
-          setMessages("");
+          setTimeout(()=>{
+  setMessages("");
+window.location.reload()
+},1500)
+
         }}
         className="flex items-center gap-2 bg-[#8a63d2] hover:bg-[#734fba] text-white"
       >
