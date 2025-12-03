@@ -43,7 +43,8 @@ useEffect(() => {
    }
    onConnect()
 },[])
-  useEffect(()=>{
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+useEffect(()=>{
     const getUser =async() =>{
       console.log(user.$id , userToTalkWith.$id)
       if(user.$id == undefined) return
@@ -53,17 +54,16 @@ useEffect(() => {
         message.map((msg :any) =>{
           setMessages(msg.msg as any)
         })      }
- setMessages("")
           }
           getUser()
           
-  },[message])
+  },[messagesEndRef])
   function handleSend (){
     socket.connect()
       socket.emit("message", message)
      setMessages("")
   }
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+
 
 useEffect(() => {
   if (messagesEndRef.current) {
