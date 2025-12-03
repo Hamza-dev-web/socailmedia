@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useEffect, useState , useRef } from "react";
 import Image from "next/image";
 import { io } from "socket.io-client";
 import {
@@ -61,6 +61,13 @@ useEffect(() => {
       socket.emit("message", message)
      setMessages("")
   }
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+useEffect(() => {
+  if (messagesEndRef.current) {
+    messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+  }
+}, [user?.message, userToTalkWith?.message]);
   return (
 <main className="w-full h-[700px] flex items-center justify-center bg-slate-100 overflow-auto">
 
@@ -75,55 +82,39 @@ useEffect(() => {
       />
       <p className="text-lg font-semibold">{userToTalkWith?.name}</p>
     </div>
+<div 
+  ref={messagesEndRef}
+  className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4 bg-[#f1f2f6]"
+>
 
-    {/* MESSAGES */}
-    <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-[#f1f2f6]">
-
-      {/* USER MESSAGES (LEFT) */}
-      {user?.message?.map((msg: any, i: number) => (
-        <div key={i} className="flex items-end gap-2 max-w-[70%]">
-
-          <img
-            src={user?.image}
-            className="w-8 h-8 rounded-full"
-          />
-
-          <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
-
-            {/* Tail */}
-            <div className="absolute -left-2 bottom-0 w-0 h-0 
-              border-t-[10px] border-t-white
-              border-r-[10px] border-r-transparent">
-            </div>
-
-            <p className="text-gray-900">{msg.message}</p>
-          </div>
-        </div>
-      ))}
-
-      {/* OTHER USER MESSAGES (RIGHT) */}
-      {userToTalkWith?.message?.map((msg: any, i: number) => (
-        <div key={i} className="flex justify-end items-end gap-2 max-w-[70%] ml-auto">
-
-          <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
-
-            {/* Tail */}
-            <div className="absolute -right-2 bottom-0 w-0 h-0 
-              border-t-[10px] border-t-[#0084ff]
-              border-l-[10px] border-l-transparent">
-            </div>
-
-            <p>{msg.message}</p>
-          </div>
-
-          <img
-            src={userToTalkWith?.image}
-            className="w-8 h-8 rounded-full"
-          />
-        </div>
-      ))}
-
+  {/* Your messages */}
+  {user?.message?.map((msg: any, i: number) => (
+    <div key={i} className="flex items-end gap-2 max-w-[70%]">
+      <img src={user?.image} className="w-8 h-8 rounded-full" />
+      <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
+        <div className="absolute -left-2 bottom-0 w-0 h-0 
+          border-t-[10px] border-t-white
+          border-r-[10px] border-r-transparent"></div>
+        <p>{msg.message}</p>
+      </div>
     </div>
+  ))}
+
+  {/* Other user */}
+  {userToTalkWith?.message?.map((msg: any, i: number) => (
+    <div key={i} className="flex justify-end items-end gap-2 max-w-[70%] ml-auto">
+      <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
+        <div className="absolute -right-2 bottom-0 w-0 h-0 
+          border-t-[10px] border-t-[#0084ff]
+          border-l-[10px] border-l-transparent"></div>
+        <p>{msg.message}</p>
+      </div>
+      <img src={userToTalkWith?.image} className="w-8 h-8 rounded-full" />
+    </div>
+  ))}
+
+</div>
+
 
     {/* INPUT AREA */}
     <div className="p-4 flex items-center gap-3 bg-white border-t">
@@ -213,3 +204,54 @@ useEffect(() => {
 
   );
 }
+
+{/*
+     MESSAGES 
+    <div className="flex-1 overflow-y-auto p-5 space-y-6 bg-[#f1f2f6]">
+
+     USER MESSAGES (LEFT) 
+      {user?.message?.map((msg: any, i: number) => (
+        <div key={i} className="flex items-end gap-2 max-w-[70%]">
+
+          <img
+            src={user?.image}
+            className="w-8 h-8 rounded-full"
+          />
+
+          <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
+
+             Tail 
+            <div className="absolute -left-2 bottom-0 w-0 h-0 
+              border-t-[10px] border-t-white
+              border-r-[10px] border-r-transparent">
+            </div>
+
+            <p className="text-gray-900">{msg.message}</p>
+          </div>
+        </div>
+      ))}
+
+     OTHER USER MESSAGES (RIGHT) 
+      {userToTalkWith?.message?.map((msg: any, i: number) => (
+        <div key={i} className="flex justify-end items-end gap-2 max-w-[70%] ml-auto">
+
+          <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
+
+           Tail 
+            <div className="absolute -right-2 bottom-0 w-0 h-0 
+              border-t-[10px] border-t-[#0084ff]
+              border-l-[10px] border-l-transparent">
+            </div>
+
+            <p>{msg.message}</p>
+          </div>
+
+          <img
+            src={userToTalkWith?.image}
+            className="w-8 h-8 rounded-full"
+          />
+        </div>
+      ))}
+
+    </div>
+*/}
