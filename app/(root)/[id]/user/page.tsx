@@ -5,10 +5,10 @@ import { PostsUsersCard } from '../../components/postCard';
 import {  ListAllthefollower2 } from '@/lib/action/frends.action';
 export default async  function  Create ({params:{id}} :{params:{id :string}}){
 const user = await GetUserDetails(id)
-if(!user) return
+//if(!user) return
 const posts = await getPostesByPosterName(user.name as string)
 const follower = await ListAllthefollower2(user.email)
-console.log(follower)
+console.log(follower , user)
     return (
       <main className=" lg:w-full h-full flex flex-col items-center justify-center  sm:w-screen md:flex md:ml-3 xl:ml[-240px] bg-gradient-to-r from-gray-200 via-blue-500 to-slate-800 rounded-md px-4 py-6">
   <div className="flex flex-col gap-6 w-full max-w-[1200px]">
