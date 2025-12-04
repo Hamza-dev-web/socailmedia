@@ -18,12 +18,6 @@ if(!sessionuser) return
 const frends = await GetAllFrends(sessionuser.documents[0].$id as string)
 
 console.log('Invitation' ,listOfInvitaion, 'Follower',frends)
-/*
-let Usersshow = []
-  for(let i=0 ; i< Follower?.length ;i++) {
-    Usersshow = users.filter((usr) => usr.email != Follower[i].email)
-  }
-    */
   return (
     <>
     {/* sm:max-w-[1200px]  hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-gradient-to-r from-gray-200 via-blue to-slate-900 */}
@@ -32,7 +26,7 @@ let Usersshow = []
              flex-col items-center 
             rounded-md 
             px-4 sm:px-6 md:px-8 
-            hidden md:flex ">
+             md:flex ">
 {
   users.length > 0 &&  (
 
