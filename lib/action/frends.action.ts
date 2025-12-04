@@ -213,6 +213,7 @@ const  user =  await database.listDocuments(
 process.env.DATABASE_ID as string,
 process.env.USERS_COLLECTION  as string
 ,[Query.equal("email" , [email])]);
+if(!user) return
 const friendRequest = await database.listDocuments(
   process.env.DATABASE_ID!,
   process.env.RECEIVED_COLLECTION!,
@@ -224,7 +225,20 @@ const friendRequest = await database.listDocuments(
             console.log(err)
         }
     }
-
+export const ListAllthefollower2 = async( email : string)=>{
+let data= [] as any
+        try {
+const  user =  await database.listDocuments(
+process.env.DATABASE_ID as string,
+process.env.USERS_COLLECTION  as string
+,[Query.equal("email" , [email])]);
+if(!user) return
+return user.documents[0].senderRequest
+        }
+        catch(err :any) {
+            console.log(err)
+        }
+    }
 
 export const DeleteRequest =async( senderId :string , receverId :string)=>{
     try {
