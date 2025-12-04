@@ -107,6 +107,15 @@ export  async  function  MobileNavbar (){
         alt="Save"
       />
     </Link>
+     <Link href="/mobileNotif">
+      <Image 
+        src="/no.png"
+        width={35}
+        height={35}
+        className="rounded-xl"
+        alt="Save"
+      />
+    </Link>
 
     {/* User Profile Button */}
     <Link href={`/${userDb?.documents[0]?.$id}/user`}>
