@@ -6,7 +6,6 @@ import { ID, Query } from "node-appwrite";
 
 export const CreateMessages =async(documents :{userId : string,ReciverId :string , message : string}) =>{
 try {
-    
               const currentUser  = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.USERS_COLLECTION as string,[
@@ -24,7 +23,7 @@ try {
         {
          CurrentUserId :documents.userId,
            SenderId : documents.ReciverId,
-         message : documents.message
+         message : documents.message,
                    }
             )
     
