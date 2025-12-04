@@ -98,7 +98,7 @@ export  async  function  MobileNavbar (){
     </Link>
 
     {/* Save Link */}
-    <Link href="/save">
+    <Link href={`/${userDb && userDb?.documents[0]?.$id}/save`}>
       <Image 
         src="/save.png"
         width={35}
