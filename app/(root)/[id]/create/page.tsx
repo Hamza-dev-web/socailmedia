@@ -68,7 +68,7 @@ await getUsers(user?.emailAddresses[0].emailAddress as string)
 
        
     return (
-<main className="hidden sm:w-full md:flex  lg:flex flex-col items-center w-full max-w-[1200px] h-full bg-gradient-to-r from-gray-400 via-blue-500 to-gray-200 rounded-md shadow-xl p-8 mx-auto">
+<main className=" sm:w-full md:flex  lg:flex flex-col items-center w-full max-w-[1200px] h-full bg-gradient-to-r from-gray-400 via-blue-500 to-gray-200 rounded-md shadow-xl p-8 mx-auto">
   <h1 className="mb-16 text-4xl font-extrabold text-gray-900 text-center">
     Welcome to the Create Posts Page 👋
   </h1>

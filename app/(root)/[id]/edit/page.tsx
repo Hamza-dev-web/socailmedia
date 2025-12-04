@@ -70,7 +70,7 @@ if(posts) {
 
        //sm:ml-0  md:flex flex-col  rounded-md  ml-[600px]  justify-center min-h-screen   items-center  w-[1300px]  h-full  bg-gradient-to-r from-gray-400 via-blue to-gray-200
     return (
-        <main className="    sm:w-screen hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-slate-100 shadow-xl ">
+        <main className="    sm:w-screen   md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-slate-100 shadow-xl ">
     <h1 className=" text-black text-[50px] font-extrabold"> Welcome to the Edit Posts Page 👋</h1>
     <Form {...form! } >
       <form onSubmit={form?.handleSubmit(onSubmit)} className="space-y-8  gap-10   bg-gradient-to-r from-slate-800 via-blue to-gray-200 w-[600px] h-[600px] rounded-lg p-5  items-center">
