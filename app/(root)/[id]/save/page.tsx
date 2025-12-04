@@ -16,7 +16,7 @@ export default async  function  Save ({params:{id}} :{params:{id :string}}){
  const posts =await GetAllSavePosts(id)
 if(!user) return
     return (
-<main className="hidden md:flex flex-col items-center h-full w-full max-w-[1280px] mx-auto bg-slate-100 shadow-xl px-6 py-10 rounded-lg font-sans">
+<main className=" md:flex flex-col items-center h-full w-full max-w-[1280px] mx-auto bg-slate-100 shadow-xl px-6 py-10 rounded-lg font-sans">
   {/* Optional Title */}
   <h1 className="text-3xl font-semibold text-gray-800 mb-8">Saved Posts</h1>
 
