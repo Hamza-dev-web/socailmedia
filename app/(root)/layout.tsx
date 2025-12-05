@@ -14,7 +14,7 @@ export default async function  RootLayout({
 }>) {
 
  const clerkuser = await currentUser()
- if(!clerkuser ) redirect('/sign-in') 
+ if(!clerkuser )return redirect('/sign-up') 
 
 
   return (

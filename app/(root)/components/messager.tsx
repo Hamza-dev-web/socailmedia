@@ -19,60 +19,12 @@ import { CreateMessages, getAllMessage } from "@/lib/action/messages.action";
 export const Messager =({user , userToTalkWith } :{user :any ,userToTalkWith :any })=>{
     const [message , setMessages] = useState("")
     const [mt , setmt] =useState(0)
-//const [allmessages , setallmessages] =useState([])
-//const socket = io("http://localhost:3001/" ,{autoConnect :false});
-/*
-const {user} = useUser()
-console.log(user?.emailAddresses)
-useEffect(()=>{
-  async function start() {
-    if(user?.emailAddresses[0].emailAddress != undefined) {
-      const userdb = await getUsers(user?.emailAddresses[0].emailAddress)
-      console.log(userdb ,user?.emailAddresses[0].emailAddress as string)
-      if(userdb)   setuserdb(userdb.documents[0] as any )
-    }
-  }
-  start()
-} ,[user])
-useEffect(() => {
-  async function onConnect() {
-    socket.connect()
-  socket.on("send-message", (data :any) => {
-    // that for how the socket.io work
-  });
-   }
-   onConnect()
-},[])
-*/
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-  /*
-useEffect(()=>{
-    const getUser =async() =>{
-      console.log(user.$id , userToTalkWith.$id)
-      if(user.$id == undefined) return
-      const messages = await getAllMessage(user.$id as string)
-      console.log(message)
-      if(message && messages.length > 0) {
-        messages.map((msg :any) =>{
-          setMessages(msg.msg as any)
-        })      }
-          }
-          getUser()
-          
-  },[messagesEndRef])
-  /*
-  function handleSend (){
-    socket.connect()
-      socket.emit("message", message)
-     setMessages("")
-  }
-*/
+
 
 useEffect(() => {
-  if (messagesEndRef.current) {
-    messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
-  }
-}, [user?.message, userToTalkWith?.message]);
+  setmt((prev) => prev +100)
+
+},[user , userToTalkWith]);
   return (
 <main className="w-full h-[700px] flex items-center justify-center bg-slate-100 overflow-auto">
 
@@ -88,7 +40,6 @@ useEffect(() => {
       <p className="text-lg font-semibold">{userToTalkWith?.name}</p>
     </div>
 <div 
-  ref={messagesEndRef}
   className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4 bg-[#f1f2f6]"
 >
 
