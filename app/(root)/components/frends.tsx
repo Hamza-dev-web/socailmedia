@@ -123,7 +123,7 @@ const [searchedUser , setSearched] =useState([])
   Frends
 </h1>
 }
-{Frends && Frends.length > 0 ?  Frends.map((usr: any) => (
+{ searchedUser.length == 0  &&  Frends && Frends.length > 0 ?  Frends.map((usr: any) => (
   <>
           <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
@@ -221,8 +221,8 @@ const [searchedUser , setSearched] =useState([])
   </div>
 
   <div className="w-full flex flex-col items-center mt-6 px-4">
-    {users &&
-      users.length > 0 &&
+    {searchedUser.length == 0 && users &&
+      users.length > 0 ?
       users
         .filter((userd: { email: string }) => userd?.email != clerkUser?.email)
         .map((userto: any) => (
@@ -232,7 +232,15 @@ const [searchedUser , setSearched] =useState([])
            useremail={clerkUser.email as string} 
            users={userto} 
            />
-        ))}
+        )) :searchedUser.filter((userd: { email: string }) => userd?.email != clerkUser?.email)
+        .map((userto: any) => (
+          <UserCard 
+           sessionuser={sessionuser} 
+           key={userto.$id} 
+           useremail={clerkUser.email as string} 
+           users={userto} 
+           />
+          ))}
   </div>
 </div>
 </>
