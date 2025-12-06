@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-export const UserCard =({users , useremail , sessionuser} :{users :{$id :string ,username: string , email :string , image :string, status: string , index:number  },sessionuser :any  , useremail : string})=>{
+export const UserCard =({users , useremail , sessionuser} :{users :{$id :string ,name: string , email :string , image :string, status: string , index:number  },sessionuser :any  , useremail : string})=>{
  const [sending , setSending] =useState('Follow')
  const router = useRouter()
  const [disble , setDisable] = useState(false)
@@ -25,7 +25,7 @@ return (
         width={30}
         height={30}
       />
-      <p className="font-black">{users.username}</p>
+      <p className="font-black">{users.name}</p>
     </div>
 
     {/* Right: Actions */}

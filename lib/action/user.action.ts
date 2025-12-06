@@ -79,7 +79,7 @@ console.log(err)
             Query.equal("posterName" ,posterName)
                 ])
             if(!posts) return console.log("not found")
-
+ console.log(posts)
  return posts
         }
         catch (err :any) {
