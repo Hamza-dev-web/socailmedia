@@ -7,8 +7,6 @@ import { useState } from "react"
 export const UserCard =({users , useremail , sessionuser} :{users :{$id :string ,name: string , email :string , image :string, status: string , index:number  },sessionuser :any  , useremail : string})=>{
  const [sending , setSending] =useState('Follow')
  const router = useRouter()
- const [disble , setDisable] = useState(false)
- console.log("users" , sessionuser )
 return (
 <div className="flex flex-col items-center w-full mt-3" key={users.$id}>
   <div className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 rounded-xl mt-6">

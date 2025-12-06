@@ -1,17 +1,8 @@
 "use server"
-
-
-import { redirect } from "next/navigation";
 import { database, users } from "../appwrite/config";
 import { revalidatePath } from "next/cache";
 import { ID, Query } from "node-appwrite";
-import { currentUser } from "@clerk/nextjs/server";
-import { comment } from "postcss";
-
-
-
-
-    export const getUsers = async (email :string)=>{
+export const getUsers = async (email :string)=>{
        // const clerkuser = await currentUser()
       //  if(!clerkuser )return
         try {
@@ -26,8 +17,7 @@ import { comment } from "postcss";
 console.log(err)
         }
     }
-    
-      export const CreateUsers = async (documents :{username :string , email:string , image :string })=>{
+export const CreateUsers = async (documents :{username :string , email:string , image :string })=>{
 
         try {
             const users= await database.listDocuments(
@@ -70,7 +60,7 @@ console.log(err)
 console.log(err)
         }
     }
-    export const getPostesByPosterName = async (posterName :string)=>{
+export const getPostesByPosterName = async (posterName :string)=>{
 
         try {
             const posts = await database.listDocuments(
@@ -86,16 +76,12 @@ console.log(err)
 console.log(err)
         }
     }
-    
-
-    
-
-        export const GetUserDetails = async( id :string )=>{
+export const GetUserDetails = async( id :string )=>{
             try{
                 const user = await database.listDocuments(
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string,[
-                    Query.equal("$id" , [id ])
+                    Query.equal("$id" , [id])
                 ])
     
              
@@ -108,9 +94,7 @@ console.log(err)
                 console.log(err)
             }
         }
-
-            
-    export const GetSearchedUsers = async(username :string)=> {
+export const GetSearchedUsers = async(username :string)=> {
                 try {
                     const  newDocuments =  await database.listDocuments(
                        process.env.DATABASE_ID as string,

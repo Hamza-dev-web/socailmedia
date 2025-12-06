@@ -214,7 +214,7 @@ const [searchedUser , setSearched] =useState([])
               width={30}
               height={30}
             />
-            <p className="font-black">{usr.username}</p>
+            <p className="font-black">{usr.name}</p>
           </div>
         </div>
       ))}
