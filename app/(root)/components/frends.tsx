@@ -1,5 +1,5 @@
 "use client"
-import { DeleteRequest, handleAccept, GetAllFrends } from "@/lib/action/frends.action";
+import { DeleteRequest, handleAccept } from "@/lib/action/frends.action";
 import Image from "next/image";
 import Link from "next/link";
 import { UserCard } from "../components/userCard";
@@ -40,7 +40,7 @@ const [searchedUser , setSearched] =useState([])
     <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
-        onClick={() => router.push(`${usr.$id}/user`)}
+        onClick={() => router.push(`/${usr.$id}/user`)}
       >
         <img
           src={usr.image}
@@ -106,7 +106,7 @@ const [searchedUser , setSearched] =useState([])
                 className="rounded-full cursor-pointer"
                 width={30}
                 height={30}
-                onClick={() => router.push(`${usr.index}/messages`)}
+                onClick={() => router.push(`/${usr.index}/messages`)}
               />
             </div>
         </>
@@ -128,7 +128,7 @@ const [searchedUser , setSearched] =useState([])
           <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
-        onClick={() => router.push(`${usr.$id}/user`)}
+        onClick={() => router.push(`/${usr.$id}/user`)}
       >
         <img
           src={usr.image}
