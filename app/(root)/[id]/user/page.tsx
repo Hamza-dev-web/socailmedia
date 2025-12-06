@@ -38,7 +38,7 @@ console.log(follower , user, posts)
                 height={30}
                 className="rounded-full"
               />
-              <p className="font-medium">{follow.name}</p>
+              <p className="font-medium">{follow.username}</p>
             </div>
           </div>
         ))}

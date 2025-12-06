@@ -40,7 +40,7 @@ const [searchedUser , setSearched] =useState([])
     <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
-        onClick={() => router.push(`/${usr.$id}/user`)}
+        onClick={() => router.push(`/${usr.senderId}/user`)}
       >
         <img
           src={usr.image}
@@ -128,7 +128,7 @@ const [searchedUser , setSearched] =useState([])
           <div key={usr.name}className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-8">
       <div
         className="flex gap-3 items-center cursor-pointer"
-        onClick={() => router.push(`/${usr.$id}/user`)}
+        onClick={() => router.push(`/${usr.receverId}/user`)}
       >
         <img
           src={usr.image}
