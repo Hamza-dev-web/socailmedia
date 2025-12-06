@@ -8,7 +8,7 @@ const user = await GetUserDetails(id)
 //if(!user) return
 const posts = await getPostesByPosterName(user.name as string)
 const follower = await ListAllthefollower2(user.email)
-console.log(follower , user)
+console.log(follower , user, posts)
     return (
       <main className=" lg:w-full h-full flex flex-col items-center justify-center  sm:w-screen md:flex md:ml-3 xl:ml[-240px] bg-gradient-to-r from-gray-200 via-blue-500 to-slate-800 rounded-md px-4 py-6">
   <div className="flex flex-col gap-6 w-full max-w-[1200px]">
@@ -24,7 +24,6 @@ console.log(follower , user)
       />
       <p className="font-black text-lg text-white">{user.name}</p>
     </div>
-
     {/* Followers */}
     {follower && follower.length > 0 && (
       <div className="flex flex-col gap-4">
@@ -45,7 +44,6 @@ console.log(follower , user)
         ))}
       </div>
     )}
-
     {/* Posts */}
     {posts && posts.documents.length > 0 ? (
       <div className="flex flex-wrap gap-4 justify-start mt-6">
@@ -60,8 +58,6 @@ console.log(follower , user)
 </main>
     )
 }
-
-
 /*
  <main className=" sm:w-screen hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-gradient-to-r from-gray-200 via-blue to-slate-800   ">
 <div className=' flex flex-col  gap-4'>
@@ -100,7 +96,5 @@ height={30}
 ) :(
   <h1 className=' text-[40px]'> this User dont have any post</h1>
 )}
-
-
 </div>
 */

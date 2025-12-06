@@ -76,7 +76,7 @@ console.log(err)
             const posts = await database.listDocuments(
                 process.env.DATABASE_ID as string,
                 process.env.POSTS_ID_COLLECTION as string,[
-            Query.equal("posterName" ,[posterName])
+            Query.equal("posterName" ,posterName)
                 ])
             if(!posts) return console.log("not found")
 
