@@ -1,6 +1,8 @@
 import Notifictation from "../components/notifiction"
 export default function Page(){
     return (
-        <Notifictation/>
+        <div className=" lg:hidden xl:hidden" >
+    <Notifictation/>
+        </div>
     )
 }

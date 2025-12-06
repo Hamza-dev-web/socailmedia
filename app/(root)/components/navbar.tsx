@@ -74,7 +74,15 @@ export  async  function  MobileNavbar (){
   
   {/* Mobile Navigation Bar */}
   <div className="flex items-center justify-between w-full h-[80px] bg-slate-900 rounded-lg px-4">
-    
+       <Link href="/">
+      <Image 
+        src="/hom.jpg"
+        width={35}
+        height={35}
+        className="rounded-xl"
+        alt="home"
+      />
+    </Link>
     {/* Friends Link */}
     <Link href="/frends">
       <Image 
