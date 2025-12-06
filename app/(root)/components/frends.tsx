@@ -201,7 +201,7 @@ const [searchedUser , setSearched] =useState([])
   </div>
 
   <div className="w-full flex flex-col items-center mt-6 px-4">
-    {search !== "" && searchedUser.length == 0 && users &&
+    {search == "" && searchedUser.length == 0 && users &&
       users.length > 0 ?
       users
         .filter((userd: { email: string }) => userd?.email != clerkUser?.email)
