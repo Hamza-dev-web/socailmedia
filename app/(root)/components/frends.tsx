@@ -25,7 +25,11 @@ const [search , setSearch] =useState("")
 const router = useRouter()
 const [satus , setStatus] =useState(true)
 const [searchedUser , setSearched] =useState([])
-
+useEffect(()=>{
+if(search == ""){
+  setSearched([])
+}
+},[search])
   return (
     <>
 <div className="flex flex-col items-center w-full px-4">
