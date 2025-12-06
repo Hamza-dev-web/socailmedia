@@ -197,32 +197,11 @@ const [searchedUser , setSearched] =useState([])
       </div>
     </div>
 
-    {
-    /*searchedUser.length > 0 &&
-      searchedUser.map((usr) => (
-        <div
-          key={usr.$id}
-          className="flex justify-between items-center bg-slate-200 w-full max-w-[1200px] px-4 py-3 m-3 rounded-xl mt-4"
-        >
-          <div
-            className="flex gap-2 items-center cursor-pointer"
-            onClick={() => router.push(`${usr.$id}/user`)}
-          >
-            <img
-              src={usr.image}
-              alt=""
-              className="rounded-full"
-              width={30}
-              height={30}
-            />
-            <p className="font-black">{usr.name}</p>
-          </div>
-        </div>
-      ))*/}
+
   </div>
 
   <div className="w-full flex flex-col items-center mt-6 px-4">
-    {searchedUser.length == 0 && users &&
+    {search !== "" && searchedUser.length == 0 && users &&
       users.length > 0 ?
       users
         .filter((userd: { email: string }) => userd?.email != clerkUser?.email)
