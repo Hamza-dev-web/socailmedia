@@ -197,7 +197,8 @@ const [searchedUser , setSearched] =useState([])
       </div>
     </div>
 
-    {searchedUser.length > 0 &&
+    {
+    /*searchedUser.length > 0 &&
       searchedUser.map((usr) => (
         <div
           key={usr.$id}
@@ -217,7 +218,7 @@ const [searchedUser , setSearched] =useState([])
             <p className="font-black">{usr.name}</p>
           </div>
         </div>
-      ))}
+      ))*/}
   </div>
 
   <div className="w-full flex flex-col items-center mt-6 px-4">
