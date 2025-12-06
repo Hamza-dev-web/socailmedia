@@ -10,52 +10,70 @@ const posts = await getPostesByPosterName(user.name as string)
 const follower = await ListAllthefollower2(user.email)
 console.log(follower , user, posts)
     return (
-      <main className=" lg:w-full h-full flex flex-col items-center justify-center  sm:w-screen md:flex md:ml-3 xl:ml[-240px] bg-gradient-to-r from-gray-200 via-blue-500 to-slate-800 rounded-md px-4 py-6">
-  <div className="flex flex-col gap-6 w-full max-w-[1200px]">
+<main className="w-full min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-gray-200 via-blue-500 to-slate-900 px-6 py-10 font-[Poppins]">
+  <div className="flex flex-col gap-10 w-full max-w-[1200px]">
 
     {/* User Info */}
-    <div className="flex justify-center items-center gap-3 mt-6">
+    <div className="flex flex-col items-center text-center">
       <img 
         src={user.image}
         alt=""
-        className="rounded-full"
-        width={40}
-        height={40}
+        className="rounded-full shadow-lg border-4 border-white"
+        width={90}
+        height={90}
       />
-      <p className="font-black text-lg text-white">{user.name}</p>
+      <p className="font-extrabold text-3xl text-white mt-3 tracking-wide">
+        {user.name}
+      </p>
     </div>
+
     {/* Followers */}
     {follower && follower.length > 0 && (
-      <div className="flex flex-col gap-4">
-        <h2 className="text-white text-xl font-semibold">Followers</h2>
+      <div className="flex flex-col gap-4 bg-white/10 backdrop-blur-md p-6 rounded-xl shadow-lg">
+        <h2 className="text-white text-2xl font-semibold border-b pb-2 border-white/30">
+          Followers
+        </h2>
+
         {follower.map((follow: any) => (
-          <div key={follow.id} className="flex items-center justify-between bg-white rounded-md p-3 shadow-sm">
-            <div className="flex items-center gap-3">
+          <div 
+            key={follow.id}
+            className="flex items-center justify-between bg-white/90 hover:bg-white transition rounded-lg p-4 shadow-md"
+          >
+            <div className="flex items-center gap-4">
               <img
                 src={follow.image}
                 alt=""
-                width={30}
-                height={30}
-                className="rounded-full"
+                width={40}
+                height={40}
+                className="rounded-full shadow"
               />
-              <p className="font-medium">{follow.username}</p>
+              <p className="font-medium text-gray-800 text-lg">
+                {follow.username}
+              </p>
             </div>
           </div>
         ))}
       </div>
     )}
+
     {/* Posts */}
     {posts && posts.documents.length > 0 ? (
-      <div className="flex flex-wrap gap-4 justify-start mt-6">
-        {posts.documents.map((post: any) => (
-          <PostsUsersCard key={post.id} post={post} user={user} />
-        ))}
+      <div>
+        <h2 className="text-white text-2xl font-semibold mb-4">Posts</h2>
+        <div className="flex flex-wrap gap-6 justify-start">
+          {posts.documents.map((post: any) => (
+            <PostsUsersCard key={post.id} post={post} user={user} />
+          ))}
+        </div>
       </div>
     ) : (
-      <h1 className="text-white text-2xl mt-10 font-semibold">This user doesn't have any posts.</h1>
+      <h1 className="text-white text-3xl mt-10 font-bold text-center">
+        This user doesn't have any posts.
+      </h1>
     )}
   </div>
 </main>
+
     )
 }
 /*
