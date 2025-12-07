@@ -9,12 +9,13 @@ export default async function Home({params:{id}} :{params:{id :string}}) {
 if(!user) return
    const usertoTalk = await GetUserDetails(id)
    if(!usertoTalk) return
-   const message = await getAllMessage(user.documents[0].$id , id)
+      const message = await getAllMessage(user.documents[0].$id , id)
+
   return (
  <Messager
  user={user.documents[0]}
  userToTalkWith={usertoTalk}
- messages={message} 
+ messages={message}
  />
   );
 }

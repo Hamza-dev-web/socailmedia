@@ -28,36 +28,7 @@ try {
          message : documents.message,
                    }
             )
-    /*
-                await database.updateDocument(      
-                    process.env.DATABASE_ID as string,
-                    process.env.USERS_COLLECTION as string ,
-                     documents.userId ,{
-                        message :[
-                            { 
-                                PairId : PairId,
-                               CurrentUserId :documents.userId,
-                               SenderId : documents.ReciverId,
-                                message :newmessage.message
-                            }
-                        ]
-                    })
-                    /*
-                         await database.updateDocument(     
-                     process.env.DATABASE_ID as string,
-                    process.env.USERS_COLLECTION as string , 
-                    documents.ReciverId ,{
-                        ...ReciverUser.documents[0],
-                        message :[
-                            ...ReciverUser.documents[0].message,
-                            { 
-                               CurrentUserId :documents.userId,
-                               SenderId : documents.ReciverId,
-                                message :newmessage.message
-                            }
-                        ]
-                    })
-                        */
+
                     return console.log("donne" , currentUser.documents[0].message)
 }
 catch (err :any) {

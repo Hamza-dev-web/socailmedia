@@ -33,7 +33,6 @@ console.log(follower , user, posts)
         <h2 className="text-white text-2xl font-semibold border-b pb-2 border-white/30">
           Followers
         </h2>
-
         {follower.map((follow: any) => (
           <div 
             key={follow.id}
@@ -76,43 +75,3 @@ console.log(follower , user, posts)
 
     )
 }
-/*
- <main className=" sm:w-screen hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-gradient-to-r from-gray-200 via-blue to-slate-800   ">
-<div className=' flex flex-col  gap-4'>
-<div className=" flex mb-7  justify-center mr-10  mt-12  gap-2 items-center ">
-    <img 
-    src={user.image}
-    alt=""
-    className=" rounded-full"
-    width={30}
-    height={30}
-    />
-    <p className=" font-black  ">{user.name}</p>
-    </div>
-    <div className=' flex flex-col gap-5'>
-{follower && follower?.map((follow :any) =>(
-  <div className=' flex  justify-between gap-32'>
-<img
-src={follow.image}
-alt=''
-width={30}
-height={30}
-/>
-<p>{follow.name}</p>
-
-  </div>
-))}
-
-    </div>
-{posts && posts.length  > 0  ?  (
-  <div className=' flex  gap-2 items-center '>
-  {posts.map((post:any )=>(
-<PostsUsersCard post={post} user={user}/>
-
-  ))}
-  </div>
-) :(
-  <h1 className=' text-[40px]'> this User dont have any post</h1>
-)}
-</div>
-*/

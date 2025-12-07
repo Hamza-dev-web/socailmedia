@@ -39,23 +39,3 @@ if(!user) return
     )
 }
 
-/*
-        <main className=" sm:w-screen hidden  md:ml-3 xl:ml-[200px] md:flex sm:ml-0 sm:flex  xl:w-[1200px]    lg:flex  flex-col  rounded-md   items-center   w-[1200px]  h-full   bg-slate-100 shadow-xl  ">
-{ posts && posts.length > 0 && (
-<div className="  mt-14 flex flex-wrap justify-center gap-5 w-[1000px]    bg-purple-300 rounded-lg p-4">
-{
-  posts.map((post :any ) =>
-    (
-    <PostsCard  post={post} user={user.documents[0] } isinSave={true}/>
-   
-  ))
-}
-</div>
-
-) 
-
-
-
-
-}
-        </main>*/
