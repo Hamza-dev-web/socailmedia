@@ -45,20 +45,30 @@ useEffect(() => {
   {messages && messages?.map((msg: any, i: number) => (
     <div key={i} className={`flex items-end gap-2 max-w-[70%] `}>
       {user.$id == msg.CurrentUserId ? (
-      <img src={user?.image} className="w-8 h-8 rounded-full" />
+      <>
+       <img src={user?.image} className="w-8 h-8 rounded-full" />
+        <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
+        <div className="absolute -left-2 bottom-0 w-0 h-0 
+          border-t-[10px] border-t-white
+          border-r-[10px] border-r-transparent"></div>
+        <p>{msg.message}</p>
+         </div>
 
+        </>
+     
       ) :(
-              <img 
+       <>
+             <img 
       src={userToTalkWith?.image} 
       className="w-8 h-8 rounded-full" />
-      )}
-
-      <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
+    <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
         <div className="absolute -left-2 bottom-0 w-0 h-0 
           border-t-[10px] border-t-white
           border-r-[10px] border-r-transparent"></div>
         <p>{msg.message}</p>
       </div>
+       </>
+      )}
     </div>
   ))}
 
