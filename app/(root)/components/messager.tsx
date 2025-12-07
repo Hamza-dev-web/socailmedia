@@ -13,11 +13,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios"
-import { CreateMessages } from "@/lib/action/messages.action";
+import { CreateMessages, getAllMessage } from "@/lib/action/messages.action";
 export const Messager =({user , userToTalkWith , messages } :{user :any ,userToTalkWith :any , messages :any })=>{
     const [message , setMessages] = useState("")
+    const [allMessage , setAllMessage] = useState([]) 
    useEffect(()=>{
-
+const Recall = async ()=>{
+ try {
+  const am = await getAllMessage(user.$id , userToTalkWith.$id) 
+setAllMessage(am)
+ } catch (err :any ) {
+console.log(err)
+ } 
+} 
    },[messages])
     /*
     const [mt , setmt] =useState(0)
@@ -30,7 +38,7 @@ useEffect(() => {
 <main className="w-full h-[700px] flex items-center justify-center bg-slate-100 overflow-auto">
 
   {/* DESKTOP CHAT BOX */}
-  <div className="hidden md:flex flex-col w-full max-w-3xl h-[700px] bg-white rounded-lg shadow-xl overflow-hidden">
+  <div className=" md:flex flex-col w-full max-w-3xl h-[700px] bg-white rounded-lg shadow-xl overflow-hidden">
 
     {/* HEADER */}
     <div className="flex items-center gap-3 p-4 bg-[#8a63d2] text-white shadow-md">
@@ -45,7 +53,7 @@ useEffect(() => {
 >
 
   {/* Your messages */}
-  {messages && messages?.map((msg: any, i: number) => (
+  {messages && allMessage && allMessage?.map((msg: any, i: number) => (
     <>
       {user.$id == msg.CurrentUserId ? (
        <div key={i} className={`flex items-end gap-2 max-w-[70%] `}>
@@ -74,22 +82,6 @@ useEffect(() => {
     </>
   ))}
 
-  {/* Other user */}
-  { /*
-  userToTalkWith?.message?.map((msg: any, i: number) => (
-    <div key={i} className={`flex justify-end items-end gap-2 max-w-[70%] ml-auto  `}>
-      <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
-        <div className="absolute -right-2 bottom-0 w-0 h-0 
-          border-t-[10px] border-t-[#0084ff]
-          border-l-[10px] border-l-transparent"></div>
-        <p>{msg.message}</p>
-      </div>
-      <img 
-      src={userToTalkWith?.image} 
-      className="w-8 h-8 rounded-full" />
-    </div>
-  )) */}
-
 </div>
 
 
@@ -110,11 +102,7 @@ useEffect(() => {
             ReciverId: userToTalkWith.$id,
             message: message
           });
-          setTimeout(()=>{     
   setMessages("");
-window.location.reload()
-},200)
-
         }}
         className="flex items-center gap-2 bg-[#8a63d2] hover:bg-[#734fba] text-white"
       >
