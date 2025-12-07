@@ -13,8 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios"
-import { useUser } from "@clerk/clerk-react"
-import {GetUserDetails, getUsers} from "@/lib/action/user.action";
 import { CreateMessages, getAllMessage } from "@/lib/action/messages.action";
 export const Messager =({user , userToTalkWith } :{user :any ,userToTalkWith :any })=>{
     const [message , setMessages] = useState("")
@@ -45,7 +43,7 @@ useEffect(() => {
 
   {/* Your messages */}
   {user?.message?.map((msg: any, i: number) => (
-    <div key={i} className={`flex items-end gap-2 max-w-[70%] mt-[${mt}]`}>
+    <div key={i} className={`flex items-end gap-2 max-w-[70%] `}>
       <img src={user?.image} className="w-8 h-8 rounded-full" />
       <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
         <div className="absolute -left-2 bottom-0 w-0 h-0 
@@ -58,7 +56,7 @@ useEffect(() => {
 
   {/* Other user */}
   {userToTalkWith?.message?.map((msg: any, i: number) => (
-    <div key={i} className={`flex justify-end items-end gap-2 max-w-[70%] ml-auto  mt-[${mt}]`}>
+    <div key={i} className={`flex justify-end items-end gap-2 max-w-[70%] ml-auto  `}>
       <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
         <div className="absolute -right-2 bottom-0 w-0 h-0 
           border-t-[10px] border-t-[#0084ff]
@@ -89,8 +87,7 @@ useEffect(() => {
             ReciverId: userToTalkWith.$id,
             message: message
           });
-          setTimeout(()=>{
-     setmt((pre)=> pre+100)       
+          setTimeout(()=>{     
   setMessages("");
 window.location.reload()
 },1000)
