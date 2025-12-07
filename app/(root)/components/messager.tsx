@@ -13,9 +13,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import axios from "axios"
-import { CreateMessages, getAllMessage } from "@/lib/action/messages.action";
+import { CreateMessages } from "@/lib/action/messages.action";
 export const Messager =({user , userToTalkWith , messages } :{user :any ,userToTalkWith :any , messages :any })=>{
     const [message , setMessages] = useState("")
+   useEffect(()=>{
+
+   },[messages])
     /*
     const [mt , setmt] =useState(0)
 useEffect(() => {
@@ -110,7 +113,7 @@ useEffect(() => {
           setTimeout(()=>{     
   setMessages("");
 window.location.reload()
-},1000)
+},200)
 
         }}
         className="flex items-center gap-2 bg-[#8a63d2] hover:bg-[#734fba] text-white"
