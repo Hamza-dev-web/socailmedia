@@ -44,7 +44,7 @@ useEffect(() => {
   {/* Your messages */}
   {messages && messages?.map((msg: any, i: number) => (
     <div key={i} className={`flex items-end gap-2 max-w-[70%] `}>
-      {user.$id == msg.SenderId ? (
+      {user.$id == msg.CurrentUserId ? (
       <img src={user?.image} className="w-8 h-8 rounded-full" />
 
       ) :(
