@@ -28,131 +28,86 @@ console.log(err)
 } 
 Recall()
    },[messages])
-    /*
-    const [mt , setmt] =useState(0)
-useEffect(() => {
-  setmt((prev) => prev +100)
 
-},[user , userToTalkWith]);
-*/
   return (
-<main className="w-full h-[700px] flex items-center justify-center bg-slate-100 overflow-auto">
+<main className="w-full h-screen flex items-center justify-center bg-slate-100">
 
-  {/* DESKTOP CHAT BOX */}
-  <div className=" md:flex flex-col w-full max-w-3xl h-[700px] bg-white rounded-lg shadow-xl overflow-hidden">
+  <div className="flex flex-col w-full h-full md:max-w-3xl md:h-[700px] bg-white rounded-none md:rounded-lg shadow-xl overflow-hidden">
 
     {/* HEADER */}
     <div className="flex items-center gap-3 p-4 bg-[#8a63d2] text-white shadow-md">
       <img
         src={userToTalkWith?.image}
-        className="w-10 h-10 rounded-full"
+        className="w-9 h-9 md:w-10 md:h-10 rounded-full"
       />
       <p className="text-lg font-semibold">{userToTalkWith?.name}</p>
     </div>
-{/* MOBILE CHAT UI */}
-<div className="flex sm:hidden flex-col gap-4 px-3 py-3 bg-[#f1f2f6] overflow-y-auto">
 
-  {allMessage?.map((msg: any, i: number) => (
-    <div key={i}>
-      {user.$id === msg.CurrentUserId ? (
+    {/* CHAT AREA — ONE UI FOR ALL DEVICES */}
+    <div className="
+      flex-1 flex flex-col gap-4
+      overflow-y-auto
+      px-3 py-3 
+      bg-[#f1f2f6]
+      md:px-5 md:py-5
+    ">
 
-        /* ----------- USER MESSAGE (LEFT, MOBILE) ----------- */
-        <div className="flex items-end gap-2 max-w-[85%]">
-          <img 
-            src={user?.image}
-            className="w-7 h-7 rounded-full"
-          />
+      {allMessage?.map((msg: any, i: number) => (
+        <div key={i}>
 
-          <div className="relative bg-white p-3 rounded-2xl shadow border">
-            <div 
-              className="absolute -left-2 bottom-0 w-0 h-0 
-              border-t-[10px] border-t-white
-              border-r-[10px] border-r-transparent"
-            />
-            <p className="text-sm">{msg.message}</p>
-          </div>
+          {user.$id === msg.CurrentUserId ? (
+
+            /* ---------- USER MESSAGE (LEFT) ---------- */
+            <div className="flex items-end gap-2 max-w-[85%] md:max-w-[70%]">
+              
+              <img 
+                src={user?.image}
+                className="w-7 h-7 md:w-9 md:h-9 rounded-full"
+              />
+
+              <div className="relative bg-white p-3 md:p-4 rounded-2xl shadow-md border">
+                <div 
+                  className="absolute -left-2 md:-left-3 bottom-1 w-0 h-0 
+                  border-t-[10px] md:border-t-[12px]
+                  border-t-white
+                  border-r-[10px] md:border-r-[12px] border-r-transparent"
+                />
+                <p className="text-sm md:text-base">{msg.message}</p>
+              </div>
+
+            </div>
+
+          ) : (
+
+            /* ---------- OTHER USER MESSAGE (RIGHT) ---------- */
+            <div className="flex items-end justify-end gap-2 max-w-[85%] md:max-w-[70%] ml-auto">
+
+              <div className="relative bg-[#0084ff] text-white p-3 md:p-4 rounded-2xl shadow-md">
+                <div 
+                  className="absolute -right-2 md:-right-3 bottom-1 w-0 h-0 
+                  border-t-[10px] md:border-t-[12px]
+                  border-t-[#0084ff]
+                  border-l-[10px] md:border-l-[12px] border-l-transparent"
+                />
+                <p className="text-sm md:text-base">{msg.message}</p>
+              </div>
+
+              <img 
+                src={userToTalkWith?.image}
+                className="w-7 h-7 md:w-9 md:h-9 rounded-full"
+              />
+
+            </div>
+
+          )}
+
         </div>
+      ))}
 
-      ) : (
-
-        /* ----------- OTHER USER MESSAGE (RIGHT, MOBILE) ----------- */
-        <div className="flex justify-end items-end gap-2 max-w-[85%] ml-auto">
-          <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow">
-            <div 
-              className="absolute -right-2 bottom-0 w-0 h-0 
-              border-t-[10px] border-t-[#0084ff]
-              border-l-[10px] border-l-transparent"
-            />
-            <p className="text-sm">{msg.message}</p>
-          </div>
-
-          <img 
-            src={userToTalkWith?.image}
-            className="w-7 h-7 rounded-full"
-          />
-        </div>
-
-      )}
     </div>
-  ))}
 
-</div>
-
-{/* DESKTOP CHAT UI */}
-<div className="hidden sm:flex flex-col gap-4 px-5 py-5 bg-[#eef0f4] overflow-y-auto">
-
-  {allMessage?.map((msg: any, i: number) => (
-    <div key={i}>
-      {user.$id === msg.CurrentUserId ? (
-
-        /* ----------- USER MESSAGE (LEFT, DESKTOP) ----------- */
-        <div className="flex items-end gap-3 max-w-[70%]">
-          <img 
-            src={user?.image}
-            className="w-9 h-9 rounded-full shadow-sm"
-          />
-
-          <div className="relative bg-white p-4 rounded-2xl shadow-md border">
-            <div 
-              className="absolute -left-3 bottom-1 w-0 h-0 
-              border-t-[12px] border-t-white
-              border-r-[12px] border-r-transparent"
-            />
-            <p className="text-base">{msg.message}</p>
-          </div>
-        </div>
-
-      ) : (
-
-        /* ----------- OTHER USER MESSAGE (RIGHT, DESKTOP) ----------- */
-        <div className="flex justify-end items-end gap-3 max-w-[70%] ml-auto">
-          <div className="relative bg-[#0084ff] text-white p-4 rounded-2xl shadow-md">
-            <div 
-              className="absolute -right-3 bottom-1 w-0 h-0 
-              border-t-[12px] border-t-[#0084ff]
-              border-l-[12px] border-l-transparent"
-            />
-            <p className="text-base">{msg.message}</p>
-          </div>
-
-          <img 
-            src={userToTalkWith?.image}
-            className="w-9 h-9 rounded-full shadow-sm"
-          />
-        </div>
-
-      )}
-    </div>
-  ))}
-
-</div>
-
-
-
-
-
-    {/* INPUT AREA */}
-    <div className="p-4 flex items-center gap-3 bg-white border-t">
+    {/* INPUT AREA (ONE VERSION FOR ALL DEVICES) */}
+    <div className="p-3 md:p-4 flex items-center gap-3 bg-white border-t">
 
       <Input
         placeholder="Type a message..."
@@ -161,46 +116,6 @@ useEffect(() => {
         onChange={(e) => setMessages(e.target.value)}
       />
 
-      <Button
-        onClick={async () => {
-          await CreateMessages({
-            userId: user.$id,
-            ReciverId: userToTalkWith.$id,
-            message: message
-          });
-  setMessages("");
-  const am = await getAllMessage(user.$id , userToTalkWith.$id) 
-setAllMessage(am)
-        }}
-        className="flex items-center gap-2 bg-[#8a63d2] hover:bg-[#734fba] text-white"
-      >
-        <img src="/send.png" className="w-5 h-5" />
-        Send
-      </Button>
-    </div>
-  </div>
-
-  {/* MOBILE UI */}
-  <div className="md:hidden flex flex-col w-full h-full bg-white">
-
-    {/* Header */}
-    <div className="flex items-center gap-3 p-3 bg-[#8a63d2] text-white">
-      <img
-        src={userToTalkWith?.image}
-        className="w-8 h-8 rounded-full"
-      />
-      <p className="font-semibold">{userToTalkWith?.name}</p>
-    </div>
-
- 
-    {/* Input */}
-    <div className="flex p-3 gap-2 border-t bg-white">
-      <Input
-        placeholder="Type a message..."
-        className="flex-1"
-        value={message}
-        onChange={(e) => setMessages(e.target.value)}
-      />
       <Button
         onClick={async () => {
           await CreateMessages({
@@ -209,15 +124,21 @@ setAllMessage(am)
             message: message
           });
           setMessages("");
+
+          const am = await getAllMessage(user.$id, userToTalkWith.$id);
+          setAllMessage(am);
         }}
-        className="bg-[#8a63d2] text-white hover:bg-[#6c4baa]"
+        className="flex items-center gap-2 bg-[#8a63d2] hover:bg-[#734fba] text-white"
       >
+        <img src="/send.png" className="w-5 h-5" />
         Send
       </Button>
+
     </div>
   </div>
 
 </main>
+
 
 
 
