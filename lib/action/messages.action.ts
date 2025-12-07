@@ -15,12 +15,14 @@ try {
                 process.env.USERS_COLLECTION as string,[
                 Query.equal("$id" , [documents.ReciverId ])] )
                 if(!currentUser || !ReciverUser ) return
+                  const PairId = [documents.userId, documents.ReciverId].sort().join("_");
                 console.log(currentUser.documents[0].message)
                 const newmessage = await database.createDocument(
         process.env.DATABASE_ID as string,
         process.env.MESSAGE_COLLECTION as string,
         ID.unique() , 
         {
+            PairId : PairId,
          CurrentUserId :documents.userId,
            SenderId : documents.ReciverId,
          message : documents.message,
@@ -31,10 +33,9 @@ try {
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string ,
                      documents.userId ,{
-                        ...currentUser.documents[0],
                         message :[
-                            ...currentUser.documents[0].message,
                             { 
+                                PairId : PairId,
                                CurrentUserId :documents.userId,
                                SenderId : documents.ReciverId,
                                 message :newmessage.message
@@ -63,14 +64,14 @@ catch (err :any) {
 console.log(err)
 }
 }
-export const getAllMessage =async (userId :string )=>{
+export const getAllMessage =async (userId :string , ReciverId :string)=>{
 try {
-
-const user = await database.listDocuments(
+     const PairId = [userId,ReciverId].sort().join("_");
+const message = await database.listDocuments(
   process.env.DATABASE_ID as string,
-  process.env.USERS_COLLECTION as string,[
-  Query.equal("$id" , userId )] )
-return  user.documents[0].message
+   process.env.MESSAGE_COLLECTION as string,[
+  Query.equal("PairId" , PairId )] )
+return  message.documents
 
 }
 catch(err :any){
