@@ -28,7 +28,7 @@ try {
          message : documents.message,
                    }
             )
-    
+    /*
                 await database.updateDocument(      
                     process.env.DATABASE_ID as string,
                     process.env.USERS_COLLECTION as string ,
