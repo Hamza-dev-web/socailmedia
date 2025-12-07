@@ -41,7 +41,7 @@ useEffect(() => {
       <p className="text-lg font-semibold">{userToTalkWith?.name}</p>
     </div>
 <div 
-  className="flex-1 overflow-y-auto px-5 py-4 flex flex-col gap-4 bg-[#f1f2f6]"
+  className="flex-1 overflow-y-auto px-3 py-3 sm:px-5 sm:py-4 flex flex-col gap-4 bg-[#f1f2f6]"
 >
 
   {/* Your messages */}
