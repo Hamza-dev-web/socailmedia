@@ -26,6 +26,7 @@ setAllMessage(am)
 console.log(err)
  } 
 } 
+Recall()
    },[messages])
     /*
     const [mt , setmt] =useState(0)
@@ -38,7 +39,7 @@ useEffect(() => {
 <main className="w-full h-[700px] flex items-center justify-center bg-slate-100 overflow-auto">
 
   {/* DESKTOP CHAT BOX */}
-  <div className=" md:flex flex-col w-full max-w-3xl h-[700px] bg-white rounded-lg shadow-xl overflow-hidden">
+  <div className="hidden md:flex flex-col w-full max-w-3xl h-[700px] bg-white rounded-lg shadow-xl overflow-hidden">
 
     {/* HEADER */}
     <div className="flex items-center gap-3 p-4 bg-[#8a63d2] text-white shadow-md">
@@ -49,40 +50,78 @@ useEffect(() => {
       <p className="text-lg font-semibold">{userToTalkWith?.name}</p>
     </div>
 <div 
-  className="flex-1 overflow-y-auto px-3 py-3 sm:px-5 sm:py-4 flex flex-col gap-4 bg-[#f1f2f6]"
+  className="
+    flex-1 overflow-y-auto 
+    bg-[#f1f2f6]
+    flex flex-col gap-4
+    px-3 py-3 sm:px-5 sm:py-4
+  "
 >
 
-  {/* Your messages */}
-  {messages && allMessage && allMessage?.map((msg: any, i: number) => (
-    <>
-      {user.$id == msg.CurrentUserId ? (
-       <div key={i} className={`flex items-end gap-2 max-w-[70%] `}>
-       <img src={user?.image} className="w-8 h-8 rounded-full" />
-        <div className="relative bg-white p-3 rounded-2xl shadow-sm border">
-        <div className="absolute -left-2 bottom-0 w-0 h-0 
-          border-t-[10px] border-t-white
-          border-r-[10px] border-r-transparent"></div>
-        <p>{msg.message}</p>
-         </div>
-       </div>
-     
-      ) :(
-        <div key={i} className={`flex justify-end items-end gap-2 max-w-[70%] ml-auto  `}>
-      <div className="relative bg-[#0084ff] text-white p-3 rounded-2xl shadow-md">
-        <div className="absolute -right-2 bottom-0 w-0 h-0 
-          border-t-[10px] border-t-[#0084ff]
-          border-l-[10px] border-l-transparent"></div>
-        <p>{msg.message}</p>
-      </div>
-      <img 
-      src={userToTalkWith?.image} 
-      className="w-8 h-8 rounded-full" />
-    </div>
+  {messages && allMessage && allMessage.map((msg: any, i: number) => (
+    <div key={i}>
+      {user.$id === msg.CurrentUserId ? (
+        
+        /* ------------------ USER MESSAGE (LEFT) ------------------ */
+        <div 
+          className="
+            flex items-end gap-2 
+            max-w-[85%] sm:max-w-[70%]
+          "
+        >
+          <img 
+            src={user?.image} 
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
+          />
+          
+          <div className="relative bg-white p-3 sm:p-4 rounded-2xl shadow-sm border">
+            <div 
+              className="
+                absolute 
+                -left-2 bottom-0 
+                w-0 h-0 
+                border-t-[10px] border-t-white
+                border-r-[10px] border-r-transparent
+              "
+            ></div>
+            <p className="text-sm sm:text-base">{msg.message}</p>
+          </div>
+        </div>
+
+      ) : (
+
+        /* ------------------ OTHER PERSON MESSAGE (RIGHT) ------------------ */
+        <div 
+          className="
+            flex justify-end items-end gap-2 
+            max-w-[85%] sm:max-w-[70%] 
+            ml-auto
+          "
+        >
+          <div className="relative bg-[#0084ff] text-white p-3 sm:p-4 rounded-2xl shadow-md">
+            <div 
+              className="
+                absolute 
+                -right-2 bottom-0 
+                w-0 h-0 
+                border-t-[10px] border-t-[#0084ff]
+                border-l-[10px] border-l-transparent
+              "
+            ></div>
+            <p className="text-sm sm:text-base">{msg.message}</p>
+          </div>
+
+          <img 
+            src={userToTalkWith?.image} 
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full"
+          />
+        </div>
       )}
-    </>
+    </div>
   ))}
 
 </div>
+
 
 
     {/* INPUT AREA */}
